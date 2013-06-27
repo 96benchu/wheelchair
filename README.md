@@ -176,4 +176,4 @@ The sample code does that in the `setup` dictionary.
 	        inGameStoreItems = [@[item1, item2, item3] mutableCopy];
 	        NSDictionary *setup = @{@"Coins": @[item1, item2,item3, item4, item5, item6]};
 
-To add new Coin-Items, simply create new instances and add them to both or one of the two stores.
+To add new Coin-Items, simply create new instances and add them to both or one of the two stores.# This is my README
