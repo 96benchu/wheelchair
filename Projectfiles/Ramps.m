@@ -15,7 +15,6 @@
 {
     self = [super initWithFile:@"ramp.png"];
     self.velocity = ccp(0,0);
-    
     [self scheduleUpdate];
     
     return self;
@@ -35,9 +34,18 @@
     
     
     [self setPosition:ccpAdd(self.position, ccpMult(self.velocity,delta))];
-    
-    
-    
 }
 
+-(void)detectCol:(CGPoint)pos
+{
+    CGRect bbox = [self boundingBox];
+    if(CGRectContainsPoint(bbox, pos))
+       {
+           self.col = true;
+       }
+       else
+       {
+           self.col = false;
+       }
+}
 @end

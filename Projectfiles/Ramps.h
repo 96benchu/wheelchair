@@ -10,8 +10,9 @@
 @interface Ramps : CCSprite
 
 {
-    
 }
 @property (nonatomic, assign) CGPoint velocity;
+@property (nonatomic, assign) BOOL col;
 -(id)initWithRampImage;
+-(void)detectCol:(CGPoint)pos;
 @end

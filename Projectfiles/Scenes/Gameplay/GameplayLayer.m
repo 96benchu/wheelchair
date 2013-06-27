@@ -175,7 +175,7 @@
         counter = 0;
         counter2 = 29;
         mult = 10;
-        cap=500;
+        cap=400;
         counter3 = 0;
         num = 3;
         counter4=0;
@@ -508,8 +508,34 @@
         counter = 0;
     }
     */
-    
+    [ramp detectCol:knight.position];
     counter++;
+    if(ramp.col == true)
+    {
+        double x = 327;
+        double y = 100;
+        double z = y/x;
+        double diffX = knight.position.x - ramp.position.x;
+        NSLog([NSString stringWithFormat:@"%i",z]);
+        NSLog([NSString stringWithFormat:@"%i",diffX]);
+         NSLog([NSString stringWithFormat:@"%i",ramp.col]);
+        knight.position = ccp(knight.position.x, diffX*z+knight.position.y);
+        if(((counter==5) || (counter ==10) || (counter ==15)))
+        {
+            //decreasbackground speed
+            double frac = 350/cap;
+            if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
+            {
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*frac];
+            }
+                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
+                {
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/20];
+                }
+            spikes.velocity = ccp(spikes.velocity.x + speedUp/6, spikes.velocity.y);
+            
+        }
+    }
     if(counter == 15)
     {
         if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
@@ -518,7 +544,10 @@
         }
         else
         {
-            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:0];
+            if(ramp.col == false)
+            {
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:0];
+            }
         }
         counter = 0;
     }
@@ -577,7 +606,7 @@
     }
     if(counter3 == 300)
     {
-        if(cap<400)
+        if(cap<700)
         {
             cap+=5;
         }
@@ -589,9 +618,9 @@
         {
             speedUp+=2;
         }
-        if(cap<400)
+        if(cap<700)
         {
-            cap+=5;
+            cap+=50;
         }
         counter3=0;
 
@@ -602,7 +631,7 @@
         spikes.velocity = ccp(0,0);
         spikes.position = ccp(0,300);
     }
-            ramp.velocity = ccp(-1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
+    ramp.velocity = ccp(-1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
      
 
 
