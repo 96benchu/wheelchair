@@ -15,6 +15,7 @@
 #import "PopUp.h"
 #import "Knight.h"
 #import "Spikes.h"
+#import "Ramps.h"
 
 
 @interface GameplayLayer : CCLayer <StoreDisplayNeedsUpdate, PauseScreenDelegate>
@@ -43,6 +44,7 @@
     Game *game;
     Knight *knight;
     Spikes* spikes;
+    Ramps* ramp;
     
     /* used to trigger events, that need to run every X update cycles*/
     int updateCount;

@@ -23,6 +23,7 @@
 #import "NotificationBox.h"
 #import "PauseScreen.h"
 #import "Spikes.h"
+#import "Ramps.h"
 
 // defines how many update cycles run, before the missions get an update about the current game state
 #define MISSION_UPDATE_FREQUENCY 10
@@ -119,9 +120,9 @@
         spikes = [[Spikes alloc] initWithSpikeImage];
         [self addChild:spikes];
         spikes.anchorPoint=ccp(0,0);
-        //ramp = [[ramps alloc] initWithrampImage];
-        //[self addChild:ramp];
-        //ramp.anchorPoint=ccp(0,0);
+        ramp = [[Ramps alloc] initWithRampImage];
+        [self addChild:ramp];
+        ramp.anchorPoint=ccp(0,0);
         
         // add the health display
         healthDisplayNode = [[HealthDisplayNode alloc] initWithHealthImage:@"heart_filled.png" lostHealthImage:@"heart_empty.png" maxHealth:5];
@@ -249,7 +250,7 @@
     spikes.zOrder = 11;
     spikes.rotation = 106;
     
-    //ramp.position = ccp(480,60);
+    ramp.position = ccp(480,20);
     
     // set spwan rate for monsters
     //[[GameMechanics sharedGameMechanics] setSpawnRate:25 forMonsterType:[BasicMonster class]];
@@ -601,7 +602,7 @@
         spikes.velocity = ccp(0,0);
         spikes.position = ccp(0,300);
     }
-            //ramp.velocity = ccp(-1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
+            ramp.velocity = ccp(-1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
      
 
 

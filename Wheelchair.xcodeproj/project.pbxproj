@@ -277,6 +277,7 @@
 		62F0C64C174F295B00FB096E /* StoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C64A174F295B00FB096E /* StoreTableViewCell.m */; };
 		62F0C64F174FD3C600FB096E /* CCNode+Autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C64E174FD3C600FB096E /* CCNode+Autolayout.m */; };
 		62F0C652174FDA9100FB096E /* StoreTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */; };
+		A58388EC177CBC8A0059F152 /* Ramps.m in Sources */ = {isa = PBXBuildFile; fileRef = A58388EB177CBC8A0059F152 /* Ramps.m */; };
 		A5AFCA61177A0E11007C16B6 /* Spikes.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AFCA60177A0E11007C16B6 /* Spikes.m */; };
 		A5AFCB9C177A0FF0007C16B6 /* background_belowground-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA65177A0FEF007C16B6 /* background_belowground-hd.png */; };
 		A5AFCB9D177A0FF0007C16B6 /* background_desert-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA66177A0FEF007C16B6 /* background_desert-hd.png */; };
@@ -918,6 +919,8 @@
 		62F0C64E174FD3C600FB096E /* CCNode+Autolayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Autolayout.m"; sourceTree = "<group>"; };
 		62F0C650174FDA9100FB096E /* StoreTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreTableViewHeaderCell.h; path = Scenes/StoreScene/StoreTableViewHeaderCell.h; sourceTree = "<group>"; };
 		62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableViewHeaderCell.m; path = Scenes/StoreScene/StoreTableViewHeaderCell.m; sourceTree = "<group>"; };
+		A58388EA177CBC8A0059F152 /* Ramps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ramps.h; sourceTree = "<group>"; };
+		A58388EB177CBC8A0059F152 /* Ramps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ramps.m; sourceTree = "<group>"; };
 		A5AFCA5F177A0E11007C16B6 /* Spikes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spikes.h; sourceTree = "<group>"; };
 		A5AFCA60177A0E11007C16B6 /* Spikes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spikes.m; sourceTree = "<group>"; };
 		A5AFCA65177A0FEF007C16B6 /* background_belowground-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_belowground-hd.png"; sourceTree = "<group>"; };
@@ -1800,6 +1803,8 @@
 				629F31031747FEF20088244A /* SlowMonster.m */,
 				A5AFCA5F177A0E11007C16B6 /* Spikes.h */,
 				A5AFCA60177A0E11007C16B6 /* Spikes.m */,
+				A58388EA177CBC8A0059F152 /* Ramps.h */,
+				A58388EB177CBC8A0059F152 /* Ramps.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -3048,6 +3053,7 @@
 				6212B6C5176E546D0040386F /* MissionProvider.m in Sources */,
 				6212B6C8176E6F850040386F /* KillAmountOfEnemiesInDistance.m in Sources */,
 				A5AFCA61177A0E11007C16B6 /* Spikes.m in Sources */,
+				A58388EC177CBC8A0059F152 /* Ramps.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

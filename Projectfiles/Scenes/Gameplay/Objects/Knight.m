@@ -228,12 +228,12 @@
     
 #ifdef DEBUG
     // visualize the hit zone
-    /*
+    
     ccDrawColor4B(100, 0, 255, 255); //purple, values range from 0 to 255
     CGPoint origin = ccp(self.hitZone.origin.x - self.position.x, self.hitZone.origin.y - self.position.y);
     CGPoint destination = ccp(origin.x + self.hitZone.size.width, origin.y + self.hitZone.size.height);
     ccDrawRect(origin, destination);
-     */
+     
      
 #endif
 }
