@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		
+		<key>monster1_1.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 0}, {100, 84}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -0}</string>
+			<key>spriteSize</key>
+			<string>{100, 84}</string>
+			<key>spriteSourceSize</key>
+			<string>{100, 84}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{132, 0}, {100, 84}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster1_2.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{3, 0}, {92, 88}}</string>
+			<key>spriteOffset</key>
+			<string>{-1, -0}</string>
+			<key>spriteSize</key>
+			<string>{92, 88}</string>
+			<key>spriteSourceSize</key>
+			<string>{100, 88}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{130, 243}, {92, 88}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster1_3.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 2}, {100, 84}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -1}</string>
+			<key>spriteSize</key>
+			<string>{100, 84}</string>
+			<key>spriteSourceSize</key>
+			<string>{100, 86}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{132, 86}, {100, 84}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster1_4.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{7, 10}, {88, 77}}</string>
+			<key>spriteOffset</key>
+			<string>{1, -2}</string>
+			<key>spriteSize</key>
+			<string>{88, 77}</string>
+			<key>spriteSourceSize</key>
+			<string>{100, 93}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{234, 0}, {88, 77}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster1_5.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{7, 8}, {90, 79}}</string>
+			<key>spriteOffset</key>
+			<string>{2, -2}</string>
+			<key>spriteSize</key>
+			<string>{90, 79}</string>
+			<key>spriteSourceSize</key>
+			<string>{100, 91}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{224, 172}, {90, 79}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster2_1.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 0}, {130, 121}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -0}</string>
+			<key>spriteSize</key>
+			<string>{130, 121}</string>
+			<key>spriteSourceSize</key>
+			<string>{130, 121}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{0, 0}, {130, 121}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster2_2.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 1}, {130, 118}}</string>
+			<key>spriteOffset</key>
+			<string>{0, 1}</string>
+			<key>spriteSize</key>
+			<string>{130, 118}</string>
+			<key>spriteSourceSize</key>
+			<string>{130, 122}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{0, 123}, {130, 118}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>monster2_3.png</key>
+		<dict>
+			<key>aliases</key>
+			<array>
+			
+			</array>
+			<key>spriteColorRect</key>
+			<string>{{0, 4}, {128, 107}}</string>
+			<key>spriteOffset</key>
+			<string>{-1, 4}</string>
+			<key>spriteSize</key>
+			<string>{128, 107}</string>
+			<key>spriteSourceSize</key>
+			<string>{130, 123}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{0, 243}, {128, 107}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>version</key>
+		<string>1.6.0</string>
+		<key>format</key>
+		<integer>3</integer>
+		<key>size</key>
+		<string>{512, 512}</string>
+		<key>name</key>
+		<string>Untitled</string>
+		<key>target</key>
+		<dict>
+			<key>name</key>
+			<string>default</string>
+			<key>textureFileName</key>
+			<string>monster-animations-hd</string>
+			<key>textureFileExtension</key>
+			<string>.png</string>
+			<key>coordinatesFileName</key>
+			<string>monster-animations-hd</string>
+			<key>coordinatesFileExtension</key>
+			<string>.plist</string>
+			<key>premultipliedAlpha</key>
+			<false/>
+		</dict>
+	</dict>
+</dict>
+</plist>
