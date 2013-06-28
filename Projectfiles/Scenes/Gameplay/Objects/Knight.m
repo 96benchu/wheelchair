@@ -175,6 +175,7 @@
 //    }
     
     // apply gravity
+    
     CGPoint gravity = [[GameMechanics sharedGameMechanics] worldGravity];
     float xVelocity = self.velocity.x;
     float yVelocity = self.velocity.y;
@@ -185,6 +186,7 @@
     {
         xVelocity = self.velocity.x + (gravity.x * delta);
     }
+     
     
     NSAssert(gravity.y <= 0, @"Currently only negative gravity is supported");
     // only apply gravity if the current velocity is not equal to the gravity velocity
@@ -192,7 +194,7 @@
     {
         yVelocity = self.velocity.y + (gravity.y * delta);
     }
-    
+        
     self.velocity = ccp(xVelocity, yVelocity);
     
     [self setPosition:ccpAdd(self.position, ccpMult(self.velocity,delta))];

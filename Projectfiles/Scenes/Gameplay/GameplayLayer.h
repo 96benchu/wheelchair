@@ -57,6 +57,7 @@
     double cap;
     int counter3;
     int counter5;
+    BOOL recent;
     
     /* stores the exact distance the knight has ran */
     float gainedDistance;

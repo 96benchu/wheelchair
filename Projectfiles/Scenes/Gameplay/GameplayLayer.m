@@ -180,6 +180,7 @@
         num = 3;
         counter4=0;
         counter5=10;
+        recent = false;
         [self scheduleUpdate];
         
         /**
@@ -253,11 +254,11 @@
     ramp.position = ccp(480,20);
     
     // set spwan rate for monsters
-    //[[GameMechanics sharedGameMechanics] setSpawnRate:25 forMonsterType:[BasicMonster class]];
+    //[[GameMechanics sharedGameMechanics] setSpawnRate:25 forMonsterType:[Ramps class]];
     //[[GameMechanics sharedGameMechanics] setSpawnRate:50 forMonsterType:[SlowMonster class]];
     
     // set gravity (used for jumps)
-    [[GameMechanics sharedGameMechanics] setWorldGravity:ccp(0.f, -750.f)];
+    [[GameMechanics sharedGameMechanics] setWorldGravity:ccp(0.f, -100.f)];
     
     // set the floor height, this will be the minimum y-Position for all entities
     [[GameMechanics sharedGameMechanics] setFloorHeight:20.f];
@@ -508,7 +509,8 @@
         counter = 0;
     }
     */
-    [ramp detectCol:knight.position];
+    //ramps!
+    [ramp detectCol:ccp(knight.position.x-20, knight.position.y)];
     counter++;
     if(ramp.col == true)
     {
@@ -516,37 +518,65 @@
         double y = 100;
         double z = y/x;
         double diffX = knight.position.x - ramp.position.x;
-        NSLog([NSString stringWithFormat:@"%i",z]);
-        NSLog([NSString stringWithFormat:@"%i",diffX]);
-         NSLog([NSString stringWithFormat:@"%i",ramp.col]);
-        knight.position = ccp(knight.position.x, diffX*z+knight.position.y);
+        NSLog([NSString stringWithFormat:@"%f",diffX]);
+
+        //NSLog([NSString stringWithFormat:@"%i",diffX]);
+        NSLog(ramp.col ? @"Yes" : @"No");
+        knight.position = ccp(knight.position.x, diffX*z+20);
         if(((counter==5) || (counter ==10) || (counter ==15)))
         {
             //decreasbackground speed
             double frac = 350/cap;
-            if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
+            if(counter==15)
             {
-                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*frac];
+                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
+                {
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*frac];
+                }
             }
                 if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
                 {
-                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/20];
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/30];
                 }
-            spikes.velocity = ccp(spikes.velocity.x + speedUp/6, spikes.velocity.y);
+            if(spikes.position.x<150)
+            {
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/6, spikes.velocity.y);
+            }
+            else
+            {
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/10, spikes.velocity.y);
+            }
+            recent = true;
             
         }
     }
+    //increase speed after leaving ramp
+    if(recent == true)
+    {
+        if(ramp.col==false)
+        {
+            knight.velocity = ccp(knight.velocity.x, knight.velocity.x*100/327+knight.velocity.y);
+            recent = false;
+        }
+    }
+    //decrease background speed
+    NSLog(ramp.col ? @"Yes" : @"No");
     if(counter == 15)
     {
-        if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
-        {
-            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-20];
-        }
+            if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
+            {
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/25];
+            }
+        // if there's a ramp
         else
         {
             if(ramp.col == false)
             {
                 [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:0];
+            }
+            else
+            {
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/15];
             }
         }
         counter = 0;
@@ -567,7 +597,7 @@
                {
                    if(spikes.velocity.x>-50)
                    {
-                       if(spikes.position.x < 150)
+                       if(spikes.position.x > 150)
                        {
                            spikes.velocity = ccp(((speedUp)*2/3-counter5)*2+spikes.velocity.x,spikes.velocity.y);
                        }
@@ -595,11 +625,23 @@
                 spikes.velocity = ccp((speedUp-counter5)*2+spikes.velocity.x,spikes.velocity.y);
             }
         }
-        
-        if(speedUp<15)
+        //if on ramp and very slow, in case of stalling on ramp and no movement
+        if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]<=30) && (ramp.col == true))
         {
-            speedUp+=.05;
-            cap+=.1;
+            if(spikes.position.x < 100)
+            {
+                spikes.velocity = ccp((50-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/15+spikes.velocity.x,spikes.velocity.y);
+            }
+            else
+            {
+                spikes.velocity = ccp((50-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/10+spikes.velocity.x,spikes.velocity.y);
+            }
+        }
+        //gradual speedup
+        if(speedUp<30)
+        {
+            speedUp+=.2;
+            cap+=4;
         }
         counter2=0;
         counter5=0;
@@ -625,12 +667,14 @@
         counter3=0;
 
     }
+    //failsafe
     if(spikes.position.x<0)
     {
         NSLog(@"WHY DONT U WORK");
         spikes.velocity = ccp(0,0);
         spikes.position = ccp(0,300);
     }
+    //ram velocity
     ramp.velocity = ccp(-1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
      
 
