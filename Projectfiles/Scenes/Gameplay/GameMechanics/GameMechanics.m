@@ -64,7 +64,7 @@
     
     /**
      A Notification can be used to broadcast an information to all objects of a game, that are interested in it.
-     Here we broadcast the 'GamePaused' and  the'GameResumed' information. All classes that listen to this notification, will be informed, that the game paused or resumed and can react accordingly.
+     Here we broadcast the 'GamePausesd' and  the'GameResumed' information. All classes that listen to this notification, will be informed, that the game paused or resumed and can react accordingly.
      **/
     
     // we are leaving the paused mode and need to resume animations

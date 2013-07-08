@@ -16,6 +16,7 @@
 #import "Knight.h"
 #import "Spikes.h"
 #import "Ramps.h"
+#import "NitroButton.h"
 
 
 @interface GameplayLayer : CCLayer <StoreDisplayNeedsUpdate, PauseScreenDelegate>
@@ -45,7 +46,8 @@
     Knight *knight;
     Spikes* spikes;
     Ramps* ramp;
-    
+    /* Jump button */
+    NitroButton *nitro;
     /* used to trigger events, that need to run every X update cycles*/
     int updateCount;
     int counter4;
@@ -57,6 +59,7 @@
     double cap;
     int counter3;
     int counter5;
+    int spawnRate;
     BOOL recent;
     
     /* stores the exact distance the knight has ran */
@@ -65,7 +68,7 @@
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.
 @property (nonatomic, assign) BOOL showMainMenu;
-
+@property (nonatomic, assign) BOOL onRamp;
 /**
  Tells the game to start
  */

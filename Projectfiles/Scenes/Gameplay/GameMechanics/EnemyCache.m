@@ -11,8 +11,9 @@
 #import "GameMechanics.h"
 #import "BasicMonster.h"
 #import "Knight.h"
+#import "Truth.h"
 
-#define ENEMY_MAX 300
+#define ENEMY_MAX 1
 
 @implementation EnemyCache
 
@@ -37,9 +38,10 @@
         // load all the enemies in a sprite cache, all monsters need to be part of this sprite file
         // currently the knight is used as the only monster type
         CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-		[frameCache addSpriteFramesWithFile:@"monster-animations.plist"];
+        CCSpriteFrame *rampFrame = [[CCSprite spriteWithFile:@"ramp.png"] displayFrame];
+		[frameCache addSpriteFrame:rampFrame name:@"ramp.png"];
         // we need to initialize the batch node with one of the frames
-		CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"monster1_1.png"];
+		CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"ramp.png"];
         /* A batch node allows drawing a lot of different sprites with on single draw cycle. Therefore it is necessary,
            that all sprites are added as child nodes to the batch node and that all use a texture contained in the batch node texture. */
 		batch = [CCSpriteBatchNode batchNodeWithTexture:frame.texture];
@@ -98,50 +100,99 @@
      We use the class of the enemy as key for the dictionary, to receive an array of all existing enimies of that type.
      We use a CCArray since it has a better performance than an NSArray. */
 	CCArray* enemiesOfType = [enemies objectForKey:enemyTypeClass];
-    BasicMonster* enemy;
-    
+    Ramps* enemy;
+
     /* we try to reuse existing enimies, therefore we use this flag, to keep track if we found an enemy we can
      respawn or if we need to create a new one */
     BOOL foundAvailableEnemyToSpawn = FALSE;
-    
+
+
     // if the enemiesOfType array exists, iterate over all already existing enemies of the provided type and check if one of them can be respawned
+    NSLog(onScreen ? @"Yes" : @"No");
     if (enemiesOfType != nil)
     {
+        CCARRAY_FOREACH(enemiesOfType, enemy)
+        {
+            if(enemy.visible==YES)
+            {
+                NSLog(@"YEAP");
+                onScreen = true;
+            }
+        }
+ 
         CCARRAY_FOREACH(enemiesOfType, enemy)
         {
             // find the first free enemy and respawn it
             if (enemy.visible == NO)
             {
-                [enemy spawn];
+                if(onScreen==false)
+                {
+                    NSLog(@"YEAP2");
+                    [enemy spawn];
+                }
                 // remember, that we will not need to create a new enemy
                 foundAvailableEnemyToSpawn = TRUE;
                 break;
             }
         }
-    } else {
+                      
+
+    }
+    else
+    {
+
         // if no enemies of that type existed yet, the enemiesOfType array will be nil and we first need to create one
         enemiesOfType = [[CCArray alloc] init];
         [enemies setObject:enemiesOfType forKey:(id<NSCopying>)enemyTypeClass];
     }
-    
+    //NSLog(onScreen ? @"Yes" : @"No");
     // if we haven't been able to find a enemy to respawn, we need to create one
     if (!foundAvailableEnemyToSpawn)
     {
-        // initialize an enemy of the provided class
-        BasicMonster *enemy =  [(BasicMonster *) [enemyTypeClass alloc] initWithMonsterPicture];
-        [enemy spawn];
-        [enemiesOfType addObject:enemy];
-        [batch addChild:enemy];
+        if(onScreen == false)
+        {
+             //NSLog(@"NOPE");
+            // initialize an enemy of the provided class
+            Ramps *enemy =  [(Ramps *) [enemyTypeClass alloc] initWithRampImage];
+            [enemy spawn];
+
+            [enemiesOfType addObject:enemy];
+                
+
+            [batch addChild:enemy];
+        }
+
     }
+    NSLog(@"NOPE");
+    onScreen = false;
+    
 }
 
--(void) checkForCollisions
+-(BOOL) checkForCollisions
 {
-	BasicMonster* enemy;
+    Ramps *ramp;
+    Knight *knight = [[GameMechanics sharedGameMechanics] knight];
+
+    
+    CCARRAY_FOREACH([batch children], ramp)
+    {
+        [ramp detectCol:ccp(knight.position.x+36, knight.position.y)];
+        if(ramp.col==true)
+        {
+            CGSize size = [ramp contentSize];
+            CGPoint pos = ramp.position;
+            Truth* data = [Truth sharedData];
+            data.pos = pos;
+            data.sprite = size;
+            return true;
+        }
+    }
+    return false;
+    /*
     Knight *knight = [[GameMechanics sharedGameMechanics] knight];
     CGRect knightBoundingBox = [knight boundingBox];
     CGRect knightHitZone = [knight hitZone];
-    
+    //
     // iterate over all enemies (all child nodes of this enemy batch)
 	CCARRAY_FOREACH([batch children], enemy)
 	{
@@ -149,10 +200,10 @@
 		if (enemy.visible)
 		{
 			CGRect bbox = [enemy boundingBox];
-            /*
+            
              1) check collision between Bounding Box of the knight and Bounding Box of the enemy.
                 If a collision occurs here, only the knight can kill the enemy. The knight can not be injured by this colission. The knight can only be injured if his hit zone collides with an enemy (checked in step 2) )
-             */
+             
             // if we detect an intersection, a collision occured
             if (CGRectIntersectsRect(knightBoundingBox, bbox))
 			{
@@ -164,9 +215,9 @@
                     continue;
                 }
 			}
-            /* 
+            
              2) now we check if the knights Hit Zone collided with the enemy. If this happens, and he is not stabbing, he will be injured.
-             */
+             
             if (CGRectIntersectsRect(knightHitZone, bbox))
             {
                 // if the knight is stabbing, or the knight is in invincible mode, the enemy will be destroyed...
@@ -180,7 +231,7 @@
                 }
             }
 		}
-	}
+	}*/
 }
 
 
@@ -206,7 +257,33 @@
             }
         }
         
-        [self checkForCollisions];
+        Truth* data = [Truth sharedData];
+        CCArray* enemiesOfType = [enemies objectForKey:[Ramps class]];
+        Ramps* enemy;
+        if (enemiesOfType != nil)
+        {
+        CCARRAY_FOREACH(enemiesOfType, enemy)
+        {
+            if(enemy.visible != NO)
+            {
+                enemy.velocity = ccp(data.scrollSpeed, enemy.velocity.y);
+            }
+            if(enemy.position.x < 0)
+            {
+                enemy.visible == NO;
+            }
+        }
+        }
+
+        if([self checkForCollisions])
+        {
+            
+            data.onRamp = true;
+        }
+        else
+        {
+            data.onRamp=false;
+        }
     }
 }
 

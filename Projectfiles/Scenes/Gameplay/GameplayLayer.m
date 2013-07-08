@@ -24,6 +24,7 @@
 #import "PauseScreen.h"
 #import "Spikes.h"
 #import "Ramps.h"
+#import "Truth.h"
 
 // defines how many update cycles run, before the missions get an update about the current game state
 #define MISSION_UPDATE_FREQUENCY 10
@@ -49,7 +50,7 @@
  called when the player has chosen if he wants to continue the game (for paying coins) or not
  */
 - (void)goOnPopUpButtonClicked:(CCControlButton *)sender;
-
+- (void)speedUpButtonPressed;
 @end
 
 @implementation GameplayLayer
@@ -120,9 +121,9 @@
         spikes = [[Spikes alloc] initWithSpikeImage];
         [self addChild:spikes];
         spikes.anchorPoint=ccp(0,0);
-        ramp = [[Ramps alloc] initWithRampImage];
-        [self addChild:ramp];
-        ramp.anchorPoint=ccp(0,0);
+        //ramp = [[Ramps alloc] initWithRampImage];
+        //[self addChild:ramp];
+        //ramp.anchorPoint=ccp(0,0);
         
         // add the health display
         healthDisplayNode = [[HealthDisplayNode alloc] initWithHealthImage:@"heart_filled.png" lostHealthImage:@"heart_empty.png" maxHealth:5];
@@ -165,10 +166,13 @@
         pauseButtonMenu = [CCMenu menuWithItems:pauseButtonMenuItem, nil];
         pauseButtonMenu.position = ccp(self.contentSize.width - pauseButtonMenuItem.contentSize.width - 4, self.contentSize.height - 58);
         [hudNode addChild:pauseButtonMenu];
-        
+        //Nitro button
+        nitro = [[NitroButton alloc] initWithButtonImage];
+        [self addChild:nitro];
+        nitro.anchorPoint = ccp(0,0);
         // add the enemy cache containing all spawned enemies
         [self addChild:[EnemyCache node]];
-        
+        //speedUpButton        
         // setup a new gaming session
         [self resetGame];
         speedUp =3;
@@ -180,6 +184,7 @@
         num = 3;
         counter4=0;
         counter5=10;
+        spawnRate = 160;
         recent = false;
         [self scheduleUpdate];
         
@@ -205,7 +210,10 @@
 }
 
 #pragma mark - Reset Game
-
+-(void)speedUpButtonPressed
+{
+    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+50];
+}
 - (void)startGame
 {
     [[GameMechanics sharedGameMechanics] setGameState:GameStateRunning];
@@ -250,15 +258,16 @@
     spikes.position = ccp(20,300);
     spikes.zOrder = 11;
     spikes.rotation = 106;
-    
-    ramp.position = ccp(480,20);
-    
+    nitro.position = ccp(20,20);
+   // ramp.position = ccp(480,20);
+
     // set spwan rate for monsters
-    //[[GameMechanics sharedGameMechanics] setSpawnRate:25 forMonsterType:[Ramps class]];
+    [[GameMechanics sharedGameMechanics] setSpawnRate:160 forMonsterType:[Ramps class]];
+
     //[[GameMechanics sharedGameMechanics] setSpawnRate:50 forMonsterType:[SlowMonster class]];
     
     // set gravity (used for jumps)
-    [[GameMechanics sharedGameMechanics] setWorldGravity:ccp(0.f, -100.f)];
+    [[GameMechanics sharedGameMechanics] setWorldGravity:ccp(0.f, -450.f)];
     
     // set the floor height, this will be the minimum y-Position for all entities
     [[GameMechanics sharedGameMechanics] setFloorHeight:20.f];
@@ -347,6 +356,17 @@
     healthDisplayNode.health = knight.hitPoints;
     
     KKInput* input = [KKInput sharedInput];
+    CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
+    CGRect buttonArea = [nitro boundingBox];
+    //nitro
+    if(CGRectContainsPoint(buttonArea, pos))
+    {
+        if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] < cap)
+        {
+            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+15];
+        }
+        counter5++;
+    }
     /*
     if ([input gestureSwipeRecognizedThisFrame])
     {
@@ -423,7 +443,7 @@
 
                     }
                     counter5+=5;
-                    NSLog([NSString stringWithFormat:@"%i",counter5]);
+                    //NSLog([NSString stringWithFormat:@"%i",counter5]);
                     //failsafe
                     if(knight.velocity.x>0)
                     {
@@ -510,18 +530,21 @@
     }
     */
     //ramps!
-    [ramp detectCol:ccp(knight.position.x-20, knight.position.y)];
+    Truth* data = [Truth sharedData];
     counter++;
-    if(ramp.col == true)
+    CGSize spriteSize = data.sprite;
+    double x = spriteSize.width;
+    double y = spriteSize.height;
+    double z = y/x;
+    double diffX = knight.position.x - data.pos.x;
+    if(data.onRamp== true)
     {
-        double x = 327;
-        double y = 100;
-        double z = y/x;
-        double diffX = knight.position.x - ramp.position.x;
-        NSLog([NSString stringWithFormat:@"%f",diffX]);
+        knight.rotation = -atan(z)*(180/M_PI);
+
+       // NSLog([NSString stringWithFormat:@"%f",atan(z)]);
 
         //NSLog([NSString stringWithFormat:@"%i",diffX]);
-        NSLog(ramp.col ? @"Yes" : @"No");
+        //NSLog(ramp.col ? @"Yes" : @"No");
         knight.position = ccp(knight.position.x, diffX*z+20);
         if(((counter==5) || (counter ==10) || (counter ==15)))
         {
@@ -551,16 +574,18 @@
         }
     }
     //increase speed after leaving ramp
+    
     if(recent == true)
     {
-        if(ramp.col==false)
+        if(data.onRamp==false)
         {
-            knight.velocity = ccp(knight.velocity.x, knight.velocity.x*100/327+knight.velocity.y);
-            recent = false;
+            knight.rotation = 0;
+            knight.velocity = ccp(knight.velocity.x, [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*z+knight.velocity.y+450);
+            recent = false;	
         }
     }
     //decrease background speed
-    NSLog(ramp.col ? @"Yes" : @"No");
+    //NSLog(ramp.col ? @"Yes" : @"No");
     if(counter == 15)
     {
             if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
@@ -570,7 +595,7 @@
         // if there's a ramp
         else
         {
-            if(ramp.col == false)
+            if(data.onRamp == false)
             {
                 [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:0];
             }
@@ -587,9 +612,9 @@
     counter3++;
     //determines if spikes moving and gradual speedUp
     
-    if(counter2== 30)
+    if(counter2==30)
     {
-        NSLog([NSString stringWithFormat:@"%i",counter5]);
+       NSLog([NSString stringWithFormat:@"%i",counter5]);
         //spike speedUp
         if(counter5> speedUp)
            {
@@ -597,13 +622,20 @@
                {
                    if(spikes.velocity.x>-50)
                    {
-                       if(spikes.position.x > 150)
+                       if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>30)
                        {
-                           spikes.velocity = ccp(((speedUp)*2/3-counter5)*2+spikes.velocity.x,spikes.velocity.y);
+                           if(spikes.position.x > 150)
+                           {
+                               spikes.velocity = ccp(((speedUp)*2/3-counter5)*2+spikes.velocity.x,spikes.velocity.y);
+                           }
+                           else
+                           {
+                               spikes.velocity = ccp((speedUp-counter5)*2+spikes.velocity.x,spikes.velocity.y);
+                           }
                        }
                        else
                        {
-                           spikes.velocity = ccp((speedUp-counter5)*2+spikes.velocity.x,spikes.velocity.y);
+                           spikes.velocity = ccp(spikes.velocity.x+5, spikes.velocity.y);
                        }
                    }
                }
@@ -626,19 +658,19 @@
             }
         }
         //if on ramp and very slow, in case of stalling on ramp and no movement
-        if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]<=30) && (ramp.col == true))
+        if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]<=30) && (data.onRamp==true))
         {
             if(spikes.position.x < 100)
             {
-                spikes.velocity = ccp((50-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/15+spikes.velocity.x,spikes.velocity.y);
+                spikes.velocity = ccp((50-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/10+spikes.velocity.x,spikes.velocity.y);
             }
             else
             {
-                spikes.velocity = ccp((50-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/10+spikes.velocity.x,spikes.velocity.y);
+                spikes.velocity = ccp((50-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/15+spikes.velocity.x,spikes.velocity.y);
             }
         }
         //gradual speedup
-        if(speedUp<30)
+        if(speedUp<25)
         {
             speedUp+=.2;
             cap+=4;
@@ -665,17 +697,23 @@
             cap+=50;
         }
         counter3=0;
+        if(spawnRate>40)
+        {
+            spawnRate = spawnRate - 40;
+        }
+        [[GameMechanics sharedGameMechanics] setSpawnRate:spawnRate forMonsterType:[Ramps class]];
 
     }
     //failsafe
     if(spikes.position.x<0)
     {
-        NSLog(@"WHY DONT U WORK");
+        //NSLog(@"WHY DONT U WORK");
         spikes.velocity = ccp(0,0);
         spikes.position = ccp(0,300);
     }
     //ram velocity
-    ramp.velocity = ccp(-1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
+    data.scrollSpeed = -1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX];
+
      
 
 
