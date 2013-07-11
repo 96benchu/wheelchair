@@ -278,6 +278,7 @@
 		62F0C64F174FD3C600FB096E /* CCNode+Autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C64E174FD3C600FB096E /* CCNode+Autolayout.m */; };
 		62F0C652174FDA9100FB096E /* StoreTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */; };
 		A58388EC177CBC8A0059F152 /* Ramps.m in Sources */ = {isa = PBXBuildFile; fileRef = A58388EB177CBC8A0059F152 /* Ramps.m */; };
+		A59EDE8A178C858300DC7EAF /* Box1.m in Sources */ = {isa = PBXBuildFile; fileRef = A59EDE89178C858300DC7EAF /* Box1.m */; };
 		A5AD9B60178232C5005655B8 /* ramp-animations.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5AD9B5F178232C5005655B8 /* ramp-animations.plist */; };
 		A5AD9B6617824738005655B8 /* Truth.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AD9B6517824738005655B8 /* Truth.m */; };
 		A5AFCA61177A0E11007C16B6 /* Spikes.m in Sources */ = {isa = PBXBuildFile; fileRef = A5AFCA60177A0E11007C16B6 /* Spikes.m */; };
@@ -570,6 +571,7 @@
 		A5AFCCBA177A0FF0007C16B6 /* title_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCB9A177A0FF0007C16B6 /* title_shop.png */; };
 		A5AFCCBB177A0FF0007C16B6 /* title_upgrades.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCB9B177A0FF0007C16B6 /* title_upgrades.png */; };
 		A5B840D4178B40B500F941B8 /* NitroButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B840D3178B40B500F941B8 /* NitroButton.m */; };
+		A5E5A07A178E155900B66201 /* box1-animations.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5E5A079178E155900B66201 /* box1-animations.plist */; };
 		DC65615C13A969B600A7AC53 /* libbox2d-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615013A969B600A7AC53 /* libbox2d-ios.a */; };
 		DC65615D13A969B600A7AC53 /* libchipmunk-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615113A969B600A7AC53 /* libchipmunk-ios.a */; };
 		DC65615E13A969B600A7AC53 /* libchipmunk-spacemanager-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615213A969B600A7AC53 /* libchipmunk-spacemanager-ios.a */; };
@@ -924,6 +926,8 @@
 		62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableViewHeaderCell.m; path = Scenes/StoreScene/StoreTableViewHeaderCell.m; sourceTree = "<group>"; };
 		A58388EA177CBC8A0059F152 /* Ramps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ramps.h; sourceTree = "<group>"; };
 		A58388EB177CBC8A0059F152 /* Ramps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ramps.m; sourceTree = "<group>"; };
+		A59EDE88178C858300DC7EAF /* Box1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box1.h; sourceTree = "<group>"; };
+		A59EDE89178C858300DC7EAF /* Box1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Box1.m; sourceTree = "<group>"; };
 		A5AD9B5F178232C5005655B8 /* ramp-animations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ramp-animations.plist"; path = "Objects/ramp-animations.plist"; sourceTree = "<group>"; };
 		A5AD9B6417824738005655B8 /* Truth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Truth.h; sourceTree = "<group>"; };
 		A5AD9B6517824738005655B8 /* Truth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Truth.m; sourceTree = "<group>"; };
@@ -1219,6 +1223,7 @@
 		A5AFCB9B177A0FF0007C16B6 /* title_upgrades.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_upgrades.png; sourceTree = "<group>"; };
 		A5B840D2178B40B500F941B8 /* NitroButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NitroButton.h; sourceTree = "<group>"; };
 		A5B840D3178B40B500F941B8 /* NitroButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NitroButton.m; sourceTree = "<group>"; };
+		A5E5A079178E155900B66201 /* box1-animations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "box1-animations.plist"; sourceTree = "<group>"; };
 		DC3BE97813B4FB71003739CC /* BuildSettings-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-iOS.xcconfig"; sourceTree = "<group>"; };
 		DC65615013A969B600A7AC53 /* libbox2d-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libbox2d-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC65615113A969B600A7AC53 /* libchipmunk-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libchipmunk-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1575,8 +1580,8 @@
 				62CD5DCF17430600002EC156 /* Game.m */,
 				62F0C644174F1B7C00FB096E /* Store.h */,
 				62F0C645174F1B7C00FB096E /* Store.m */,
-				62F0C647174F1BD800FB096E /* StoreItem.h */,
 				62F0C648174F1BD800FB096E /* StoreItem.m */,
+				62F0C647174F1BD800FB096E /* StoreItem.h */,
 				62B74123175D379B00D9BD34 /* VirtualCurrencyStoreItem.h */,
 				62B74124175D379C00D9BD34 /* VirtualCurrencyStoreItem.m */,
 				62B74126175D382D00D9BD34 /* CoinPurchaseStoreItem.h */,
@@ -1722,6 +1727,7 @@
 		62F018A517445BEC00BAF979 /* Gameplay */ = {
 			isa = PBXGroup;
 			children = (
+				A5E5A079178E155900B66201 /* box1-animations.plist */,
 				A5AD9B5F178232C5005655B8 /* ramp-animations.plist */,
 				6212B4F4176671A50040386F /* monster-animations.plist */,
 				6212B4F5176671A50040386F /* monster-animations.png */,
@@ -1814,8 +1820,10 @@
 				A5AFCA60177A0E11007C16B6 /* Spikes.m */,
 				A58388EA177CBC8A0059F152 /* Ramps.h */,
 				A58388EB177CBC8A0059F152 /* Ramps.m */,
-				A5B840D2178B40B500F941B8 /* NitroButton.h */,
 				A5B840D3178B40B500F941B8 /* NitroButton.m */,
+				A5B840D2178B40B500F941B8 /* NitroButton.h */,
+				A59EDE88178C858300DC7EAF /* Box1.h */,
+				A59EDE89178C858300DC7EAF /* Box1.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -2993,6 +3001,7 @@
 				A5AFCCBA177A0FF0007C16B6 /* title_shop.png in Resources */,
 				A5AFCCBB177A0FF0007C16B6 /* title_upgrades.png in Resources */,
 				A5AD9B60178232C5005655B8 /* ramp-animations.plist in Resources */,
+				A5E5A07A178E155900B66201 /* box1-animations.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3070,6 +3079,7 @@
 				A58388EC177CBC8A0059F152 /* Ramps.m in Sources */,
 				A5AD9B6617824738005655B8 /* Truth.m in Sources */,
 				A5B840D4178B40B500F941B8 /* NitroButton.m in Sources */,
+				A59EDE8A178C858300DC7EAF /* Box1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

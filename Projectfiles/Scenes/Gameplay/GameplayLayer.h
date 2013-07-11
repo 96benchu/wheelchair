@@ -17,6 +17,7 @@
 #import "Spikes.h"
 #import "Ramps.h"
 #import "NitroButton.h"
+#import "Box1.h"
 
 
 @interface GameplayLayer : CCLayer <StoreDisplayNeedsUpdate, PauseScreenDelegate>

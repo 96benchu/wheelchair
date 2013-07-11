@@ -34,7 +34,7 @@
     
     
     [self setPosition:ccpAdd(self.position, ccpMult(self.velocity,delta))];
-    if(self.position.x < -100)
+    if(self.position.x < -500)
     {
         self.visible = false;
     }
@@ -61,8 +61,8 @@
     self.anchorPoint = ccp(0,0);
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 20;
-	self.position = CGPointMake(xPos, yPos);
-	
+	self.position = CGPointMake(700, 20);
+	self.scale = .9;
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
 }

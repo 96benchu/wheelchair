@@ -16,9 +16,11 @@
 @interface EnemyCache : CCNode
 {
     CCSpriteBatchNode* batch;
+    CCSpriteBatchNode* batch2;
     
     // stores all enemies
     NSMutableDictionary* enemies;
+    NSMutableDictionary* enemies2;
     BOOL onScreen;
 
     // count the updates (used to determine when monsters should be spawned)

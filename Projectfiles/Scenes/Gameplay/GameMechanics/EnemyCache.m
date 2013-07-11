@@ -13,7 +13,7 @@
 #import "Knight.h"
 #import "Truth.h"
 
-#define ENEMY_MAX 1
+#define ENEMY_MAX 100
 
 @implementation EnemyCache
 
@@ -39,16 +39,24 @@
         // currently the knight is used as the only monster type
         CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
         CCSpriteFrame *rampFrame = [[CCSprite spriteWithFile:@"ramp.png"] displayFrame];
+        CCSpriteFrameCache* frameCache2 = [CCSpriteFrameCache sharedSpriteFrameCache];
+        CCSpriteFrame *boxFrame = [[CCSprite spriteWithFile:@"basicbarrell.png"] displayFrame];
+
 		[frameCache addSpriteFrame:rampFrame name:@"ramp.png"];
+        [frameCache2 addSpriteFrame:boxFrame name:@"basicbarrell.png"];
         // we need to initialize the batch node with one of the frames
 		CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"ramp.png"];
+        CCSpriteFrame* frame2 = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"basicbarrell.png"];
+
         /* A batch node allows drawing a lot of different sprites with on single draw cycle. Therefore it is necessary,
            that all sprites are added as child nodes to the batch node and that all use a texture contained in the batch node texture. */
 		batch = [CCSpriteBatchNode batchNodeWithTexture:frame.texture];
+        batch2 = [CCSpriteBatchNode batchNodeWithTexture:frame2.texture];
 		[self addChild:batch];
+        [self addChild:batch2];
         [self scheduleUpdate];
         enemies = [[NSMutableDictionary alloc] init];
-        
+        enemies2= [[NSMutableDictionary alloc] init];
         /**
          A Notification can be used to broadcast an information to all objects of a game, that are interested in it.
          Here we sign up for the 'GamePaused' and 'GameResumed' information, that is broadcasted by the GameMechanics class. Whenever the game pauses or resumes, we get informed and can react accordingly.
@@ -94,13 +102,69 @@
     }
 }
 
+-(void) spawnEnemyOfType2
+{
+    CCArray* enemiesOfType = [enemies2 objectForKey:[Box1 class]];
+      Box1* enemy;
+    Truth* data = [Truth sharedData];
+    BOOL foundAvailableEnemyToSpawn = FALSE;
+    
+    // if the enemiesOfType array exists, iterate over all already existing enemies of the provided type and check if one of them can be respawned
+    if (enemiesOfType != nil)
+    {
+        CCARRAY_FOREACH(enemiesOfType, enemy)
+        {
+            if(data.scrollSpeed*-2>20)
+            {
+            // find the first free enemy and respawn it
+            if (enemy.visible == NO)
+            {
+                [enemy spawn];
+                // remember, that we will not need to create a new enemy
+                foundAvailableEnemyToSpawn = TRUE;
+                break;
+            }
+            }
+        }
+    } else {
+        if(data.scrollSpeed*-2>20)
+        {
+
+                NSLog(@"YEAP2");
+        // if no enemies of that type existed yet, the enemiesOfType array will be nil and we first need to create one
+        enemiesOfType = [[CCArray alloc] init];
+        [enemies2 setObject:enemiesOfType forKey:(id<NSCopying>)[Box1 class]];
+        }
+        
+    }
+    
+    // if we haven't been able to find a enemy to respawn, we need to create one
+    if (!foundAvailableEnemyToSpawn)
+    {
+
+        if(data.scrollSpeed*-2>20)
+        {
+        // initialize an enemy of the provided class
+        Box1 *enemy =  [(Box1 *) [[Box1 class] alloc] initWithBoxImage];
+        [enemy spawn];
+        [enemiesOfType addObject:enemy];
+
+        [batch2 addChild:enemy];
+        }
+    }
+
+}
+ 
 -(void) spawnEnemyOfType:(Class)enemyTypeClass
 {
     /* the 'enemies' dictionary stores an array of available enemies for each enemy type. 
      We use the class of the enemy as key for the dictionary, to receive an array of all existing enimies of that type.
      We use a CCArray since it has a better performance than an NSArray. */
-	CCArray* enemiesOfType = [enemies objectForKey:enemyTypeClass];
+
+        CCArray* enemiesOfType = [enemies objectForKey:enemyTypeClass];
+    
     Ramps* enemy;
+  
 
     /* we try to reuse existing enimies, therefore we use this flag, to keep track if we found an enemy we can
      respawn or if we need to create a new one */
@@ -108,14 +172,14 @@
 
 
     // if the enemiesOfType array exists, iterate over all already existing enemies of the provided type and check if one of them can be respawned
-    NSLog(onScreen ? @"Yes" : @"No");
+    //NSLog(onScreen ? @"Yes" : @"No");
     if (enemiesOfType != nil)
     {
         CCARRAY_FOREACH(enemiesOfType, enemy)
         {
             if(enemy.visible==YES)
             {
-                NSLog(@"YEAP");
+                //NSLog(@"YEAP");
                 onScreen = true;
             }
         }
@@ -127,7 +191,7 @@
             {
                 if(onScreen==false)
                 {
-                    NSLog(@"YEAP2");
+                    //NSLog(@"YEAP2");
                     [enemy spawn];
                 }
                 // remember, that we will not need to create a new enemy
@@ -135,8 +199,6 @@
                 break;
             }
         }
-                      
-
     }
     else
     {
@@ -154,6 +216,7 @@
              //NSLog(@"NOPE");
             // initialize an enemy of the provided class
             Ramps *enemy =  [(Ramps *) [enemyTypeClass alloc] initWithRampImage];
+            //Box1 *enemy = [(Box1 *) [enemyTypeClass alloc] initWithBoxImage];
             [enemy spawn];
 
             [enemiesOfType addObject:enemy];
@@ -163,7 +226,7 @@
         }
 
     }
-    NSLog(@"NOPE");
+    //NSLog(@"NOPE");
     onScreen = false;
     
 }
@@ -176,7 +239,7 @@
     
     CCARRAY_FOREACH([batch children], ramp)
     {
-        [ramp detectCol:ccp(knight.position.x+36, knight.position.y)];
+        [ramp detectCol:ccp(knight.position.x, knight.position.y)];
         if(ramp.col==true)
         {
             CGSize size = [ramp contentSize];
@@ -233,6 +296,30 @@
 		}
 	}*/
 }
+-(BOOL) checkForBoxCollisions
+{
+    Box1 *box;
+    Knight *knight = [[GameMechanics sharedGameMechanics] knight];
+    CCARRAY_FOREACH([batch2 children], box)
+    {
+        NSLog(@"done");
+        CGRect bbox = [box boundingBox];
+        CGRect knightBoundingBox = [knight boundingBox];
+        CGRect knightHitZone = [knight hitZone];
+        if (CGRectIntersectsRect(knightHitZone, bbox))
+        {
+            	
+            return true;;
+        }
+        else
+        {
+            
+            return false;
+        }
+
+    }
+    return false;
+}
 
 
 -(void) update:(ccTime)delta
@@ -241,10 +328,15 @@
     if ([[GameMechanics sharedGameMechanics] gameState] == GameStateRunning)
     {
         updateCount++;
-        
+        Truth* data = [Truth sharedData];
+
         // first we get all available monster types
         NSArray *monsterTypes = [[[GameMechanics sharedGameMechanics] spawnRatesByMonsterType] allKeys];
+        CCArray* enemiesOfType = [enemies objectForKey:[Ramps class]];
+        CCArray* enemiesOfType2 = [enemies2 objectForKey:[Box1 class]];
         
+        Ramps* enemy;
+        Box1* enemy2;
         for (Class monsterTypeClass in monsterTypes)
         {
             // we get the spawn frequency for this specific monster type
@@ -253,37 +345,85 @@
             // if the updateCount reached the spawnFrequency we spawn a new enemy
             if (updateCount % spawnFrequency == 0)
             {
-                [self spawnEnemyOfType:monsterTypeClass];
+                if(monsterTypeClass == [Ramps class])
+                {
+                    [self spawnEnemyOfType:[Ramps class]];
+                }
+                else
+                {
+                    BOOL same = FALSE;
+                    if (enemiesOfType != nil)
+                    {
+                        
+                        CCARRAY_FOREACH(enemiesOfType, enemy);
+                        {
+                            CGRect bbox = [enemy boundingBox];
+                            CGRect spawned = CGRectMake(500, 20, 120, 80);
+                            if(CGRectIntersectsRect(bbox, spawned))
+                            {
+                                same = true;
+                            }
+
+                        }
+                        if(same == FALSE)
+                        {
+                            [self spawnEnemyOfType2];
+                        }
+                    }
+                
+                }
             }
         }
         
-        Truth* data = [Truth sharedData];
-        CCArray* enemiesOfType = [enemies objectForKey:[Ramps class]];
-        Ramps* enemy;
+        
+ 
         if (enemiesOfType != nil)
         {
-        CCARRAY_FOREACH(enemiesOfType, enemy)
-        {
-            if(enemy.visible != NO)
-            {
-                enemy.velocity = ccp(data.scrollSpeed, enemy.velocity.y);
-            }
-            if(enemy.position.x < 0)
-            {
-                enemy.visible == NO;
-            }
-        }
-        }
-
-        if([self checkForCollisions])
-        {
             
-            data.onRamp = true;
+            CCARRAY_FOREACH(enemiesOfType, enemy)
+            {
+                
+                if(enemy.visible != NO)
+                {
+                    enemy.velocity = ccp(data.scrollSpeed, enemy.velocity.y);
+                }
+                if(enemy.position.x < -400)
+                {
+                    enemy.visible = NO;
+                }
+            }
+            CCARRAY_FOREACH(enemiesOfType2, enemy2)
+            {
+                NSLog(@"success");
+                if(enemy2.visible == YES)
+                {
+                    enemy2.velocity = ccp(data.scrollSpeed, enemy2.velocity.y);
+                }
+                if(enemy2.position.x<-100)
+                {
+                    enemy2.visible =NO;
+                }
+            }
+            if([self checkForCollisions])
+            {
+            
+                data.onRamp = true;
+            }
+            else
+            {
+                data.onRamp=false;
+            }
+        }
+        if([self checkForBoxCollisions] == TRUE)
+        {
+            NSLog(@"hit");
+            data.hit = [self checkForBoxCollisions];
         }
         else
         {
-            data.onRamp=false;
+            data.hit = false;
         }
+            
     }
 }
 

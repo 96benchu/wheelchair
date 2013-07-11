@@ -39,6 +39,8 @@
 // indicates if the knight is invincible at the moment
 @property (nonatomic, assign) BOOL invincible;
 
+@property(nonatomic, assign) int jumpCounter;
+
 - (id)initWithKnightPicture;
 - (void)gotHit;
 - (void)jump;

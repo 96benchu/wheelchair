@@ -15,6 +15,7 @@
 @property (nonatomic) CGSize sprite;
 @property (nonatomic) CGPoint pos;
 @property (nonatomic) float scrollSpeed;
+@property (nonatomic) BOOL hit;
 
 +(Truth*) sharedData;
 @end

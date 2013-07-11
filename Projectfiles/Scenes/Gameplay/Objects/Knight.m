@@ -115,7 +115,17 @@
     // can only jump of the floor
     if (self.position.y == [[GameMechanics sharedGameMechanics] floorHeight])
     {
-        self.velocity = ccp(self.velocity.x, 475.f);
+        self.jumpCounter = 0;
+        self.velocity = ccp(self.velocity.x, 325.f);
+    }
+    else
+    {
+        //jump again in midair
+        if(self.jumpCounter < 1)
+        {
+            self.velocity = ccp(self.velocity.x, 270.f);
+            self.jumpCounter++;
+        }
     }
 }
 -(void) move
