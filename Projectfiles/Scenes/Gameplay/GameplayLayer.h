@@ -62,6 +62,9 @@
     int counter5;
     int spawnRate;
     BOOL recent;
+    BOOL nitroOn;
+    BOOL recent2;
+    int counter6;
     
     /* stores the exact distance the knight has ran */
     float gainedDistance;

@@ -114,7 +114,7 @@
     {
         CCARRAY_FOREACH(enemiesOfType, enemy)
         {
-            if(data.scrollSpeed*-2>20)
+            if(data.onRamp == false && data.scrollSpeed*-3/2 > 175)
             {
             // find the first free enemy and respawn it
             if (enemy.visible == NO)
@@ -127,10 +127,10 @@
             }
         }
     } else {
-        if(data.scrollSpeed*-2>20)
+        if(data.onRamp == false && data.scrollSpeed*-3/2 > 175)
         {
 
-                NSLog(@"YEAP2");
+                //NSLog(@"YEAP2");
         // if no enemies of that type existed yet, the enemiesOfType array will be nil and we first need to create one
         enemiesOfType = [[CCArray alloc] init];
         [enemies2 setObject:enemiesOfType forKey:(id<NSCopying>)[Box1 class]];
@@ -142,7 +142,7 @@
     if (!foundAvailableEnemyToSpawn)
     {
 
-        if(data.scrollSpeed*-2>20)
+        if(data.onRamp == false && data.scrollSpeed*-3/2 > 175)
         {
         // initialize an enemy of the provided class
         Box1 *enemy =  [(Box1 *) [[Box1 class] alloc] initWithBoxImage];
@@ -302,18 +302,17 @@
     Knight *knight = [[GameMechanics sharedGameMechanics] knight];
     CCARRAY_FOREACH([batch2 children], box)
     {
-        NSLog(@"done");
+        //NSLog(@"done");
         CGRect bbox = [box boundingBox];
         CGRect knightBoundingBox = [knight boundingBox];
         CGRect knightHitZone = [knight hitZone];
         if (CGRectIntersectsRect(knightHitZone, bbox))
         {
             	
-            return true;;
+            return true;
         }
         else
         {
-            
             return false;
         }
 
@@ -394,7 +393,7 @@
             }
             CCARRAY_FOREACH(enemiesOfType2, enemy2)
             {
-                NSLog(@"success");
+                //NSLog(@"success");
                 if(enemy2.visible == YES)
                 {
                     enemy2.velocity = ccp(data.scrollSpeed, enemy2.velocity.y);
@@ -416,7 +415,7 @@
         }
         if([self checkForBoxCollisions] == TRUE)
         {
-            NSLog(@"hit");
+            //NSLog(@"hit");
             data.hit = [self checkForBoxCollisions];
         }
         else

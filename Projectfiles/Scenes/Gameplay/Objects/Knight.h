@@ -41,6 +41,8 @@
 
 @property(nonatomic, assign) int jumpCounter;
 
+@property(nonatomic, assign) int fuel;
+
 - (id)initWithKnightPicture;
 - (void)gotHit;
 - (void)jump;

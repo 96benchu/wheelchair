@@ -25,6 +25,7 @@
     if (self)
     {
         a=2;
+        self.fuel = 5000;
         // knight is initally not moving
         self.velocity = ccp(0,0);
         self.invincible = FALSE;
@@ -115,15 +116,17 @@
     // can only jump of the floor
     if (self.position.y == [[GameMechanics sharedGameMechanics] floorHeight])
     {
+        self.fuel -=25;
         self.jumpCounter = 0;
-        self.velocity = ccp(self.velocity.x, 325.f);
+        self.velocity = ccp(self.velocity.x, 400.f);
     }
     else
     {
         //jump again in midair
         if(self.jumpCounter < 1)
         {
-            self.velocity = ccp(self.velocity.x, 270.f);
+            self.fuel -=25;
+            self.velocity = ccp(self.velocity.x, 250.f);
             self.jumpCounter++;
         }
     }
