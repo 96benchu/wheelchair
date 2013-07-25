@@ -14,7 +14,7 @@
 -(id)initWithRampImage
 {
     self = [super initWithSpriteFrameName:@"ramp.png"];
-    self.velocity = ccp(-50,0);
+    self.velocity = ccp(0,0);
     [self scheduleUpdate];
     
     return self;
@@ -61,8 +61,8 @@
     self.anchorPoint = ccp(0,0);
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 20;
-	self.position = CGPointMake(1000, 20);
-	self.scale = 1.3;
+	self.position = CGPointMake(1200, 20);
+	self.scale = 1.4;
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
 }

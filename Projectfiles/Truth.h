@@ -16,6 +16,7 @@
 @property (nonatomic) CGPoint pos;
 @property (nonatomic) float scrollSpeed;
 @property (nonatomic) BOOL hit;
-
+@property (nonatomic) int gainedDistance;
+@property (nonatomic) BOOL recent;
 +(Truth*) sharedData;
 @end

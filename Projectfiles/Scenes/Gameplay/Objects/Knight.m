@@ -8,6 +8,7 @@
 
 #import "Knight.h"
 #import "GameMechanics.h"
+#import "Truth.h"
 
 @implementation Knight
 
@@ -25,7 +26,7 @@
     if (self)
     {
         a=2;
-        self.fuel = 5000;
+        self.fuel = 1000000;
         // knight is initally not moving
         self.velocity = ccp(0,0);
         self.invincible = FALSE;
@@ -113,7 +114,10 @@
 
 - (void)jump
 {
+     Truth* data = [Truth sharedData];
     // can only jump of the floor
+    if(data.onRamp == FALSE && data.recent == FALSE)
+    {
     if (self.position.y == [[GameMechanics sharedGameMechanics] floorHeight])
     {
         self.fuel -=25;
@@ -125,10 +129,11 @@
         //jump again in midair
         if(self.jumpCounter < 1)
         {
-            self.fuel -=25;
-            self.velocity = ccp(self.velocity.x, 250.f);
+            self.fuel -=50;
+            self.velocity = ccp(self.velocity.x, 300.f);
             self.jumpCounter++;
         }
+    }
     }
 }
 -(void) move

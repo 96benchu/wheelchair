@@ -17,11 +17,14 @@
 {
     CCSpriteBatchNode* batch;
     CCSpriteBatchNode* batch2;
+    CCSpriteBatchNode* batch3;
     
     // stores all enemies
     NSMutableDictionary* enemies;
     NSMutableDictionary* enemies2;
+    NSMutableDictionary* enemies3;
     BOOL onScreen;
+    BOOL spawned2;
 
     // count the updates (used to determine when monsters should be spawned)
     int updateCount;

@@ -277,6 +277,7 @@
 		62F0C64C174F295B00FB096E /* StoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C64A174F295B00FB096E /* StoreTableViewCell.m */; };
 		62F0C64F174FD3C600FB096E /* CCNode+Autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C64E174FD3C600FB096E /* CCNode+Autolayout.m */; };
 		62F0C652174FDA9100FB096E /* StoreTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */; };
+		A53E049B17989E8C003443D0 /* Coins.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E049A17989E8C003443D0 /* Coins.m */; };
 		A58388EC177CBC8A0059F152 /* Ramps.m in Sources */ = {isa = PBXBuildFile; fileRef = A58388EB177CBC8A0059F152 /* Ramps.m */; };
 		A59EDE8A178C858300DC7EAF /* Box1.m in Sources */ = {isa = PBXBuildFile; fileRef = A59EDE89178C858300DC7EAF /* Box1.m */; };
 		A5AD9B60178232C5005655B8 /* ramp-animations.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5AD9B5F178232C5005655B8 /* ramp-animations.plist */; };
@@ -924,6 +925,8 @@
 		62F0C64E174FD3C600FB096E /* CCNode+Autolayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Autolayout.m"; sourceTree = "<group>"; };
 		62F0C650174FDA9100FB096E /* StoreTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoreTableViewHeaderCell.h; path = Scenes/StoreScene/StoreTableViewHeaderCell.h; sourceTree = "<group>"; };
 		62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableViewHeaderCell.m; path = Scenes/StoreScene/StoreTableViewHeaderCell.m; sourceTree = "<group>"; };
+		A53E049917989E8C003443D0 /* Coins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coins.h; sourceTree = "<group>"; };
+		A53E049A17989E8C003443D0 /* Coins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coins.m; sourceTree = "<group>"; };
 		A58388EA177CBC8A0059F152 /* Ramps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ramps.h; sourceTree = "<group>"; };
 		A58388EB177CBC8A0059F152 /* Ramps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ramps.m; sourceTree = "<group>"; };
 		A59EDE88178C858300DC7EAF /* Box1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box1.h; sourceTree = "<group>"; };
@@ -1824,6 +1827,8 @@
 				A5B840D2178B40B500F941B8 /* NitroButton.h */,
 				A59EDE88178C858300DC7EAF /* Box1.h */,
 				A59EDE89178C858300DC7EAF /* Box1.m */,
+				A53E049917989E8C003443D0 /* Coins.h */,
+				A53E049A17989E8C003443D0 /* Coins.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -3080,6 +3085,7 @@
 				A5AD9B6617824738005655B8 /* Truth.m in Sources */,
 				A5B840D4178B40B500F941B8 /* NitroButton.m in Sources */,
 				A59EDE8A178C858300DC7EAF /* Box1.m in Sources */,
+				A53E049B17989E8C003443D0 /* Coins.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

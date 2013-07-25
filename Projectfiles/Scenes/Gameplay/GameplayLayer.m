@@ -25,6 +25,7 @@
 #import "Spikes.h"
 #import "Ramps.h"
 #import "Truth.h"
+#import "Coins.h"
 
 // defines how many update cycles run, before the missions get an update about the current game state
 #define MISSION_UPDATE_FREQUENCY 10
@@ -51,6 +52,7 @@
  */
 - (void)goOnPopUpButtonClicked:(CCControlButton *)sender;
 - (void)speedUpButtonPressed;
+- (void)jumpButtonPressed;
 @end
 
 @implementation GameplayLayer
@@ -131,10 +133,10 @@
         healthDisplayNode.position = ccp(screenCenter.x, self.contentSize.height - 18);
         
         // add scoreboard entry for coins
-        coinsDisplayNode = [[ScoreboardEntryNode alloc] initWithScoreImage:@"coin.png" fontFile:@"avenir.fnt"];
-        coinsDisplayNode.scoreStringFormat = @"%d";
-        coinsDisplayNode.position = ccp(20, self.contentSize.height - 26);
-        [hudNode addChild:coinsDisplayNode z:MAX_INT-1];
+        //coinsDisplayNode = [[ScoreboardEntryNode alloc] initWithScoreImage:@"coin.png" fontFile:@"avenir.fnt"];
+        //coinsDisplayNode.scoreStringFormat = @"%d";
+        //coinsDisplayNode.position = ccp(20, self.contentSize.height - 26);
+        //[hudNode addChild:coinsDisplayNode z:MAX_INT-1];
         
         // add scoreboard entry for in-app currency
         inAppCurrencyDisplayNode = [[ScoreboardEntryNode alloc] initWithScoreImage:@"coin.png" fontFile:@"avenir.fnt"];
@@ -145,9 +147,20 @@
         
         // add scoreboard entry for points
         pointsDisplayNode = [[ScoreboardEntryNode alloc] initWithScoreImage:nil fontFile:@"avenir24.fnt"];
-        pointsDisplayNode.position = ccp(10, self.contentSize.height - 50);
+        pointsDisplayNode.position = ccp(10, self.contentSize.height - 40);
         pointsDisplayNode.scoreStringFormat = @"%d m";
         [hudNode addChild:pointsDisplayNode z:MAX_INT-1];
+        //add scoreboard entry for spikes
+        
+        spikesDisplayNode = [[ScoreboardEntryNode alloc] initWithScoreImage:nil fontFile:@"avenir24.fnt"];
+        spikesDisplayNode.position = ccp(70, self.contentSize.height - 40);
+        spikesDisplayNode.scoreStringFormat = @"%d m";
+        [hudNode addChild:spikesDisplayNode];
+        spikesDisplayNode2 = [[ScoreboardEntryNode alloc] initWithScoreImage:nil fontFile:@"avenir24.fnt"];
+        spikesDisplayNode2.position = ccp(140, self.contentSize.height - 40);
+        spikesDisplayNode2.scoreStringFormat = @"%d m";
+        [hudNode addChild:spikesDisplayNode2];
+         
         
         // set up the skip ahead menu
         CCSprite *skipAhead = [CCSprite spriteWithFile:@"skipahead.png"];
@@ -170,20 +183,29 @@
         nitro = [[NitroButton alloc] initWithButtonImage];
         [self addChild:nitro];
         nitro.anchorPoint = ccp(0,0);
+        nitro.scale = .5;
+        jumpButtonMenuItem = [CCMenuItemImage itemWithNormalImage:@"button-top.png" selectedImage:@"button-top.png" target:self selector:@selector(jumpButtonPressed)];
+        jumpButtonMenuItem.position = ccp(0,100);
+        jumpButtonMenu = [CCMenu menuWithItems:jumpButtonMenuItem, nil];
+        jumpButtonMenu.position = ccp(0,0);
+        jumpButtonMenu.scale = .5;
+        [hudNode addChild:jumpButtonMenu];
         // add the enemy cache containing all spawned enemies
         [self addChild:[EnemyCache node]];
         //speedUpButton        
         // setup a new gaming session
         [self resetGame];
-        speedUp =3;
+        speedUp =18;
         counter = 0;
         counter2 = 29;
         mult = 10;
-        cap=400;
+        cap=300;
         counter3 = 0;
         num = 3;
         counter4=0;
         counter5=3;
+        counter6=0;
+        counter7 = 59;
         spawnRate = 160;
         recent = false;
         nitroOn = false;
@@ -205,17 +227,16 @@
 {
     [self pauseSchedulerAndActions];
 }
-
+- (void)jumpButtonPressed
+{
+    [knight jump];
+}
 - (void)gameResumed
 {
     [self resumeSchedulerAndActions];
 }
 
 #pragma mark - Reset Game
--(void)speedUpButtonPressed
-{
-    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+50];
-}
 - (void)startGame
 {
     [[GameMechanics sharedGameMechanics] setGameState:GameStateRunning];
@@ -261,14 +282,12 @@
     spikes.position = ccp(20,300);
     spikes.zOrder = 11;
     spikes.rotation = 106;
-    nitro.position = ccp(20,20);
+    nitro.position = ccp(700,100);
    // ramp.position = ccp(480,20);
 
-    // set spwan rate for monsters
-    [[GameMechanics sharedGameMechanics] setSpawnRate:200 forMonsterType:[Ramps class]];
-
-    [[GameMechanics sharedGameMechanics] setSpawnRate:43 forMonsterType:[Box1 class]];
-    [[GameMechanics sharedGameMechanics] setSpawnRate:33 forMonsterType:[Box1 class]];
+    //set spwan rate for monsters
+   [[GameMechanics sharedGameMechanics] setSpawnRate:400 forMonsterType:[Ramps class]];
+    //[[GameMechanics sharedGameMechanics] setSpawnRate:150 forMonsterType:[Coins class]];
     
     // set gravity (used for jumps)
     [[GameMechanics sharedGameMechanics] setWorldGravity:ccp(0.f, -900.f)];
@@ -352,13 +371,15 @@
 - (void)updateRunning:(ccTime)delta
 {
     // distance depends on the current scrolling speed
-    //gainedDistance += (delta * [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]) / 5;
+    gainedDistance2 += (int) (delta * [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX])/5;
     gainedDistance = [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX];
     game.meters = (int) (gainedDistance);
     // update the score display
     pointsDisplayNode.score = game.meters;
     coinsDisplayNode.score = game.score;
     healthDisplayNode.health = knight.hitPoints;
+    spikesDisplayNode.score = spikes.position.x;
+    spikesDisplayNode2.score = spikes.velocity.x;
     Truth* data = [Truth sharedData];
     KKInput* input = [KKInput sharedInput];
     CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
@@ -367,75 +388,51 @@
  
     if(CGRectContainsPoint(buttonArea, pos))
     {
-        
+        NSLog(@"Value of hello = %i", knight.fuel);
         if(knight.fuel > 0)
         {
-            if(nitroOn || recent2)
-            {
-                knight.fuel -= 2;
-                nitroOn = true;
-            if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] < cap)
-            {
-                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] <0)
-                {
-                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+10];
-                }
-                else
-                {
-                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+10];
-                }
-            }   
-            if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]<=20))
-            {
-                if(spikes.velocity.x > 0)
-                {
-                    spikes.velocity = ccp(spikes.velocity.x - 5, spikes.velocity.y);
-                }
-                else
-                {
-                    spikes.velocity = ccp(spikes.velocity.x - 5, spikes.velocity.y);
-                }
-            }
-            }
-            //initial nitro
             if((!nitroOn) && (recent2 == false))
             {
+                
                 recent2 = true;
                 nitroOn = true;
                 knight.fuel -= 100;
-                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] <0)
+                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] <=0)
                 {
+                    
                     if(knight.position.y >20 && data.onRamp == false)
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:150];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:300];
                     }
                     else
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:100];
+                        
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:200];
                     }
                 }
                 else
                 {
                     if(knight.position.y > 20 && data.onRamp == false)
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+300];
+                       
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+500];
                     }
                     else
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+100];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+250];
                     }
                 }
-                if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=10))
+                if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=20))
                 {
                     if(data.onRamp == FALSE)
                     {
                         if(spikes.velocity.x > 0)
                         {
-                            spikes.velocity = ccp(-75, spikes.velocity.y);
+                            spikes.velocity = ccp(-25, spikes.velocity.y);
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x - 50, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x - 15, spikes.velocity.y);
                         }
                     }
                     else
@@ -446,12 +443,56 @@
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x - 10, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x - 25, spikes.velocity.y);
                         }
+                    }
+                }
+                else
+                {
+                    if(data.onRamp == true)
+                    {
+                        spikes.velocity = ccp(-5, spikes.velocity.y);
+                    }
+                    else
+                    {
+                        spikes.velocity = ccp(-10, spikes.velocity.y);
                     }
                 }
             }
             
+            if(nitroOn || recent2)
+            {
+                
+                knight.fuel -= 5;
+                nitroOn = true;
+                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] < cap)
+                {
+                    if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] >0)
+                    {
+                        //NSLog(@"WORKS");
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+10];
+                    }
+                    else
+                    {
+                       // NSLog(@"WORKS");
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+10];
+                    }
+                }   
+                if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=20))
+                {
+                    if(spikes.velocity.x > 0)
+                    {
+                        spikes.velocity = ccp(spikes.velocity.x - 5, spikes.velocity.y);
+                    }
+                    else
+                    {
+                        spikes.velocity = ccp(spikes.velocity.x - 5, spikes.velocity.y);
+                    }
+                }
+        
+                //initial nitro
+             
+            }
         }
     }
     else
@@ -461,7 +502,7 @@
     if(recent2 == true)
     {
         counter6++;
-        if(counter6 == 180)
+        if(counter6 == 90)
         {
             recent2 = false;
             counter6=0;
@@ -537,26 +578,53 @@
         switch (dir)
         {
             //if swipe
-            case KKSwipeGestureDirectionRight:
+            case KKSwipeGestureDirectionDown:
                 //if falling behind
-                    if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] <= cap)
-                    {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+20];
+                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] <= cap)
+                {
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+cap/9];
+                }
 
-                    }
-                    counter5+=5;
-                    //NSLog([NSString stringWithFormat:@"%i",counter5]);
-                    //failsafe
-                    if(knight.velocity.x>0)
+                //NSLog([NSString stringWithFormat:@"%i",counter5]);
+                //failsafe
+                if(knight.velocity.x>0)
+                {
+                    knight.velocity = CGPointMake(0, knight.velocity.y);
+                }
+                if(spikes.position.x>= -151)
+                {
+                    if(spikes.velocity.x>=-40)
                     {
-                        knight.velocity = CGPointMake(0, knight.velocity.y);
+                        if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>30)
+                        {
+                            if(spikes.velocity.x < 5)
+                            {
+                                spikes.velocity = ccp(spikes.velocity.x-6,spikes.velocity.y);
+                            }
+                            else
+                            {
+                                spikes.velocity = ccp(spikes.velocity.x -9,spikes.velocity.y);
+                            }
+                        }
+                        else
+                        {
+                            spikes.velocity = ccp(spikes.velocity.x-1, spikes.velocity.y);
+                        }
                     }
+                }
+                else
+                {
+                    spikes.position = ccp(-150,300);
+
+                }
                 break;
                 
-            case KKSwipeGestureDirectionLeft:
-                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-20];
             case KKSwipeGestureDirectionUp:
-                [knight jump];
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-30];
+                break;
+            case KKSwipeGestureDirectionRight:
+
+                break;
             default:
                 break;
         }
@@ -653,7 +721,7 @@
         if(((counter==5) || (counter ==10) || (counter ==15)))
         {
             //decreasbackground speed
-            double frac = 350/cap;
+            double frac = 300/(300+(cap-300)/3);
             if(counter==15)
             {
                 if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
@@ -661,17 +729,17 @@
                     [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*frac];
                 }
             }
-                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
-                {
-                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/40];
-                }
-            if(spikes.position.x<50)
+            if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/6, spikes.velocity.y);
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/80];
+            }
+            if(spikes.velocity.x<5)
+            {
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/40, spikes.velocity.y);
             }
             else
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/10, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/70, spikes.velocity.y);
             }
             recent = true;
             
@@ -685,7 +753,8 @@
         {
             knight.rotation = 0;
             knight.velocity = ccp(knight.velocity.x, [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*z+knight.velocity.y+900.f);
-            recent = false;	
+            recent = false;
+            data.recent = recent;
         }
     }
     //decrease background speed
@@ -694,7 +763,7 @@
     {
         if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
         {
-                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/25];
+            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/40];
         }
         // if there's a ramp
 
@@ -706,15 +775,27 @@
             }
             else
             {
-                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/15];
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/40];
             }
         }
         counter = 0;
         if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]) > cap && (data.onRamp == false))
         {
             double decrease = [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] - cap;
-            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] - decrease/1.5];
+            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] - decrease/1.75];
         }
+        if(spikes.velocity.x <30)
+        {
+            if(spikes.velocity.x <5)
+            {
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/4, spikes.velocity.y);
+            }
+            else
+            {
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/7, spikes.velocity.y);
+            }
+        }
+        
     }
      
     //spikes moving
@@ -724,7 +805,9 @@
     
     if(counter2==30)
     {
-       NSLog([NSString stringWithFormat:@"%i",counter5]);
+        
+        
+       /*NSLog([NSString stringWithFormat:@"%i",counter5]);
         //spike speedUp
         if(counter5> speedUp)
            {
@@ -751,7 +834,8 @@
                }
                else
                {
-                   
+                   spikes.position = ccp(-300,300);
+                   spikes.velocity = ccp(0,0);
                }
            }
         //spike slowdown
@@ -761,75 +845,90 @@
             {
                 if(spikes.position.x < 50)
                 {
-                    spikes.velocity = ccp((speedUp-counter5)*2.5+spikes.velocity.x,spikes.velocity.y);
+                    spikes.velocity = ccp((speedUp-counter5)*2+spikes.velocity.x,spikes.velocity.y);
                 }
                 else
                 {
-                    spikes.velocity = ccp(((speedUp)*1/2-counter5)*2.5,spikes.velocity.y);
+                    spikes.velocity = ccp(((speedUp)*1/2-counter5)*2+spikes.velocity.x,spikes.velocity.y);
                 }
             }
-        }
+        }*/
         //if on ramp and very slow, in case of stalling on ramp and no movement
         if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]<=30) && (data.onRamp==true))
         {
-            if(spikes.position.x < 50)
+            if(spikes.velocity.x <0)
             {
-                spikes.velocity = ccp(6,spikes.velocity.y);
+                if(spikes.position.x < 50)
+                {
+                    spikes.velocity = ccp(5,spikes.velocity.y);
+                }
+                else
+                {
+                    spikes.velocity = ccp(3 ,spikes.velocity.y);
+                }
             }
             else
             {
-                spikes.velocity = ccp(3 ,spikes.velocity.y);
+                if(spikes.position.x < 50)
+                {
+                    spikes.velocity = ccp(4 +spikes.velocity.x,spikes.velocity.y);
+                }
+                else
+                {
+                    spikes.velocity = ccp(2 +spikes.velocity.x,spikes.velocity.y);
+                }
             }
         }
         //gradual speedup
-        if(speedUp<25)
+        if(speedUp<24)
         {
-            speedUp+=.2;
+            speedUp+=.025;
         }
-        counter2=0;
+        
         counter5=0;
     }
-    if(counter3 == 300)
+    if(counter2 == 30)
     {
-        if(cap<700)
+        if(cap<500)
         {
-            cap+=25;
+            cap+=1;
         }
+        counter2=0;	
     }
     //large speedUp
     if(counter3 == 600)
     {
-        if(speedUp<25)
+        if(speedUp<24)
         {
             speedUp+=5;
         }
-        if(cap<700)
+        if(cap<500)
         {
-            cap+=50;
+            cap+=40;
         }
         counter3=0;
         if(spawnRate>100)
         {
             spawnRate = spawnRate - 40;
         }
-        [[GameMechanics sharedGameMechanics] setSpawnRate:spawnRate forMonsterType:[Ramps class]];
+        counter3 = 0;
 
     }
     //failsafe
-    if(spikes.position.x<-300)
+    if(spikes.position.x<-150)
     {
         //NSLog(@"WHY DONT U WORK");
-        spikes.velocity = ccp(0,0);
-        spikes.position = ccp(-300,300);
+        spikes.position = ccp(-150,300);
     }
     //ram velocity
-    data.scrollSpeed = -2/3*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX];
+    data.scrollSpeed = -1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX];
     if(data.hit)
     {
         
         [knight gotHit];
 
     }
+    
     if(knight.position.x < spikes.position.x)
     {
         knight.hitPoints--;
@@ -837,13 +936,16 @@
         knight.hitPoints--;
         knight.hitPoints--;
         knight.hitPoints--;
+        knight.hitPoints--;
     }
-     
-
-
-
-
-   
+    data.gainedDistance = gainedDistance2;
+    counter7++;
+    if(counter7==60)
+    {   int rand = arc4random()%40+80;
+        [[GameMechanics sharedGameMechanics] setSpawnRate:rand forMonsterType:[Box1 class]];
+        counter7 = 0;
+    }
+   //NSLog(@"Value of hello = %f", speedUp);
 }
 
 
@@ -1094,5 +1196,6 @@
     [inGameStore removeFromParent];
     [self presentGoOnPopUp];
 }
+
 
 @end

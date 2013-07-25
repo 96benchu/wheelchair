@@ -26,6 +26,8 @@
     ScoreboardEntryNode *coinsDisplayNode;
     ScoreboardEntryNode *pointsDisplayNode;
     ScoreboardEntryNode *inAppCurrencyDisplayNode;
+    ScoreboardEntryNode *spikesDisplayNode;
+    ScoreboardEntryNode *spikesDisplayNode2;
     // groups health, coins and points display
     CCNode *hudNode;
     
@@ -48,6 +50,8 @@
     Spikes* spikes;
     Ramps* ramp;
     /* Jump button */
+    CCMenu *jumpButtonMenu;
+    CCMenuItemSprite *jumpButtonMenuItem;
     NitroButton *nitro;
     /* used to trigger events, that need to run every X update cycles*/
     int updateCount;
@@ -65,9 +69,10 @@
     BOOL nitroOn;
     BOOL recent2;
     int counter6;
-    
+    int counter7;
     /* stores the exact distance the knight has ran */
     float gainedDistance;
+    int gainedDistance2;
 }
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.
