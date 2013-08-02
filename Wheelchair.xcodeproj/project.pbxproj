@@ -571,6 +571,10 @@
 		A5AFCCB9177A0FF0007C16B6 /* title_highscore.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCB99177A0FF0007C16B6 /* title_highscore.png */; };
 		A5AFCCBA177A0FF0007C16B6 /* title_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCB9A177A0FF0007C16B6 /* title_shop.png */; };
 		A5AFCCBB177A0FF0007C16B6 /* title_upgrades.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCB9B177A0FF0007C16B6 /* title_upgrades.png */; };
+		A5B4152F17A9C3DE00D65905 /* Box2.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B4152E17A9C3DE00D65905 /* Box2.m */; };
+		A5B4153217A9C40000D65905 /* Box3.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B4153117A9C40000D65905 /* Box3.m */; };
+		A5B79F3D17A723E90073BA09 /* TutRamp.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B79F3C17A723E80073BA09 /* TutRamp.m */; };
+		A5B79F4017A723FD0073BA09 /* TutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B79F3F17A723FA0073BA09 /* TutBox.m */; };
 		A5B840D4178B40B500F941B8 /* NitroButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B840D3178B40B500F941B8 /* NitroButton.m */; };
 		A5E5A07A178E155900B66201 /* box1-animations.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5E5A079178E155900B66201 /* box1-animations.plist */; };
 		DC65615C13A969B600A7AC53 /* libbox2d-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615013A969B600A7AC53 /* libbox2d-ios.a */; };
@@ -1224,6 +1228,14 @@
 		A5AFCB99177A0FF0007C16B6 /* title_highscore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_highscore.png; sourceTree = "<group>"; };
 		A5AFCB9A177A0FF0007C16B6 /* title_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_shop.png; sourceTree = "<group>"; };
 		A5AFCB9B177A0FF0007C16B6 /* title_upgrades.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_upgrades.png; sourceTree = "<group>"; };
+		A5B4152D17A9C3DD00D65905 /* Box2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2.h; sourceTree = "<group>"; };
+		A5B4152E17A9C3DE00D65905 /* Box2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Box2.m; sourceTree = "<group>"; };
+		A5B4153017A9C40000D65905 /* Box3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box3.h; sourceTree = "<group>"; };
+		A5B4153117A9C40000D65905 /* Box3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Box3.m; sourceTree = "<group>"; };
+		A5B79F3B17A723E80073BA09 /* TutRamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutRamp.h; sourceTree = "<group>"; };
+		A5B79F3C17A723E80073BA09 /* TutRamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutRamp.m; sourceTree = "<group>"; };
+		A5B79F3E17A723F90073BA09 /* TutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutBox.h; sourceTree = "<group>"; };
+		A5B79F3F17A723FA0073BA09 /* TutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutBox.m; sourceTree = "<group>"; };
 		A5B840D2178B40B500F941B8 /* NitroButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NitroButton.h; sourceTree = "<group>"; };
 		A5B840D3178B40B500F941B8 /* NitroButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NitroButton.m; sourceTree = "<group>"; };
 		A5E5A079178E155900B66201 /* box1-animations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "box1-animations.plist"; sourceTree = "<group>"; };
@@ -1825,10 +1837,18 @@
 				A58388EB177CBC8A0059F152 /* Ramps.m */,
 				A5B840D3178B40B500F941B8 /* NitroButton.m */,
 				A5B840D2178B40B500F941B8 /* NitroButton.h */,
-				A59EDE88178C858300DC7EAF /* Box1.h */,
-				A59EDE89178C858300DC7EAF /* Box1.m */,
 				A53E049917989E8C003443D0 /* Coins.h */,
 				A53E049A17989E8C003443D0 /* Coins.m */,
+				A5B79F3B17A723E80073BA09 /* TutRamp.h */,
+				A5B79F3C17A723E80073BA09 /* TutRamp.m */,
+				A5B79F3E17A723F90073BA09 /* TutBox.h */,
+				A5B79F3F17A723FA0073BA09 /* TutBox.m */,
+				A59EDE88178C858300DC7EAF /* Box1.h */,
+				A59EDE89178C858300DC7EAF /* Box1.m */,
+				A5B4152D17A9C3DD00D65905 /* Box2.h */,
+				A5B4152E17A9C3DE00D65905 /* Box2.m */,
+				A5B4153017A9C40000D65905 /* Box3.h */,
+				A5B4153117A9C40000D65905 /* Box3.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -3086,6 +3106,10 @@
 				A5B840D4178B40B500F941B8 /* NitroButton.m in Sources */,
 				A59EDE8A178C858300DC7EAF /* Box1.m in Sources */,
 				A53E049B17989E8C003443D0 /* Coins.m in Sources */,
+				A5B79F3D17A723E90073BA09 /* TutRamp.m in Sources */,
+				A5B79F4017A723FD0073BA09 /* TutBox.m in Sources */,
+				A5B4152F17A9C3DE00D65905 /* Box2.m in Sources */,
+				A5B4153217A9C40000D65905 /* Box3.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,5 +18,6 @@
 @property (nonatomic) BOOL hit;
 @property (nonatomic) int gainedDistance;
 @property (nonatomic) BOOL recent;
+@property (nonatomic) BOOL collect;
 +(Truth*) sharedData;
 @end

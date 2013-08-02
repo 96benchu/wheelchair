@@ -1,16 +1,16 @@
 //
-//  Box1.m
+//  Box2.m
 //  Wheelchair
 //
-//  Created by Ben on 09/07/2013.
+//  Created by Ben on 31/07/2013.
 //  Copyright (c) 2013 MakeGamesWithUs Inc. All rights reserved.
 //
 
-#import "Box1.h"
+#import "Box2.h"
 #import "GameMechanics.h"
-@implementation Box1
-@synthesize velocity;
 
+@implementation Box2
+@synthesize velocity;
 -(id)initWithBoxImage
 {
     self = [super initWithSpriteFrameName:@"basicbarrell.png"];
@@ -32,7 +32,8 @@
 	float yPos = 100;
 	self.position = CGPointMake(screenHeight +100, 60);
 	self.rotation = 90;
-    self.scale = .3;
+    self.scaleX = .3;
+    self.scaleY = .8;
     self.velocity = ccp(-100, 0);
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
@@ -55,4 +56,6 @@
     [self updateRunningMode:delta];
     
 }
+
+
 @end

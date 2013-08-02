@@ -18,7 +18,9 @@
 #import "Ramps.h"
 #import "NitroButton.h"
 #import "Box1.h"
-
+#import "TutRamp.h"
+#import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @interface GameplayLayer : CCLayer <StoreDisplayNeedsUpdate, PauseScreenDelegate>
 {
@@ -48,11 +50,22 @@
     Game *game;
     Knight *knight;
     Spikes* spikes;
-    Ramps* ramp;
+    TutRamp* ramp;
+    CCLabelTTF *label;
+    CCLabelTTF *label2;
+    CCLabelTTF *label3;
+    CCLabelTTF *label4;
+    CCLabelTTF *label5;
+    CCLabelTTF *label6;
+    CCLabelTTF *jumpLabel;
+    CCLabelTTF *nitroLabel;
+    CCLabelTTF *nitroLabel2;
     /* Jump button */
     CCMenu *jumpButtonMenu;
     CCMenuItemSprite *jumpButtonMenuItem;
     NitroButton *nitro;
+    CCSprite* arrowButton;
+    CCSprite* arrowButton2;
     /* used to trigger events, that need to run every X update cycles*/
     int updateCount;
     int counter4;
@@ -70,9 +83,24 @@
     BOOL recent2;
     int counter6;
     int counter7;
+    int counter8;
+    int counter9;
+    float capDivider;
+    BOOL recent4;
+    BOOL text1;
     /* stores the exact distance the knight has ran */
     float gainedDistance;
+    BOOL recent3;
+    BOOL recent5;
     int gainedDistance2;
+    int counter10;
+    BOOL text2;
+    BOOL text21;
+    BOOL recent31;
+    BOOL text3;
+    BOOL text31;
+    BOOL text4;
+    BOOL text41;
 }
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.

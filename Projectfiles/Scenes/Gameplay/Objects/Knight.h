@@ -43,6 +43,8 @@
 
 @property(nonatomic, assign) int fuel;
 
+@property(nonatomic, assign) int coins;
+
 - (id)initWithKnightPicture;
 - (void)gotHit;
 - (void)jump;

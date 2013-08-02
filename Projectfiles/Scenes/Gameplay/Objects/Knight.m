@@ -26,7 +26,8 @@
     if (self)
     {
         a=2;
-        self.fuel = 1000000;
+        self.fuel = 5000;
+        self.visible = YES;
         // knight is initally not moving
         self.velocity = ccp(0,0);
         self.invincible = FALSE;
@@ -114,6 +115,8 @@
 
 - (void)jump
 {
+    if(self.fuel > 0)
+    {
      Truth* data = [Truth sharedData];
     // can only jump of the floor
     if(data.onRamp == FALSE && data.recent == FALSE)
@@ -133,6 +136,7 @@
             self.velocity = ccp(self.velocity.x, 300.f);
             self.jumpCounter++;
         }
+    }
     }
     }
 }
