@@ -8,6 +8,7 @@
 
 #import "Ramps.h"
 #import "GameMechanics.h"
+#import "Truth.h"
 @implementation Ramps
 @synthesize velocity;
 
@@ -52,12 +53,13 @@
            self.col = false;
        }
 }
-- (void)spawn:(int)gainedDistance
+- (void)spawn
 {
-
+    Truth *data = [Truth sharedData];
 	// Select a spawn location just outside the right side of the screen, with random y position
 	//CGRect screenRect = [[CCDirector sharedDirector] screenRect];
-    double scaled;
+    float scaled;
+    NSLog(@"Value of hello = %i", data.gainedDistance);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
@@ -66,30 +68,31 @@
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 20;
 	self.position = CGPointMake(screenHeight+100, 20);
-    if(gainedDistance<750)
+    if(data.gainedDistance<500)
     {
-        int rand = arc4random()%2+10;
-        scaled = rand/10;
+        scaled = .9;
     }
-    else if(gainedDistance>=750 && gainedDistance<=1500)
+    else if(data.gainedDistance>=750 && data.gainedDistance<=1200)
     {
-        int rand = arc4random()%2+11;
-        scaled = rand/10;
+        
+        double rand = arc4random()%1+20;
+        scaled = rand/20;
     }
-    else if(gainedDistance>=1500 && gainedDistance<=4000)
+    else if(data.gainedDistance>=1200 && data.gainedDistance<=2000)
     {
-        int rand = arc4random()%2+12;
-        scaled = rand/10;
+        double rand = arc4random()%1+22;
+        scaled = rand/20;
     }
-    else if(gainedDistance>=4000 && gainedDistance<=6500)
+    else if(data.gainedDistance>=2000 && data.gainedDistance<=3000)
     {
-        int rand = arc4random()%2+13;
-        scaled = rand/10;
+        NSLog(@"itisdone");
+        double rand = arc4random()%1+24;
+        scaled = rand/20;
     }
     else
     {
-        int rand = arc4random()%2+14;
-        scaled = rand/10;
+        double rand = arc4random()%1+28;
+        scaled = rand/20;
     }
     
 	self.scale = scaled;

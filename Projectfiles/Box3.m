@@ -10,7 +10,7 @@
 
 @implementation Box3
 @synthesize velocity;
--(id)initWithBoxImage
+-(id)initWithBox3Image
 {
     self = [super initWithSpriteFrameName:@"basicbarrell.png"];
     [self scheduleUpdate];
@@ -29,11 +29,11 @@
     self.anchorPoint = ccp(0,0);
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 100;
-	self.position = CGPointMake(screenHeight +100, 60);
+	self.position = CGPointMake(screenHeight +100, 85);
 	self.rotation = 90;
-    self.scaleX = .3;
-    self.scaleY = .8;
-    self.velocity = ccp(-100, 0);
+    self.scaleX = .45;
+    self.scaleY = .3;
+    self.velocity = ccp(-0, 0);
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
 }

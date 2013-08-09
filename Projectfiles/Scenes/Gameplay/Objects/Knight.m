@@ -26,7 +26,7 @@
     if (self)
     {
         a=2;
-        self.fuel = 5000;
+        self.fuel = 10000;
         self.visible = YES;
         // knight is initally not moving
         self.velocity = ccp(0,0);
@@ -123,7 +123,7 @@
     {
     if (self.position.y == [[GameMechanics sharedGameMechanics] floorHeight])
     {
-        self.fuel -=25;
+        //self.fuel -=10;
         self.jumpCounter = 0;
         self.velocity = ccp(self.velocity.x, 400.f);
     }
@@ -132,7 +132,7 @@
         //jump again in midair
         if(self.jumpCounter < 1)
         {
-            self.fuel -=50;
+            //self.fuel -=10;
             self.velocity = ccp(self.velocity.x, 300.f);
             self.jumpCounter++;
         }

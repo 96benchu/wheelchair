@@ -20,7 +20,7 @@ local config =
 		FirstSceneClassName = "GameplayLayer",
 
 		MaxFrameRate = 60,
-		DisplayFPS = NO,
+		DisplayFPS = YES,
 
 		EnableUserInteraction = YES,
 		EnableMultiTouch = YES,

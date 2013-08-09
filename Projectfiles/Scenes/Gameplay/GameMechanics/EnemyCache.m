@@ -13,7 +13,8 @@
 #import "Knight.h"
 #import "Truth.h"
 #import "Coins.h"
-
+#import "Box3.h"
+#import "Box2.h"
 
 #define ENEMY_MAX 100
 
@@ -129,10 +130,10 @@
         }
     }
 }
-/*
+
 -(void) spawnEnemyOfType5
 {
-    CCArray* enemiesOfType = [enemies4 objectForKey:[Box3 class]];
+    CCArray* enemiesOfType = [enemies5 objectForKey:[Box3 class]];
     Box3* enemy;
     Truth* data = [Truth sharedData];
     BOOL foundAvailableEnemyToSpawn = FALSE;
@@ -174,12 +175,12 @@
         {
             //NSLog(@"Spawn2");
             // initialize an enemy of the provided class
-            Box3 *enemy =  [(Box3 *) [[Box3 class] alloc] initWithBoxImage];
+            Box3 *enemy =  [(Box3*) [[Box3 class] alloc] initWithBox3Image];
             [enemy spawn];
             [enemiesOfType addObject:enemy];
             
             [batch5 addChild:enemy];
-            foundEnemy2 = true;
+            foundEnemy5 = true;
         }
     }
     
@@ -227,18 +228,19 @@
         
         if((data.onRamp == false) && (-1*data.scrollSpeed > 150))
         {
+            NSLog(@"done");
             //NSLog(@"Spawn2");
             // initialize an enemy of the provided class
-            Box2 *enemy =  [(Box2 *) [[Box2 class] alloc] initWithBoxImage];
+            Box2 *enemy =  [(Box2 *) [[Box2 class] alloc] initWithBox2Image];
             [enemy spawn];
             [enemiesOfType addObject:enemy];
             
             [batch4 addChild:enemy];
-            foundEnemy2 = true;
+            foundEnemy4 = true;
         }
     }
     
-}*/
+}
 
 -(void) spawnEnemyOfType2
 {
@@ -262,6 +264,10 @@
                     foundAvailableEnemyToSpawn = TRUE;
                     break;
                 }
+            }
+            else
+            {
+                spawned2=false;
             }
         }
     } else {
@@ -291,10 +297,12 @@
             
             [batch2 addChild:enemy];
             foundEnemy2 = true;
+            
         }
     }
     
 }
+/*
 -(void) spawnEnemyOfType3
 {
     CCArray* enemiesOfType = [enemies3 objectForKey:[Coins class]];
@@ -311,14 +319,14 @@
             count++;
         }
     }
-    if(count <4)
+    if(count <12)
     {
         count = 0;
     }
     // if the enemiesOfType array exists, iterate over all already existing enemies of the provided type and check if one of them can be respawned
     if (enemiesOfType != nil && count == 4)
     {
-        NSLog(@"Spawn1");
+        //NSLog(@"Spawn1");
         CCARRAY_FOREACH(enemiesOfType, enemy)
         {
 
@@ -341,7 +349,23 @@
                 [enemy spawn:screenHeight+xloc:100];
                 xloc+=20;
             }
+            for(int i = 0; i<6; i++)
+            {
+                CGRect screenRect = [[UIScreen mainScreen] bounds];
+                CGFloat screenWidth = screenRect.size.width;
+                CGFloat screenHeight = screenRect.size.height;
+                [enemy spawn:screenHeight+xloc:100];
+                xloc+=20;
+            }
             xloc=0;
+            for(int i = 0; i<6; i++)
+            {
+                CGRect screenRect = [[UIScreen mainScreen] bounds];
+                CGFloat screenWidth = screenRect.size.width;
+                CGFloat screenHeight = screenRect.size.height;
+                [enemy spawn:screenHeight+xloc:200];
+            }
+            
             
         }
         
@@ -371,25 +395,57 @@
         Coins*enemy2 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
         Coins*enemy3 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
         Coins*enemy4 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
-        
+        Coins*enemy5 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy6 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy7 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy8 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy9 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy10 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy11=  [(Coins *) [[Coins class] alloc] initWithCoinImage];
+        Coins*enemy12 =  [(Coins *) [[Coins class] alloc] initWithCoinImage];
         [enemy spawn:screenHeight +100 :100];
         [enemy2 spawn:screenHeight +120 :100];
         [enemy3 spawn:screenHeight +140 :100];
         [enemy4 spawn:screenHeight +160:100];
+        [enemy5 spawn:screenHeight +180 :100];
+        [enemy6 spawn:screenHeight +200 :100];
+        [enemy7 spawn:screenHeight +100 :200];
+        [enemy8 spawn:screenHeight +120 :200];
+        [enemy9 spawn:screenHeight +140 :200];
+        [enemy10 spawn:screenHeight +160 :200];
+        [enemy11 spawn:screenHeight +180 :200];
+        [enemy12 spawn:screenHeight +200 :200];
+     
 
         [enemiesOfType addObject:enemy];
         [enemiesOfType addObject:enemy2];
         [enemiesOfType addObject:enemy3];
         [enemiesOfType addObject:enemy4];
+        [enemiesOfType addObject:enemy5];
+        [enemiesOfType addObject:enemy6];
+        [enemiesOfType addObject:enemy7];
+        [enemiesOfType addObject:enemy8];
+        [enemiesOfType addObject:enemy9];
+        [enemiesOfType addObject:enemy10];
+        [enemiesOfType addObject:enemy11];
+        [enemiesOfType addObject:enemy12];
 
         [batch3 addChild:enemy];
         [batch3 addChild:enemy2];
         [batch3 addChild:enemy3];
         [batch3 addChild:enemy4];
+        [batch3 addChild:enemy5];
+        [batch3 addChild:enemy6];
+        [batch3 addChild:enemy7];
+        [batch3 addChild:enemy8];
+        [batch3 addChild:enemy9];
+        [batch3 addChild:enemy10];
+        [batch3 addChild:enemy11];
+        [batch3 addChild:enemy12];
         foundEnemy3 = TRUE;
     }
 
-}
+}*/
  
 -(void) spawnEnemyOfType:(Class)enemyTypeClass
 {
@@ -428,11 +484,13 @@
                 if(onScreen==false)
                 {
                     //NSLog(@"YEAP2");
-                    [enemy spawn:data.gainedDistance];
+                    [enemy spawn];
                 }
                 // remember, that we will not need to create a new enemy
                 foundAvailableEnemyToSpawn = TRUE;
+                spawned2=false;
                 break;
+                
             }
         }
     }
@@ -454,19 +512,20 @@
             // initialize an enemy of the provided class
             Ramps *enemy =  [(Ramps *) [enemyTypeClass alloc] initWithRampImage];
             //Box1 *enemy = [(Box1 *) [enemyTypeClass alloc] initWithBoxImage];
-            [enemy spawn:data.gainedDistance];
+            [enemy spawn];
 
             [enemiesOfType addObject:enemy];
                 
 
             [batch addChild:enemy];
             foundEnemy1 = true;
-             NSLog(@"done");
+             
         }
 
     }
     //NSLog(@"NOPE");
     onScreen = false;
+    spawned2=false;
     
 }
 
@@ -538,6 +597,8 @@
 -(BOOL) checkForBoxCollisions
 {
     Box1 *box;
+    Box2 *box2;
+    Box3 *box3;
     Knight *knight = [[GameMechanics sharedGameMechanics] knight];
     CCARRAY_FOREACH([batch2 children], box)
     {
@@ -552,11 +613,40 @@
            // NSLog(@"done");
             return true;
         }
-        else
+
+
+    }
+    CCARRAY_FOREACH([batch4 children], box2)
+    {
+        //NSLog(@"done");
+        CGRect bbox = [box2 boundingBox];
+        CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)+60,CGRectGetMinY(bbox), CGRectGetWidth(bbox)-65, CGRectGetHeight(bbox)-10);
+        //CGRect bbox3 = CGRectMake(knight.position.x, knight.position.y, knight.height.x, knight.contentSize.y);
+        CGRect knightBoundingBox = [knight boundingBox];
+        CGRect knightHitZone = [knight hitZone];
+        if (CGRectIntersectsRect(knightHitZone, bbox2))
         {
-            return false;
+            // NSLog(@"done");
+            return true;
         }
 
+        
+    }
+    CCARRAY_FOREACH([batch5 children], box3)
+    {
+        //NSLog(@"done");
+        CGRect bbox = [box3 boundingBox];
+        CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)+10,CGRectGetMinY(bbox), CGRectGetWidth(bbox)-10, CGRectGetHeight(bbox)-25);
+        //CGRect bbox3 = CGRectMake(knight.position.x, knight.position.y, knight.height.x, knight.contentSize.y);
+        CGRect knightBoundingBox = [knight boundingBox];
+        CGRect knightHitZone = [knight hitZone];
+        if (CGRectIntersectsRect(knightHitZone, bbox2))
+        {
+            // NSLog(@"done");
+            return true;
+        }
+
+        
     }
     return false;
 }
@@ -606,9 +696,13 @@
         CCArray* enemiesOfType = [enemies objectForKey:[Ramps class]];
         CCArray* enemiesOfType2 = [enemies2 objectForKey:[Box1 class]];
         CCArray* enemiesOfType3 = [enemies3 objectForKey:[Coins class]];
+        CCArray* enemiesOfType4 = [enemies4 objectForKey:[Box2 class]];
+        CCArray* enemiesOfType5 = [enemies5 objectForKey:[Box3 class]];
         Ramps* enemy;
         Box1* enemy2;
         Coins *enemy3;
+        Box2* enemy4;
+        Box3* enemy5;
         for (Class monsterTypeClass in monsterTypes)
         {
             // we get the spawn frequency for this specific monster type
@@ -622,7 +716,7 @@
             //else
             //{
             // if the updateCount reached the spawnFrequency we spawn a new enemy
-            if ((data.gainedDistance % spawnFrequency >= 0 && data.gainedDistance %spawnFrequency <= 10) )
+            if (((data.gainedDistance % spawnFrequency >= 0) && (data.gainedDistance %spawnFrequency <= 15)))
             {
               
                 spawned2 = true;
@@ -635,16 +729,21 @@
                 else if(monsterTypeClass == [Coins class])
                 {
                     BOOL same = FALSE;
-                    if (enemiesOfType != nil)
+                    if (enemiesOfType3 != nil)
                     {
                         
                         CCARRAY_FOREACH(enemiesOfType, enemy);
                         {
+                            if(enemy.visible)
+                            {
                             CGRect bbox = [enemy boundingBox];
-                            CGRect spawned = CGRectMake(screenHeight+100, 20, 200, 300);
+                            CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-600,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+800, CGRectGetHeight(bbox));
+                            CGRect spawned = CGRectMake(screenHeight+100, 20,400, 400);
+                        
                             if(CGRectIntersectsRect(bbox, spawned))
                             {
                                 same = true;
+                            }
                             }
                             
                         }
@@ -652,62 +751,280 @@
                         {
                             if(enemy2.visible == YES)
                             {
-                            CGRect bbox = [enemy2 boundingBox];
-                            CGRect spawned = CGRectMake(screenHeight+100, 20, 200,300);
-                            
-                            if(CGRectIntersectsRect(bbox, spawned))
-                            {
-                                same = true;
-                            }
+                                CGRect bbox = [enemy2 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 400,400);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-300,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+300, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox, spawned))
+                                {
+                                    same = true;
+                                }
                             }
                         }
-                 
+                        
+                        CCARRAY_FOREACH(enemiesOfType4,enemy4);
+                        {
+                            if(enemy4.visible == YES)
+                            {
+                                CGRect bbox = [enemy4 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 400,400);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-100,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+100, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                        CCARRAY_FOREACH(enemiesOfType5,enemy5);
+                        {
+                            if(enemy5.visible == YES)
+                            {
+                                CGRect bbox = [enemy5 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 400,400);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-300,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+300, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+
                         
                     }
                     if(same == FALSE)
                     {
                         //randomly spawn a set of coins
                         //NSLog(@"spawn");
-                        [self spawnEnemyOfType3];
+                        //[self spawnEnemyOfType3];
                         spawned2 = false;
                     }
 
                 }
-                else
+                else if(monsterTypeClass == [Box2 class])
                 {
-                    BOOL same2 = FALSE;
-                    if (enemiesOfType != nil)
+                    BOOL same = FALSE;
+                    if (enemiesOfType4 != nil)
                     {
                         
                         CCARRAY_FOREACH(enemiesOfType, enemy);
                         {
-                            if(enemy.visible == YES)
+                            if(enemy.visible)
                             {
                             CGRect bbox = [enemy boundingBox];
-                            CGRect spawned = CGRectMake(screenHeight + 100, 20, 120, 80);
-                            if(CGRectIntersectsRect(bbox, spawned))
+                            CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-1500,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+2000, CGRectGetHeight(bbox));
+                            CGRect spawned = CGRectMake(screenHeight+100, 20,400, 200);
+                            if(CGRectIntersectsRect(bbox2, spawned))
                             {
-                                same2 = true;
+                                same = true;
                             }
                             }
+                            
+                        }
+                        CCARRAY_FOREACH(enemiesOfType2,enemy2);
+                        {
+                            if(enemy2.visible == YES)
+                            {
+                                CGRect bbox = [enemy2 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 400,200);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-800,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+1200, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox2, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                        
+                        CCARRAY_FOREACH(enemiesOfType3,enemy3);
+                        {
+                            if(enemy3.visible == YES)
+                            {
+                                CGRect bbox = [enemy3 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 400,200);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-100,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+100, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox2, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                        CCARRAY_FOREACH(enemiesOfType5,enemy5);
+                        {
+                            if(enemy5.visible == YES)
+                            {
+                                CGRect bbox = [enemy5 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 400,300);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-800,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+1200, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox2, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                    }
+                    if(same == FALSE)
+                    {
+                        
+                        [self spawnEnemyOfType4];
+                        spawned2 = false;
+                    }
+                }
+                else if(monsterTypeClass == [Box3 class])
+                {
+                    BOOL same = FALSE;
+                    if (enemiesOfType5 != nil)
+                    {
+                        
+                        CCARRAY_FOREACH(enemiesOfType, enemy);
+                        {
+                            if(enemy.visible)
+                            {
+                            CGRect bbox = [enemy boundingBox];
+                            CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-1500,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+2000, CGRectGetHeight(bbox));
+                            CGRect spawned = CGRectMake(screenHeight+100, 20,300, 400);
+                            if(CGRectIntersectsRect(bbox2, spawned))
+                            {
+                                same = true;
+                            }
+                            }
+                            
+                        }
+                        CCARRAY_FOREACH(enemiesOfType2,enemy2);
+                        {
+                            if(enemy2.visible == YES)
+                            {
+                                CGRect bbox = [enemy2 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 300,400);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-800,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+1200, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox2, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                        
+                        CCARRAY_FOREACH(enemiesOfType3,enemy3);
+                        {
+                            if(enemy3.visible == YES)
+                            {
+                                CGRect bbox = [enemy3 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 300,400);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-100,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+100, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox2, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                        CCARRAY_FOREACH(enemiesOfType4,enemy4);
+                        {
+                            if(enemy4.visible == YES)
+                            {
+                                CGRect bbox = [enemy4 boundingBox];
+                                CGRect spawned = CGRectMake(screenHeight+100, 20, 300,400);
+                                CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-800,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+1200, CGRectGetHeight(bbox));
+                                
+                                if(CGRectIntersectsRect(bbox2, spawned))
+                                {
+                                    same = true;
+                                }
+                            }
+                        }
+                    }
+                
+                    if(same == FALSE)
+                    {
+      
+                        [self spawnEnemyOfType5];
+                        spawned2 = false;
+                    }
+                
+                }
+                else if(monsterTypeClass == [Box1 class])
+                {
+                    BOOL same = FALSE;
+                    if (enemiesOfType2 != nil)
+                    {
 
+                    CCARRAY_FOREACH(enemiesOfType, enemy);
+                    {
+                        if(enemy.visible)
+                        {
+                        CGRect bbox = [enemy boundingBox];
+                        CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-1500,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+2000, CGRectGetHeight(bbox));
+                        CGRect spawned = CGRectMake(screenHeight+100, 20,200, 200);
+                        if(CGRectIntersectsRect(bbox2, spawned))
+                        {
+                            same = true;
+                        }
                         }
                         
                     }
-                if(same2 == FALSE)
-                {
-      
-                    [self spawnEnemyOfType2];
-                    spawned2 = false;
-                }
+                    CCARRAY_FOREACH(enemiesOfType4,enemy4);
+                    {
+                        if(enemy4.visible == YES)
+                        {
+                            CGRect bbox = [enemy4 boundingBox];
+                            CGRect spawned = CGRectMake(screenHeight+100, 20, 200,200);
+                            CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-800,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+1200, CGRectGetHeight(bbox));
+                            
+                            if(CGRectIntersectsRect(bbox2, spawned))
+                            {
+                                same = true;
+                            }
+                        }
+                    }
+                    
+                    CCARRAY_FOREACH(enemiesOfType3,enemy3);
+                    {
+                        if(enemy3.visible == YES)
+                        {
+                            CGRect bbox = [enemy3 boundingBox];
+                            CGRect spawned = CGRectMake(screenHeight+100, 20, 200,200);
+                            CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-100,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+100, CGRectGetHeight(bbox));
+                            
+                            if(CGRectIntersectsRect(bbox2, spawned))
+                            {
+                                same = true;
+                            }
+                        }
+                    }
+                    CCARRAY_FOREACH(enemiesOfType5,enemy5);
+                    {
+                        if(enemy5.visible == YES)
+                        {
+                            CGRect bbox = [enemy5 boundingBox];
+                            CGRect spawned = CGRectMake(screenHeight+100, 20, 200,200);
+                            CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)-800,CGRectGetMinY(bbox), CGRectGetWidth(bbox)+1200, CGRectGetHeight(bbox));
+                            
+                            if(CGRectIntersectsRect(bbox2, spawned))
+                            {
+                                same = true;
+                            }
+                        }
+                    }
+                    }
+                    if(same == FALSE)
+                    {
+                        
+                        [self spawnEnemyOfType2];
+                        spawned2 = false;
+                    }
                 
+
                 }
             }
         }
         
         
  
-        if (enemiesOfType2 != nil || enemiesOfType !=nil || enemiesOfType3!=nil)
+        if (enemiesOfType2 != nil || enemiesOfType !=nil || enemiesOfType3!=nil || enemiesOfType4!=nil || enemiesOfType5!=nil)
         {
             
             CCARRAY_FOREACH(enemiesOfType, enemy)
@@ -715,14 +1032,14 @@
                 
                 
                 enemy.velocity = ccp(data.scrollSpeed, enemy.velocity.y);
-                if(enemy.position.x < -400)
+                if(enemy.position.x < -600)
                 {
                     enemy.visible = NO;
                 }
             }
             CCARRAY_FOREACH(enemiesOfType2, enemy2)
             {
-                //NSLog(@"success");
+                
                 if(enemy2.visible == YES)
                 {
                     enemy2.velocity = ccp(data.scrollSpeed, enemy2.velocity.y);
@@ -746,6 +1063,31 @@
                     enemy3.visible =NO;
                 }
             }
+            CCARRAY_FOREACH(enemiesOfType4, enemy4)
+            {
+                //NSLog(@"success");
+                if(enemy4.visible == YES)
+                {
+                    enemy4.velocity = ccp(data.scrollSpeed, enemy4.velocity.y);
+                }
+                if(enemy4.position.x<-100)
+                {
+                    enemy4.visible =NO;
+                }
+            }
+            CCARRAY_FOREACH(enemiesOfType5, enemy5)
+            {
+               // NSLog(@"success");
+                if(enemy5.visible == YES)
+                {
+                    enemy5.velocity = ccp(data.scrollSpeed, enemy5.velocity.y);
+                }
+                if(enemy5.position.x<-100)
+                {
+                    enemy5.visible =NO;
+                }
+            }
+            
             if([self checkForCollisions])
             {
                 data.onRamp = true;

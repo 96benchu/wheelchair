@@ -576,6 +576,10 @@
 		A5B79F3D17A723E90073BA09 /* TutRamp.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B79F3C17A723E80073BA09 /* TutRamp.m */; };
 		A5B79F4017A723FD0073BA09 /* TutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B79F3F17A723FA0073BA09 /* TutBox.m */; };
 		A5B840D4178B40B500F941B8 /* NitroButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B840D3178B40B500F941B8 /* NitroButton.m */; };
+		A5B88B8B17B43AF100596B30 /* Arrow_red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A5B88B8A17B43AF100596B30 /* Arrow_red.jpg */; };
+		A5B88B8D17B444DC00596B30 /* Fire.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A5B88B8C17B444DC00596B30 /* Fire.JPG */; };
+		A5B88B8F17B45E5500596B30 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = A5B88B8E17B45E5300596B30 /* bar.png */; };
+		A5B88B9117B45E5C00596B30 /* barFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = A5B88B9017B45E5C00596B30 /* barFrame.png */; };
 		A5E5A07A178E155900B66201 /* box1-animations.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5E5A079178E155900B66201 /* box1-animations.plist */; };
 		DC65615C13A969B600A7AC53 /* libbox2d-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615013A969B600A7AC53 /* libbox2d-ios.a */; };
 		DC65615D13A969B600A7AC53 /* libchipmunk-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615113A969B600A7AC53 /* libchipmunk-ios.a */; };
@@ -1238,6 +1242,10 @@
 		A5B79F3F17A723FA0073BA09 /* TutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutBox.m; sourceTree = "<group>"; };
 		A5B840D2178B40B500F941B8 /* NitroButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NitroButton.h; sourceTree = "<group>"; };
 		A5B840D3178B40B500F941B8 /* NitroButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NitroButton.m; sourceTree = "<group>"; };
+		A5B88B8A17B43AF100596B30 /* Arrow_red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Arrow_red.jpg; sourceTree = "<group>"; };
+		A5B88B8C17B444DC00596B30 /* Fire.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Fire.JPG; sourceTree = "<group>"; };
+		A5B88B8E17B45E5300596B30 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
+		A5B88B9017B45E5C00596B30 /* barFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barFrame.png; sourceTree = "<group>"; };
 		A5E5A079178E155900B66201 /* box1-animations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "box1-animations.plist"; sourceTree = "<group>"; };
 		DC3BE97813B4FB71003739CC /* BuildSettings-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-iOS.xcconfig"; sourceTree = "<group>"; };
 		DC65615013A969B600A7AC53 /* libbox2d-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libbox2d-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2011,12 +2019,14 @@
 				A5AFCA97177A0FF0007C16B6 /* button-top.png */,
 				A5AFCA98177A0FF0007C16B6 /* button.png */,
 				A5AFCA99177A0FF0007C16B6 /* button_arrowbutton.png */,
+				A5B88B8A17B43AF100596B30 /* Arrow_red.jpg */,
 				A5AFCA9A177A0FF0007C16B6 /* button_backbutton.png */,
 				A5AFCA9B177A0FF0007C16B6 /* button_pausebutton.png */,
 				A5AFCA9C177A0FF0007C16B6 /* button_play.png */,
 				A5AFCA9D177A0FF0007C16B6 /* button_playbutton.png */,
 				A5AFCA9E177A0FF0007C16B6 /* button_topdown-button.png */,
 				A5AFCA9F177A0FF0007C16B6 /* joystick-bottom.png */,
+				A5B88B8C17B444DC00596B30 /* Fire.JPG */,
 				A5AFCAA0177A0FF0007C16B6 /* joystick-top.png */,
 				A5AFCAA1177A0FF0007C16B6 /* play-button.png */,
 				A5AFCAA2177A0FF0007C16B6 /* restart.png */,
@@ -2079,8 +2089,10 @@
 				A5AFCAC7177A0FF0007C16B6 /* chest.png */,
 				A5AFCAC8177A0FF0007C16B6 /* fence.png */,
 				A5AFCAC9177A0FF0007C16B6 /* flag.png */,
+				A5B88B9017B45E5C00596B30 /* barFrame.png */,
 				A5AFCACA177A0FF0007C16B6 /* flower.png */,
 				A5AFCACB177A0FF0007C16B6 /* hydrant.png */,
+				A5B88B8E17B45E5300596B30 /* bar.png */,
 				A5AFCACC177A0FF0007C16B6 /* mailbox.png */,
 				A5AFCACD177A0FF0007C16B6 /* moon.png */,
 				A5AFCACE177A0FF0007C16B6 /* palmtree.png */,
@@ -3027,6 +3039,10 @@
 				A5AFCCBB177A0FF0007C16B6 /* title_upgrades.png in Resources */,
 				A5AD9B60178232C5005655B8 /* ramp-animations.plist in Resources */,
 				A5E5A07A178E155900B66201 /* box1-animations.plist in Resources */,
+				A5B88B8B17B43AF100596B30 /* Arrow_red.jpg in Resources */,
+				A5B88B8D17B444DC00596B30 /* Fire.JPG in Resources */,
+				A5B88B8F17B45E5500596B30 /* bar.png in Resources */,
+				A5B88B9117B45E5C00596B30 /* barFrame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

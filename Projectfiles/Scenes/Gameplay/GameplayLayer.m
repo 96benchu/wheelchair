@@ -25,7 +25,10 @@
 #import "Spikes.h"
 #import "Ramps.h"
 #import "Truth.h"
+
 #import "Coins.h"
+#import "Box2.h"
+#import "Box3.h"
 
 // defines how many update cycles run, before the missions get an update about the current game state
 #define MISSION_UPDATE_FREQUENCY 10
@@ -178,6 +181,16 @@
         [hudNode addChild:skipAheadMenu];
         
         // set up pause button
+        arrow =[CCSprite spriteWithFile:@"Arrow_red.jpg"];
+        fire = [CCSprite spriteWithFile:@"Fire.JPG"];
+        nitroBar = [CCSprite spriteWithFile:@"bar.png"];
+        
+        nitroBarFrame = [CCSprite spriteWithFile:@"barFrame.png"];
+        
+        [self addChild:nitroBarFrame];
+        [self addChild:nitroBar];
+        [self addChild:fire];
+        [self addChild:arrow];
         CCSprite *pauseButton = [CCSprite spriteWithFile:@"pause.png"];
         CCSprite *pauseButtonPressed = [CCSprite spriteWithFile:@"pause-pressed.png"];
         pauseButtonMenuItem = [CCMenuItemSprite itemWithNormalSprite:pauseButton selectedSprite:pauseButtonPressed target:self selector:@selector(pauseButtonPressed)];
@@ -199,17 +212,17 @@
         CGFloat screenHeight = screenRect.size.height;
         jumpButtonMenu.position = ccp(0,49);
         jumpButtonMenu.scale = .5;
-        [hudNode addChild:jumpButtonMenu];
+        //[hudNode addChild:jumpButtonMenu];
         // add the enemy cache containing all spawned enemies
         [self addChild:[EnemyCache node]];
         //speedUpButton        
         // setup a new gaming session
         [self resetGame];
-        speedUp =18;
+        speedUp =10;
         counter = 0;
         counter2 = 29;
         mult = 10;
-        cap=275;
+        cap=350;
         counter3 = 0;
         num = 3;
         counter4=0;
@@ -221,7 +234,7 @@
         nitroOn = false;
         recent2 = false;
         counter8 = 0;
-        capDivider = 30;
+        capDivider = 60;
         counter9= 0;
         recent3 = false;
         recent4= true;
@@ -234,6 +247,7 @@
         text31=false;
         text4=false;
         text41=false;
+        counter11=0;
         [self scheduleUpdate];
         
         /**
@@ -294,7 +308,7 @@
     // setup knight
     knight.position = ccp(125,20);
     knight.zOrder = 10;
-    knight.scale = .75;
+    knight.scale = .6;
     knight.hitPoints = KNIGHT_HIT_POINTS;
     
     // setup HUD
@@ -305,6 +319,15 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
+    fire.scale = .035;
+    nitroBar.position = ccp(screenHeight/2-35,screenWidth-screenWidth/5);
+    nitroBarFrame.position = ccp(screenHeight/2-35,screenWidth-screenWidth/5);
+    nitroBar.scaleX = .8;
+    nitroBar.scaleY = .3;
+    nitroBarFrame.scaleX = .8;
+    nitroBarFrame.scaleY=.3;
+    nitroBar.anchorPoint = ccp(0,0);
+    nitroBarFrame.anchorPoint = ccp(0,0);
     spikes.position = ccp(0,125);
     spikes.zOrder = 11;
     spikes.rotation = 106;
@@ -318,12 +341,17 @@
     arrowButton2.visible = YES;
     arrowButton2.scale = .3;
     arrowButton.scale=.3;
-
+    arrow.position = ccp(screenHeight/2-85,screenWidth-screenWidth*2/3);
+    arrow.visible = NO;
+    arrow.scaleX = .01;
+    arrow.scaleY = .04;
+    arrow.rotation = 270;
     arrowButton.opacity = 0;
     arrowButton2.opacity = 0;
-    label = [CCLabelTTF labelWithString:@"Scroll right to speed up to avoid spikes following you" fontName:@"Helvetica" fontSize:14];
+    label = [CCLabelTTF labelWithString:@"Swipe right to speed up to avoid spikes following you" fontName:@"Helvetica" fontSize:14];
     label2 = [CCLabelTTF labelWithString:@"Swipe faster on ramps!" fontName:@"Helvetica" fontSize:14];
-    label3 = [CCLabelTTF labelWithString:@"Press the jump button to jump over barrels" fontName:@"Helvetica" fontSize:14];
+    label3 = [CCLabelTTF labelWithString:@"swipe up to jump over barrels" fontName:@"Helvetica" fontSize:14];
+    label4 = [CCLabelTTF labelWithString:@"swipe up again while in midair to jump twice" fontName:@"Helvetica" fontSize:14];
     label5 = [CCLabelTTF labelWithString:@"Use the nitro button in emergency situations" fontName:@"Helvetica" fontSize:14];
     label6 = [CCLabelTTF labelWithString:@"Rollout!" fontName:@"Helvetica" fontSize:14];
     jumpLabel = [CCLabelTTF labelWithString:@"Jump" fontName:@"Helvetica" fontSize:14];
@@ -332,16 +360,18 @@
     [self addChild: label];
     [self addChild: label2];
     [self addChild: label3];
+    [self addChild: label4];
     [self addChild: label5];
     [self addChild: label6];
-    [self addChild: arrowButton];
+    //[self addChild: arrowButton];
     [self addChild: arrowButton2];
-    [self addChild: jumpLabel];
+    //[self addChild: jumpLabel];
     [self addChild: nitroLabel];
     [self addChild: nitroLabel2];
     label.visible = NO;
     label2.visible = NO;
     label3.visible = NO;
+    label4.visible = NO;
     label5.visible = NO;
     label6.visible = NO;
     label.color = ccc3(0,0,0);
@@ -350,6 +380,8 @@
     label2.position = ccp(screenHeight/2,screenWidth-screenWidth/3);
     label3.color = ccc3(0,0,0);
     label3.position = ccp(screenHeight/2,screenWidth-screenWidth/3);
+    label4.color = ccc3(0,0,0);
+    label4.position = ccp(screenHeight/2,screenWidth-screenWidth/3-30);
     label5.color = ccc3(0,0,0);
     label5.position = ccp(screenHeight/2,screenWidth-screenWidth/3);
     label6.color = ccc3(0,0,0);
@@ -363,6 +395,7 @@
     label.opacity = 0;
     label2.opacity = 0;
     label3.opacity = 0;
+    label4.opacity = 0;
     label5.opacity = 0;
     label6.opacity = 0;
     
@@ -456,8 +489,10 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
-   
-    
+    double scaled =(knight.fuel/10000)/1.25;
+    nitroBar.scaleX = scaled;
+    fire.visible = NO;
+    fire.rotation=90;
     // distance depends on the current scrolling speed
     gainedDistance2 += ((int) (delta*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]));
     gainedDistance = (int) ( [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]);
@@ -473,29 +508,43 @@
     CGPoint pos = [input locationOfAnyTouchInPhase:KKTouchPhaseAny];
     CGRect buttonArea = [nitro boundingBox];
     //nitro
-    if(gainedDistance2>150000)
+    if(gainedDistance2>4000)
     {
-        NSLog(@"ydone");
+        //NSLog(@"ydone");
         
         counter2++;
         counter3++;
         counter4++;
-        counter8++;
+        
+        
     }
+    counter8++;
     counter++;
     counter7++;
     counter9++;
+    if(text2)
+    {
+        counter10++;
+    }
+    
     if(text1 == false)
     {
         label.visible= YES;
         [label runAction:[CCFadeIn actionWithDuration:.5]];
+        arrow.visible = YES;
+        [arrow runAction:[CCBlink actionWithDuration:2 blinks:3]];
         text1=true;
     }
     if(gainedDistance2>= 500 && recent5==false)
     {
-        
+        //[arrow runAction:[CCFadeOut actionWithDuration:.5]];
         [label runAction:[CCFadeOut actionWithDuration:.5]];
         recent5 = true;
+    }
+    if(counter8>=120*((1/delta)/60) && !recent5)
+    {
+        NSLog(@"spawnedl");
+        arrow.visible = NO;
     }
     //[self tutorialText1];
     if((gainedDistance2>=1000) && (recent3 ==false))
@@ -505,7 +554,7 @@
 
         
         //int rand = arc4random()%25+160;
-        [[GameMechanics sharedGameMechanics] setSpawnRate:101 forMonsterType:[Ramps class]];
+        [[GameMechanics sharedGameMechanics] setSpawnRate:100 forMonsterType:[Ramps class]];
         recent3 = true;
     }
     if(gainedDistance2>=1500 && recent31==false)
@@ -515,19 +564,30 @@
         [label2 runAction:[CCFadeOut actionWithDuration:.5]];
         recent31=true;
     }
-    if(gainedDistance2>=2200  && text2 == false)
+    if(gainedDistance2>=2000  && text2 == false)
     {
         arrowButton.visible = YES;
         [arrowButton runAction:[CCFadeIn actionWithDuration:.5]];
-        [[GameMechanics sharedGameMechanics] setSpawnRate:220 forMonsterType:[Box1 class]];
+        [[GameMechanics sharedGameMechanics] setSpawnRate:200 forMonsterType:[Box1 class]];
         label3.visible = YES;
+        label4.visible= YES;
         [label3 runAction:[CCFadeIn actionWithDuration:.5]];
         text2 = true;
+        [label4 runAction:[CCFadeIn actionWithDuration:.5]];
+        //arrow.visible = YES;
+        arrow.rotation = 180;
+        [arrow runAction:[CCBlink actionWithDuration:2 blinks:3]];
+    }
+    if(counter10>120*((1/delta)/60))
+    {
+        arrow.visible=NO;
     }
     if(gainedDistance2>=2800 && text21==false)
     {
         [label3 runAction:[CCFadeOut actionWithDuration:.5]];
         [arrowButton runAction:[CCFadeOut actionWithDuration:.5]];
+        //[arrow runAction:[CCFadeOut actionWithDuration:.5]];
+        [label4 runAction:[CCFadeOut actionWithDuration:.5]];
         text21=TRUE;
         
     }
@@ -542,7 +602,7 @@
     if(gainedDistance2 >= 9500 && text31==false)
     {
         [label5 runAction:[CCFadeOut actionWithDuration:.5]];
-        [arrowButton2 runAction:[CCFadeOut actionWithDuration:.55]];
+        [arrowButton2 runAction:[CCFadeOut actionWithDuration:.5]];
         
         text31 = true;
     }
@@ -562,17 +622,18 @@
     //ramp.velocity = ccp(-[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX], ramp.velocity.y);
     if(CGRectContainsPoint(buttonArea, pos))
     {
-       
+        fire.visible=YES;
+        fire.position = ccp(knight.position.x - 30, knight.position.y+15);
         if(knight.fuel > 0)
         {
             
             if((!nitroOn) && (recent2 == false))
             {
-                if(knight.fuel > 500)
+                if(knight.fuel > 750)
                 {
                 recent2 = true;
                 nitroOn = true;
-                knight.fuel -= 250;
+                knight.fuel -= 750;
                 if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] <=0)
                 {
                     
@@ -595,7 +656,7 @@
                     }
                     else
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+200];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+400];
                     }
                 }
                 if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=20))
@@ -604,29 +665,29 @@
                     {
                         if(spikes.velocity.x > 0)
                         {
-                            if(spikes.velocity.x > 10)
+                            if(spikes.velocity.x > 15)
                             {
-                                spikes.velocity = ccp(0, spikes.velocity.y);
+                                spikes.velocity = ccp(-5, spikes.velocity.y);
                             }
                             else
                             {
-                                spikes.velocity = ccp(-5, spikes.velocity.y);
+                                spikes.velocity = ccp(-10, spikes.velocity.y);
                             }
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x - 8, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x - 12, spikes.velocity.y);
                         }
                     }
                     else
                     {
                         if(spikes.velocity.x > 0)
                         {
-                            spikes.velocity = ccp(-20, spikes.velocity.y);
+                            spikes.velocity = ccp(-12, spikes.velocity.y);
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x - 20, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x - 10, spikes.velocity.y);
                         }
                     }
                 }
@@ -634,11 +695,11 @@
                 {
                     if(data.onRamp == true)
                     {
-                        spikes.velocity = ccp(spikes.velocity.x - 5, spikes.velocity.y);
+                        spikes.velocity = ccp(spikes.velocity.x - 8, spikes.velocity.y);
                     }
                     else
                     {
-                        spikes.velocity = ccp(spikes.velocity.x - 7, spikes.velocity.y);
+                        spikes.velocity = ccp(spikes.velocity.x - 10, spikes.velocity.y);
                     }
                 }
                 }
@@ -648,21 +709,21 @@
                 //NSLog(@"out Of fuel");
             }
             
-            if(nitroOn || recent2 || knight.fuel < 250)
+            if(nitroOn || recent2 || knight.fuel < 750)
             {
                 
-                knight.fuel -= 10;
+                knight.fuel -= 50;
                 nitroOn = true;
                 
                     if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] >0)
                     {
                         //NSLog(@"WORKS");
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+10];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+50];
                     }
                     else
                     {
                        // NSLog(@"WORKS");
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+30];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+50];
                     }
                 
                 if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=20))
@@ -681,10 +742,19 @@
              
             }
         }
+        counter11=0;
     }
     else
     {
         nitroOn = false;
+    }
+    counter11++;
+    if(counter11>300*(1/delta)/60)
+    {
+        if(knight.fuel <10000)
+        {
+            knight.fuel+=1;
+        }
     }
     if(knight.fuel < 0)
     {
@@ -769,10 +839,10 @@
         switch (dir)
         {
             //if swipe
-            case KKSwipeGestureDirectionDown:
+            case KKSwipeGestureDirectionRight:
                 //if falling behind
 
-                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+cap/8];
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+cap/7];
                 
 
                 //NSLog([NSString stringWithFormat:@"%i",counter5]);
@@ -783,37 +853,37 @@
                 }
                 if(spikes.position.x>= -151)
                 {
-                    if(spikes.velocity.x>=-40)
+                    if(spikes.velocity.x>=-15)
                     {
-                        if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>30)
+                        if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>20)
                         {
-                            if(spikes.velocity.x < 0)
+                            if(spikes.position.x < -20)
                             {
-                                spikes.velocity = ccp(spikes.velocity.x-6.5,spikes.velocity.y);
+                                spikes.velocity = ccp(spikes.velocity.x-6,spikes.velocity.y);
                             }
                             else
                             {
-                                spikes.velocity = ccp(spikes.velocity.x -8,spikes.velocity.y);
+                                spikes.velocity = ccp(spikes.velocity.x -9,spikes.velocity.y);
                             }
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x-1, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x-6, spikes.velocity.y);
                         }
                     }
                 }
                 else
                 {
-                    spikes.position = ccp(-250,125);
+                    spikes.position = ccp(-150,125);
 
                 }
                 break;
                 
-            case KKSwipeGestureDirectionUp:
+            case KKSwipeGestureDirectionLeft:
                 [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-30];
                 break;
-            case KKSwipeGestureDirectionRight:
-
+            case KKSwipeGestureDirectionUp:
+                [knight jump];
                 break;
             default:
                 break;
@@ -931,40 +1001,58 @@
     double diffX = knight.position.x - data.pos.x;
     if(data.onRamp== true)
     {
-        knight.rotation = -atan(z)*(180/M_PI);
+        
 
        // NSLog([NSString stringWithFormat:@"%f",atan(z)]);
 
         //NSLog([NSString stringWithFormat:@"%i",diffX]);
         //NSLog(ramp.col ? @"Yes" : @"No");
-        knight.position = ccp(knight.position.x, diffX*z+20);
+        if(knight.position.y<diffX*z+20)
+        {
+            knight.position = ccp(knight.position.x, diffX*z+20);
+            knight.rotation = -atan(z)*(180/M_PI);
+            fire.rotation = atan(z)*(180/M_PI);
+        }
         if(((counter>=5*(1/delta)/60) || (counter >=10*(1/delta)/60) || (counter >=15*(1/delta)/60)))
         {
+            double frac;
             //decreasbackground speed
-            double frac = 275/(275+(cap-275)/4);
+            if(knight.position.y<diffX*z+20)
+            {
+                  frac = 350/(350+(cap-300)/1);
+            }
+            else
+            {
+                 frac = 350/(350+(cap-300)/2.2);
+            }
+            //double diffY = 1-(knight.position.y/screenWidth)/1.4;
             if(counter>=15*((1/delta)/60))
             {
-                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
+                if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 100)
                 {
                     [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*frac];
                 }
             }
             if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
             {
-                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/(capDivider+40)];
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/(capDivider+30)];
             }
-            if(spikes.velocity.x<0)
+            if(spikes.velocity.x<20)
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/32, spikes.velocity.y);
+            if(spikes.position.x<-20)
+            {
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/15, spikes.velocity.y);
             }
             else
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/40, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/15, spikes.velocity.y);
             }
+            
             recent = true;
             
         }
-        recent = true;
+            recent = true;
+        }
     }
     //increase speed after leaving ramp
    // NSLog(recent ? @"Yes" : @"No");
@@ -975,7 +1063,7 @@
         {
             
             knight.rotation = 0;
-            knight.velocity = ccp(knight.velocity.x, [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*z+knight.velocity.y+950.f);
+            knight.velocity = ccp(knight.velocity.x, [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*z+knight.velocity.y+900.f);
             recent = false;
             data.recent = recent;
         }
@@ -998,25 +1086,28 @@
             }
             else
             {
-                //[[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/65];
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/35];
             }
         }
         counter = 0;
         if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]) > cap)
         {
             double decrease = [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] - cap;
-            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] - decrease/1.75];
+            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] - decrease/1.7];
         }
-        if(spikes.velocity.x <30)
+        if(text41)
+        {
+        if(spikes.velocity.x <15)
         {
             if(spikes.velocity.x <0)
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/7, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/8, spikes.velocity.y);
             }
             else
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/9, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/8, spikes.velocity.y);
             }
+        }
         }
         
     }
@@ -1082,22 +1173,22 @@
             {
                 if(spikes.position.x < 50)
                 {
-                    spikes.velocity = ccp(5,spikes.velocity.y);
+                    spikes.velocity = ccp(4,spikes.velocity.y);
                 }
                 else
                 {
-                    spikes.velocity = ccp(3 ,spikes.velocity.y);
+                    spikes.velocity = ccp(2 ,spikes.velocity.y);
                 }
             }
             else
             {
                 if(spikes.position.x < 50)
                 {
-                    spikes.velocity = ccp(4 +spikes.velocity.x,spikes.velocity.y);
+                    spikes.velocity = ccp(speedUp/30 +spikes.velocity.x,spikes.velocity.y);
                 }
                 else
                 {
-                    spikes.velocity = ccp(2 +spikes.velocity.x,spikes.velocity.y);
+                    spikes.velocity = ccp(speedUp/30 +spikes.velocity.x,spikes.velocity.y);
                 }
             }
         }
@@ -1123,13 +1214,13 @@
     if(counter3 >= 600*((1/delta)/60))
     {
         //NSLog(@"Yeaah");
-        if(speedUp<20)
+        if(speedUp<24)
         {
-            speedUp+=4;
+            speedUp+=5;
         }
-        if(cap<500)
+        if(cap<575)
         {
-            cap+=40;
+            cap+=60;
         }
         counter3=0;
         if(spawnRate>100)
@@ -1142,17 +1233,17 @@
 
     
     //nightmare
-    if(counter8 >= 3600*((1/delta)/60))
+    if(counter8 >= 10800*((1/delta)/60))
     {
         cap = 650;
-        speedUp = 24;
-        capDivider = 60;
+        speedUp = 28;
+        capDivider = 30;
     }
     //failsafe
-    if(spikes.position.x<-250)
+    if(spikes.position.x<-150)
     {
         //NSLog(@"WHY DONT U WORK");
-        spikes.position = ccp(-250, 125);
+        spikes.position = ccp(-150, 125);
     }
     //ram velocity
     data.scrollSpeed = -1*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX];
@@ -1173,25 +1264,35 @@
         knight.hitPoints--;
     }
     data.gainedDistance = gainedDistance2/10;
-    if(counter7>=60*((1/delta)/60))
+    if(counter7>=300*((1/delta)/60))
     {
-        if(counter8<4800*((1/delta)/60))
+        if(counter8<10000*((1/delta)/60))
         {
             if(recent3)
             {
                 //NSLog(@"spawnwdd");
-                int rand = arc4random()%15+240;
-                [[GameMechanics sharedGameMechanics] setSpawnRate:rand forMonsterType:[Ramps class]];
+                int rand = arc4random()%15+241;
+                [[GameMechanics sharedGameMechanics] setSpawnRate:400 forMonsterType:[Ramps class]];
+                if(text21)
+                {
+                    int rand = arc4random()%35+500;
+                    [[GameMechanics sharedGameMechanics] setSpawnRate:rand forMonsterType:[Ramps class]];
+                }
 
             }
             if(text2)
             {
                 int rand = arc4random()%15+65;
                  [[GameMechanics sharedGameMechanics] setSpawnRate:rand forMonsterType:[Box1 class]];
-                if(gainedDistance2 >= 1500)
+                if(gainedDistance2 >= 10000)
                 {
-                    int rand = arc4random()%35+130;
+                    //NSLog(@"done");
+                    int rand = arc4random()%35+90;
                     [[GameMechanics sharedGameMechanics] setSpawnRate:rand forMonsterType:[Box1 class]];
+                    int rand2 = arc4random()%105+200;
+                    [[GameMechanics sharedGameMechanics] setSpawnRate:rand2 forMonsterType:[Box2 class]];
+                    int rand3 = arc4random()%105+200;
+                    [[GameMechanics sharedGameMechanics] setSpawnRate:rand3 forMonsterType:[Box3 class]];
                 }
             }
     

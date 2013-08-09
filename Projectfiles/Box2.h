@@ -10,6 +10,6 @@
 
 @interface Box2 : CCSprite
 @property (nonatomic, assign) CGPoint velocity;
--(id)initWithBoxImage;
+-(id)initWithBox2Image;
 -(void)spawn;
 @end

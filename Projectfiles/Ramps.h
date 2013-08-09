@@ -14,5 +14,5 @@
 @property (nonatomic, assign) BOOL col;
 -(id)initWithRampImage;
 -(void)detectCol:(CGPoint)pos;
--(void)spawn:(int)gainedDistance;
+-(void)spawn;
 @end

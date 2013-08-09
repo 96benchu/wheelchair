@@ -11,7 +11,7 @@
 
 @implementation Box2
 @synthesize velocity;
--(id)initWithBoxImage
+-(id)initWithBox2Image
 {
     self = [super initWithSpriteFrameName:@"basicbarrell.png"];
     [self scheduleUpdate];
@@ -33,8 +33,8 @@
 	self.position = CGPointMake(screenHeight +100, 60);
 	self.rotation = 90;
     self.scaleX = .3;
-    self.scaleY = .8;
-    self.velocity = ccp(-100, 0);
+    self.scaleY = .9;
+    self.velocity = ccp(00, 0);
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
 }

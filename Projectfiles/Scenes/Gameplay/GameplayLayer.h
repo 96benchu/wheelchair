@@ -38,6 +38,8 @@
     CCMenuItemSprite *skipAheadMenuItem;
     
     /* Pause Button */
+    CCSprite* arrow;
+    CCSprite* fire;
     CCMenu *pauseButtonMenu;
     CCMenuItemSprite *pauseButtonMenuItem;
     
@@ -46,7 +48,8 @@
     
     /* "Buy more coins"-Popup */
     InGameStore *inGameStore;
-    
+    CCSprite* nitroBar;
+    CCSprite* nitroBarFrame;
     Game *game;
     Knight *knight;
     Spikes* spikes;
@@ -101,6 +104,7 @@
     BOOL text31;
     BOOL text4;
     BOOL text41;
+    int counter11;
 }
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.

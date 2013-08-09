@@ -34,6 +34,7 @@
     BOOL foundEnemy3;
     BOOL foundEnemy4;
     BOOL foundEnemy5;
+
     // count the updates (used to determine when monsters should be spawned)
     int updateCount;
 }

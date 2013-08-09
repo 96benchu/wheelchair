@@ -41,7 +41,7 @@
 
 @property(nonatomic, assign) int jumpCounter;
 
-@property(nonatomic, assign) int fuel;
+@property(nonatomic, assign) float fuel;
 
 @property(nonatomic, assign) int coins;
 
