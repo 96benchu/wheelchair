@@ -115,8 +115,7 @@
 
 - (void)jump
 {
-    if(self.fuel > 0)
-    {
+    
      Truth* data = [Truth sharedData];
     // can only jump of the floor
     if(data.onRamp == FALSE && data.recent == FALSE)
@@ -138,7 +137,7 @@
         }
     }
     }
-    }
+    
 }
 -(void) move
 {
@@ -164,13 +163,13 @@
         return;
     }
     
-    CCAction *blinkAction = [self getActionByTag:1000];
+    CCAction *blinkAction = [self getActionByTag:1500];
     
     if ( (blinkAction == nil) || [blinkAction isDone])
     {
         self.hitPoints --;
-        CCBlink *blink = [CCBlink actionWithDuration:1.5f blinks:5];
-        blink.tag = 1000;
+        CCBlink *blink = [CCBlink actionWithDuration:2.5f blinks:8];
+        blink.tag = 1500;
         [self runAction:blink];
     }
 }

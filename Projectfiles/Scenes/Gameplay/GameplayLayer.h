@@ -60,6 +60,8 @@
     CCLabelTTF *label4;
     CCLabelTTF *label5;
     CCLabelTTF *label6;
+    CCLabelTTF *label7;
+    CCLabelTTF *label8;
     CCLabelTTF *jumpLabel;
     CCLabelTTF *nitroLabel;
     CCLabelTTF *nitroLabel2;
@@ -83,6 +85,7 @@
     int spawnRate;
     BOOL recent;
     BOOL nitroOn;
+    BOOL nitroOn2;
     BOOL recent2;
     int counter6;
     int counter7;
@@ -104,7 +107,10 @@
     BOOL text31;
     BOOL text4;
     BOOL text41;
+    BOOL text5;
+    BOOL text51;
     int counter11;
+    int counter12;
 }
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.

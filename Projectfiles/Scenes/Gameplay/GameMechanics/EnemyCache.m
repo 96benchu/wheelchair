@@ -52,20 +52,20 @@
         CCSpriteFrameCache* frameCache3 = [CCSpriteFrameCache sharedSpriteFrameCache];
         CCSpriteFrame *coinFrame = [[CCSprite spriteWithFile:@"coin1.png"] displayFrame];
         CCSpriteFrameCache* frameCache4 = [CCSpriteFrameCache sharedSpriteFrameCache];
-        CCSpriteFrame *box2Frame = [[CCSprite spriteWithFile:@"basicbarrell.png"] displayFrame];
+        CCSpriteFrame *box2Frame = [[CCSprite spriteWithFile:@"spike.png"] displayFrame];
         CCSpriteFrameCache* frameCache5 = [CCSpriteFrameCache sharedSpriteFrameCache];
         CCSpriteFrame *box3Frame = [[CCSprite spriteWithFile:@"basicbarrell.png"] displayFrame];
 
 		[frameCache addSpriteFrame:rampFrame name:@"ramp.png"];
         [frameCache2 addSpriteFrame:boxFrame name:@"basicbarrell.png"];
         [frameCache3 addSpriteFrame:coinFrame name:@"coin1.png"];
-        [frameCache4 addSpriteFrame:box2Frame name:@"basicbarrell.png"];
+        [frameCache4 addSpriteFrame:box2Frame name:@"spike.png"];
         [frameCache5 addSpriteFrame:box3Frame name:@"basicbarrell.png"];
         // we need to initialize the batch node with one of the frames
 		CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"ramp.png"];
         CCSpriteFrame* frame2 = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"basicbarrell.png"];
         CCSpriteFrame* frame3 = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"coin1.png"];
-        CCSpriteFrame* frame4 = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"basicbarrell.png"];
+        CCSpriteFrame* frame4 = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"spike.png"];
         CCSpriteFrame* frame5 = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"basicbarrell.png"];
 
         /* A batch node allows drawing a lot of different sprites with on single draw cycle. Therefore it is necessary,
@@ -130,6 +130,7 @@
         }
     }
 }
+
 
 -(void) spawnEnemyOfType5
 {
@@ -596,12 +597,15 @@
 }
 -(BOOL) checkForBoxCollisions
 {
+    Truth* data = [Truth sharedData];
     Box1 *box;
     Box2 *box2;
     Box3 *box3;
     Knight *knight = [[GameMechanics sharedGameMechanics] knight];
     CCARRAY_FOREACH([batch2 children], box)
     {
+        if(box.visible==YES)
+        {
         //NSLog(@"done");
         CGRect bbox = [box boundingBox];
         CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)+35,CGRectGetMinY(bbox), CGRectGetWidth(bbox)-35, CGRectGetHeight(bbox)+5);
@@ -610,8 +614,16 @@
         CGRect knightHitZone = [knight hitZone];
         if (CGRectIntersectsRect(knightHitZone, bbox2))
         {
+            if(data.nitroOn)
+            {
+                box.visible = NO;
+                [box gotStolen];
+            }
+            else{
            // NSLog(@"done");
             return true;
+            }
+        }
         }
 
 
@@ -626,6 +638,7 @@
         CGRect knightHitZone = [knight hitZone];
         if (CGRectIntersectsRect(knightHitZone, bbox2))
         {
+            
             // NSLog(@"done");
             return true;
         }
@@ -634,6 +647,7 @@
     }
     CCARRAY_FOREACH([batch5 children], box3)
     {
+        
         //NSLog(@"done");
         CGRect bbox = [box3 boundingBox];
         CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)+10,CGRectGetMinY(bbox), CGRectGetWidth(bbox)-10, CGRectGetHeight(bbox)-25);
@@ -642,8 +656,18 @@
         CGRect knightHitZone = [knight hitZone];
         if (CGRectIntersectsRect(knightHitZone, bbox2))
         {
+            if(box3.visible==YES)
+            {
+            if(data.nitroOn)
+            {
+                box3.visible = NO;
+                [box3 gotStolen];
+            }
+            else{
             // NSLog(@"done");
             return true;
+            }
+            }
         }
 
         
@@ -716,7 +740,7 @@
             //else
             //{
             // if the updateCount reached the spawnFrequency we spawn a new enemy
-            if (((data.gainedDistance % spawnFrequency >= 0) && (data.gainedDistance %spawnFrequency <= 15)))
+            if (((data.gainedDistance % spawnFrequency >= 0) && (data.gainedDistance %spawnFrequency <= 4)))
             {
               
                 spawned2 = true;

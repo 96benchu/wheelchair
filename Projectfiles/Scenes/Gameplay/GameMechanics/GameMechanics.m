@@ -55,6 +55,8 @@
     self.worldGravity = CGPointZero;
     self.floorHeight = 0.f;
     self.gameState = GameStatePaused;
+    
+    
     [self.spawnRatesByMonsterType removeAllObjects];
 }
 

@@ -70,13 +70,13 @@
 	self.position = CGPointMake(screenHeight+100, 20);
     if(data.gainedDistance<500)
     {
-        scaled = .9;
+        scaled = .90;
     }
     else if(data.gainedDistance>=750 && data.gainedDistance<=1200)
     {
         
-        double rand = arc4random()%1+20;
-        scaled = rand/20;
+        double rand = arc4random()%1;
+        scaled = 20/20;
     }
     else if(data.gainedDistance>=1200 && data.gainedDistance<=2000)
     {

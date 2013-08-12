@@ -16,4 +16,5 @@
 @property (nonatomic, assign) CGPoint velocity;
 -(id)initWithBoxImage;
 -(void)spawn;
+-(void)gotStolen;
 @end
