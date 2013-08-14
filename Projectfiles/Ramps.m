@@ -72,26 +72,26 @@
     {
         scaled = .90;
     }
-    else if(data.gainedDistance>=750 && data.gainedDistance<=1200)
+    else if(data.gainedDistance>=500 && data.gainedDistance<=1200)
     {
         
         double rand = arc4random()%1;
-        scaled = 20/20;
+        scaled = .95;
     }
-    else if(data.gainedDistance>=1200 && data.gainedDistance<=2000)
+    else if(data.gainedDistance>=1201 && data.gainedDistance<=2000)
     {
-        double rand = arc4random()%1+22;
+        double rand = arc4random()%4+24;
         scaled = rand/20;
     }
-    else if(data.gainedDistance>=2000 && data.gainedDistance<=3000)
+    else if(data.gainedDistance>=2001&& data.gainedDistance<=3000)
     {
         NSLog(@"itisdone");
-        double rand = arc4random()%1+24;
+        double rand = arc4random()%2+30;
         scaled = rand/20;
     }
     else
     {
-        double rand = arc4random()%1+28;
+        double rand = arc4random()%2+34;
         scaled = rand/20;
     }
     

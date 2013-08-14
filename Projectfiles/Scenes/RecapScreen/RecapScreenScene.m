@@ -117,8 +117,8 @@
         
         /*********** Next Button ***********/
         CCMenuItemSprite *nextButton = [CCMenuItemSprite itemWithNormalSprite:[CCSprite spriteWithFile:@"next.png"] selectedSprite:[CCSprite spriteWithFile:@"next_pressed.png"]block:^(id sender) {
-            StoreScreenScene *storeScreenScene = [[StoreScreenScene alloc] init];
-            [[CCDirector sharedDirector] replaceScene:storeScreenScene];
+            GameplayLayer *gameplayLayer = [[GameplayLayer alloc] init];
+            [[CCDirector sharedDirector] replaceScene:gameplayLayer];
         }];
         
         CCMenu *nextButtonMenu = [CCMenu menuWithItems:nextButton, nil];

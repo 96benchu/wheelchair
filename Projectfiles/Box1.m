@@ -30,9 +30,9 @@
     self.anchorPoint = ccp(0,0);
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 100;
-	self.position = CGPointMake(screenHeight +100, 60);
+	self.position = CGPointMake(screenHeight +100, 75);
 	self.rotation = 90;
-    self.scale = .35;
+    self.scale = .3;
     self.velocity = ccp(-100, 0);
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;

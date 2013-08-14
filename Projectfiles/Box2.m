@@ -31,8 +31,8 @@
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 100;
 	self.position = CGPointMake(screenHeight +100, 0);
-	self.rotation = 15;
-    self.scaleX = .9;
+	self.rotation = 7;
+    self.scaleX = 1.05;
     self.scaleY = .5;
     self.velocity = ccp(00, 0);
 	// Finally set yourself to be visible, this also flag the enemy as "in use"

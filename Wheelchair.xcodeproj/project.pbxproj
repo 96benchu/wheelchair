@@ -319,7 +319,6 @@
 		A5AFCBBD177A0FF0007C16B6 /* button_backbutton-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA8A177A0FF0007C16B6 /* button_backbutton-hd.png */; };
 		A5AFCBBE177A0FF0007C16B6 /* button_pausebutton-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA8B177A0FF0007C16B6 /* button_pausebutton-hd.png */; };
 		A5AFCBBF177A0FF0007C16B6 /* button_play-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA8C177A0FF0007C16B6 /* button_play-hd.png */; };
-		A5AFCBC0177A0FF0007C16B6 /* button_playbutton-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA8D177A0FF0007C16B6 /* button_playbutton-hd.png */; };
 		A5AFCBC1177A0FF0007C16B6 /* button_topdown-button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA8E177A0FF0007C16B6 /* button_topdown-button-hd.png */; };
 		A5AFCBC2177A0FF0007C16B6 /* joystick-bottom-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA8F177A0FF0007C16B6 /* joystick-bottom-hd.png */; };
 		A5AFCBC3177A0FF0007C16B6 /* joystick-top-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA90177A0FF0007C16B6 /* joystick-top-hd.png */; };
@@ -334,7 +333,6 @@
 		A5AFCBCC177A0FF0007C16B6 /* button_backbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA9A177A0FF0007C16B6 /* button_backbutton.png */; };
 		A5AFCBCD177A0FF0007C16B6 /* button_pausebutton.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA9B177A0FF0007C16B6 /* button_pausebutton.png */; };
 		A5AFCBCE177A0FF0007C16B6 /* button_play.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA9C177A0FF0007C16B6 /* button_play.png */; };
-		A5AFCBCF177A0FF0007C16B6 /* button_playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA9D177A0FF0007C16B6 /* button_playbutton.png */; };
 		A5AFCBD0177A0FF0007C16B6 /* button_topdown-button.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA9E177A0FF0007C16B6 /* button_topdown-button.png */; };
 		A5AFCBD1177A0FF0007C16B6 /* joystick-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCA9F177A0FF0007C16B6 /* joystick-bottom.png */; };
 		A5AFCBD2177A0FF0007C16B6 /* joystick-top.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AFCAA0177A0FF0007C16B6 /* joystick-top.png */; };
@@ -2785,7 +2783,6 @@
 				A5AFCBBD177A0FF0007C16B6 /* button_backbutton-hd.png in Resources */,
 				A5AFCBBE177A0FF0007C16B6 /* button_pausebutton-hd.png in Resources */,
 				A5AFCBBF177A0FF0007C16B6 /* button_play-hd.png in Resources */,
-				A5AFCBC0177A0FF0007C16B6 /* button_playbutton-hd.png in Resources */,
 				A5AFCBC1177A0FF0007C16B6 /* button_topdown-button-hd.png in Resources */,
 				A5AFCBC2177A0FF0007C16B6 /* joystick-bottom-hd.png in Resources */,
 				A5AFCBC3177A0FF0007C16B6 /* joystick-top-hd.png in Resources */,
@@ -2800,7 +2797,6 @@
 				A5AFCBCC177A0FF0007C16B6 /* button_backbutton.png in Resources */,
 				A5AFCBCD177A0FF0007C16B6 /* button_pausebutton.png in Resources */,
 				A5AFCBCE177A0FF0007C16B6 /* button_play.png in Resources */,
-				A5AFCBCF177A0FF0007C16B6 /* button_playbutton.png in Resources */,
 				A5AFCBD0177A0FF0007C16B6 /* button_topdown-button.png in Resources */,
 				A5AFCBD1177A0FF0007C16B6 /* joystick-bottom.png in Resources */,
 				A5AFCBD2177A0FF0007C16B6 /* joystick-top.png in Resources */,
@@ -3148,6 +3144,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ashu Desai (2FQSYRXGFL)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/mgwuSDK.embeddedframework\"",
@@ -3158,6 +3155,7 @@
 					"$(KKFRAMEWORKS_IOS)",
 					"-lsqlite3.0",
 				);
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DF2FF1AD-3007-4DC7-89ED-CBAB8C33C59C";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

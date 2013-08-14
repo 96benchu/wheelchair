@@ -1068,7 +1068,7 @@
                 {
                     enemy2.velocity = ccp(data.scrollSpeed, enemy2.velocity.y);
                 }
-                if(enemy2.position.x<-100)
+                if(enemy2.position.x<-500)
                 {
                     enemy2.visible =NO;
                 }
