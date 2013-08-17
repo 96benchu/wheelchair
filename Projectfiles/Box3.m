@@ -10,11 +10,19 @@
 #import "GameMechanics.h"
 @implementation Box3
 @synthesize velocity;
+- (void)dealloc
+{
+    /*
+     When our object is removed, we need to unregister from all notifications.
+     */
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 -(id)initWithBox3Image
 {
     self = [super initWithSpriteFrameName:@"basicbarrell.png"];
     [self scheduleUpdate];
-    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gamePaused) name:@"GamePaused" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameResumed) name:@"GameResumed" object:nil];
     return self;
 }
 - (void)spawn
@@ -37,6 +45,16 @@
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
 }
+- (void)gamePaused
+{
+    [self pauseSchedulerAndActions];
+}
+
+- (void)gameResumed
+{
+    [self resumeSchedulerAndActions];
+}
+
 -(void) gotStolen
 {
     

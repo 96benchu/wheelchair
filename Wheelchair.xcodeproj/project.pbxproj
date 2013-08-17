@@ -278,6 +278,8 @@
 		62F0C64F174FD3C600FB096E /* CCNode+Autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C64E174FD3C600FB096E /* CCNode+Autolayout.m */; };
 		62F0C652174FDA9100FB096E /* StoreTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */; };
 		A53E049B17989E8C003443D0 /* Coins.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E049A17989E8C003443D0 /* Coins.m */; };
+		A54E566D17BD6D64002B28BC /* Lifetime.m in Sources */ = {isa = PBXBuildFile; fileRef = A54E566C17BD6D64002B28BC /* Lifetime.m */; };
+		A54E566F17BD93E1002B28BC /* Wheelchair.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A54E566E17BD93E1002B28BC /* Wheelchair.jpg */; };
 		A58388EC177CBC8A0059F152 /* Ramps.m in Sources */ = {isa = PBXBuildFile; fileRef = A58388EB177CBC8A0059F152 /* Ramps.m */; };
 		A59EDE8A178C858300DC7EAF /* Box1.m in Sources */ = {isa = PBXBuildFile; fileRef = A59EDE89178C858300DC7EAF /* Box1.m */; };
 		A5AD9B60178232C5005655B8 /* ramp-animations.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5AD9B5F178232C5005655B8 /* ramp-animations.plist */; };
@@ -933,6 +935,9 @@
 		62F0C651174FDA9100FB096E /* StoreTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoreTableViewHeaderCell.m; path = Scenes/StoreScene/StoreTableViewHeaderCell.m; sourceTree = "<group>"; };
 		A53E049917989E8C003443D0 /* Coins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coins.h; sourceTree = "<group>"; };
 		A53E049A17989E8C003443D0 /* Coins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coins.m; sourceTree = "<group>"; };
+		A54E566B17BD6D64002B28BC /* Lifetime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lifetime.h; sourceTree = "<group>"; };
+		A54E566C17BD6D64002B28BC /* Lifetime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lifetime.m; sourceTree = "<group>"; };
+		A54E566E17BD93E1002B28BC /* Wheelchair.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Wheelchair.jpg; sourceTree = "<group>"; };
 		A58388EA177CBC8A0059F152 /* Ramps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ramps.h; sourceTree = "<group>"; };
 		A58388EB177CBC8A0059F152 /* Ramps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ramps.m; sourceTree = "<group>"; };
 		A59EDE88178C858300DC7EAF /* Box1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box1.h; sourceTree = "<group>"; };
@@ -1645,6 +1650,8 @@
 			children = (
 				62CD5DBF17430201002EC156 /* MainMenuLayer.h */,
 				62CD5DC017430201002EC156 /* MainMenuLayer.m */,
+				A54E566B17BD6D64002B28BC /* Lifetime.h */,
+				A54E566C17BD6D64002B28BC /* Lifetime.m */,
 			);
 			name = MainMenu;
 			sourceTree = "<group>";
@@ -2079,6 +2086,7 @@
 		A5AFCAC1177A0FF0007C16B6 /* regular */ = {
 			isa = PBXGroup;
 			children = (
+				A54E566E17BD93E1002B28BC /* Wheelchair.jpg */,
 				A5AFCAC2177A0FF0007C16B6 /* barrell.png */,
 				A5AFCAC3177A0FF0007C16B6 /* basicbarrell.png */,
 				A5AFCAC4177A0FF0007C16B6 /* block.png */,
@@ -3039,6 +3047,7 @@
 				A5B88B8D17B444DC00596B30 /* Fire.JPG in Resources */,
 				A5B88B8F17B45E5500596B30 /* bar.png in Resources */,
 				A5B88B9117B45E5C00596B30 /* barFrame.png in Resources */,
+				A54E566F17BD93E1002B28BC /* Wheelchair.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3122,6 +3131,7 @@
 				A5B79F4017A723FD0073BA09 /* TutBox.m in Sources */,
 				A5B4152F17A9C3DE00D65905 /* Box2.m in Sources */,
 				A5B4153217A9C40000D65905 /* Box3.m in Sources */,
+				A54E566D17BD6D64002B28BC /* Lifetime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3144,7 +3154,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ashu Desai (2FQSYRXGFL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jeremy Rossmann (4497S2CL2T)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks/mgwuSDK.embeddedframework\"",
@@ -3155,7 +3165,7 @@
 					"$(KKFRAMEWORKS_IOS)",
 					"-lsqlite3.0",
 				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DF2FF1AD-3007-4DC7-89ED-CBAB8C33C59C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D86EDE02-CE67-4D8A-8AF7-9C0A0F08E5C9";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

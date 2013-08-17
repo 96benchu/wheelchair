@@ -16,7 +16,7 @@
 #import "Store.h"
 #import "GameMechanics.h"
 
-#define TITLE_LABEL @"Endless Runner Demo Game"
+#define TITLE_LABEL @"Wheelchair Hero"
 #define TITLE_AS_SPRITE TRUE
 
 @interface MainMenuLayer ()
@@ -38,18 +38,20 @@
         [self addChild:colorLayer z:0];
     
         //setup the start menu title
-        if (!TITLE_AS_SPRITE) {
+        /*if (!TITLE_AS_SPRITE) {*/
             // OPTION 1: Title as Text
             CCLabelTTF *tempStartTitleLabel = [CCLabelTTF labelWithString:TITLE_LABEL
-                                                   fontName:@"Arial"
-                                                   fontSize:20];
+                                                   fontName:@"Helvetica-Bold"
+                                                   fontSize:32];
             tempStartTitleLabel.color = DEFAULT_FONT_COLOR;
             startTitleLabel = tempStartTitleLabel;
+        /*
         } else {
             // OPTION 2: Title as Sprite
             CCSprite *startLabelSprite = [CCSprite spriteWithFile:@"title.png"];
             startTitleLabel = startLabelSprite;
         }
+         */
         
         CGPoint screenCenter = [CCDirector sharedDirector].screenCenter;
         CGSize screenSize = [CCDirector sharedDirector].screenSize;
@@ -94,10 +96,13 @@
     
     CCSequence *menuHideMovement = [CCSequence actions:moveOffScreen, movementCompleted, nil];
     [self runAction:menuHideMovement];
-
-    /** Start the game and display the HUD */
+    GameplayLayer *gameplayLayer = [[GameplayLayer alloc] init];
+    [[CCDirector sharedDirector] replaceScene:gameplayLayer];
+    
     [[[GameMechanics sharedGameMechanics] gameScene] startGame];
     [[[GameMechanics sharedGameMechanics] gameScene] showHUD:TRUE];
+     
+     
 }
 
 #pragma mark - Scene Lifecyle
@@ -116,7 +121,7 @@
     [startTitleLabel runAction: easeMove];
     
     // set game state to "MenuState" when this menu appears
-    [[GameMechanics sharedGameMechanics] setGameState:GameStateMenu];
+    //[[GameMechanics sharedGameMechanics] setGameState:GameStateMenu];
     
     // hide the HUD of the gamePlayLayer
     [[[GameMechanics sharedGameMechanics] gameScene] hideHUD:FALSE];

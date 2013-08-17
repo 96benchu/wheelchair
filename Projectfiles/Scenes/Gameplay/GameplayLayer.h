@@ -65,6 +65,7 @@
     CCLabelTTF *jumpLabel;
     CCLabelTTF *nitroLabel;
     CCLabelTTF *nitroLabel2;
+    CCLabelTTF *faster;
     /* Jump button */
     CCMenu *jumpButtonMenu;
     CCMenuItemSprite *jumpButtonMenuItem;
@@ -111,6 +112,11 @@
     BOOL text51;
     int counter11;
     int counter12;
+    BOOL correct;
+    BOOL correct2;
+    int counter13;
+    int maxSwipes;
+    double timeSpent;
 }
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.

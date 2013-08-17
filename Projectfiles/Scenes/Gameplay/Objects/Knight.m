@@ -21,7 +21,7 @@
 }
 
 - (id)initWithKnightPicture {
-    self = [super initWithFile:@"animation_knight-1.png"];
+    self = [super initWithFile:@"Wheelchair.jpg"];
     
     if (self)
     {
@@ -31,7 +31,7 @@
         // knight is initally not moving
         self.velocity = ccp(0,0);
         self.invincible = FALSE;
-        
+        /*
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile: @"animation_knight.plist"];
         
         // ************* RUNNING ANIMATION ********************
@@ -79,7 +79,7 @@
         stab = [CCSequence actions:startStab, stabAction, finishStab, nil];
         
         // run knight running animation
-        [self runAction:run];
+        [self runAction:run];*/
         
         [self scheduleUpdate];
         
@@ -87,6 +87,7 @@
          A Notification can be used to broadcast an information to all objects of a game, that are interested in it.
          Here we sign up for the 'GamePaused' and 'GameResumed' information, that is broadcasted by the GameMechanics class. Whenever the game pauses or resumes, we get informed and can react accordingly.
          **/
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gamePaused) name:@"GamePaused" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameResumed) name:@"GameResumed" object:nil];
     }
@@ -118,6 +119,8 @@
     
      Truth* data = [Truth sharedData];
     // can only jump of the floor
+    if(self.rotation > -12)
+    {
     if(data.onRamp == FALSE && data.recent == FALSE)
     {
     if (self.position.y == [[GameMechanics sharedGameMechanics] floorHeight])
@@ -135,6 +138,7 @@
             self.velocity = ccp(self.velocity.x, 300.f);
             self.jumpCounter++;
         }
+    }
     }
     }
     

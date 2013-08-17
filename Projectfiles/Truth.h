@@ -20,5 +20,12 @@
 @property (nonatomic) BOOL recent;
 @property (nonatomic) BOOL collect;
 @property (nonatomic) BOOL nitroOn;
+@property (nonatomic) int maxSpeed;
+@property (nonatomic) float timeSpent;
+@property (nonatomic) int totalSwipes;
+@property (nonatomic) int blasted;
+@property (nonatomic) int climbed;
+@property (nonatomic) int fuelLeft;
+@property (nonatomic) int maxSwipes;
 +(Truth*) sharedData;
 @end

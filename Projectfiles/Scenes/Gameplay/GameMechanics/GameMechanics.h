@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, GameState) {
 
 #define SCROLL_SPEED_DEFAULT 20.f
 #define SCROLL_SPEED_SKIP_AHEAD 100.f
-#define KNIGHT_HIT_POINTS 5
+#define KNIGHT_HIT_POINTS 1
 
 @interface GameMechanics : NSObject
 

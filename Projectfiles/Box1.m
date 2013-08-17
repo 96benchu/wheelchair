@@ -10,12 +10,19 @@
 #import "GameMechanics.h"
 @implementation Box1
 @synthesize velocity;
-
+- (void)dealloc
+{
+    /*
+     When our object is removed, we need to unregister from all notifications.
+     */
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 -(id)initWithBoxImage
 {
     self = [super initWithSpriteFrameName:@"basicbarrell.png"];
     [self scheduleUpdate];
-    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gamePaused) name:@"GamePaused" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameResumed) name:@"GameResumed" object:nil];
     return self;
 }
 - (void)spawn
@@ -30,13 +37,23 @@
     self.anchorPoint = ccp(0,0);
 	float xPos = screenRect.size.width + spriteSize.width * 0.5f;
 	float yPos = 100;
-	self.position = CGPointMake(screenHeight +100, 75);
+	self.position = CGPointMake(screenHeight +100, 65);
 	self.rotation = 90;
     self.scale = .3;
     self.velocity = ccp(-100, 0);
 	// Finally set yourself to be visible, this also flag the enemy as "in use"
 	self.visible = YES;
 }
+- (void)gamePaused
+{
+    [self pauseSchedulerAndActions];
+}
+
+- (void)gameResumed
+{
+    [self resumeSchedulerAndActions];
+}
+
 -(void) gotStolen
 {
     
