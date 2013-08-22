@@ -15,8 +15,9 @@
 #import "Mission.h"
 #import "Store.h"
 #import "GameMechanics.h"
+#import "Lifetime.h"
 
-#define TITLE_LABEL @"Wheelchair Hero"
+#define TITLE_LABEL @"Wheels"
 #define TITLE_AS_SPRITE TRUE
 
 @interface MainMenuLayer ()
@@ -34,8 +35,8 @@
         [Store setupDefault];
         
         // set background color
-        CCLayerColor* colorLayer = [CCLayerColor layerWithColor:SCREEN_BG_COLOR_TRANSPARENT];
-        [self addChild:colorLayer z:0];
+        CCLayerColor* colorLayer = [CCLayerColor layerWithColor:ccc4(0,0,0,0)];
+        [self addChild:colorLayer z:1];
     
         //setup the start menu title
         /*if (!TITLE_AS_SPRITE) {*/
@@ -52,9 +53,13 @@
             startTitleLabel = startLabelSprite;
         }
          */
+        CCSprite* background = [CCSprite spriteWithFile:@"background.png"];
+        
+        [self addChild:background z:0];
         
         CGPoint screenCenter = [CCDirector sharedDirector].screenCenter;
         CGSize screenSize = [CCDirector sharedDirector].screenSize;
+    background.position = screenCenter;
         
         // place the startTitleLabel off-screen, later we will animate it on screen 
         startTitleLabel.position = ccp (screenCenter.x, screenSize.height + 100);
@@ -72,12 +77,18 @@
             CCScene *scene = [[StoreScreenScene alloc] init];
             [[CCDirector sharedDirector] replaceScene:scene];
         }];
-        storeButton.color = DEFAULT_FONT_COLOR;
-
-        startMenu = [CCMenu menuWithItems:startButton, storeButton, nil];
+        storeButton.color = ccc3(0,0,0);
+        recordButton = [CCMenuItemFont itemWithString:@"Lifetime Records" block:^(id sender) {
+            Lifetime *scene = [[Lifetime alloc] init];
+            [[CCDirector sharedDirector] replaceScene:scene];
+        }];
+        recordButton.color = ccc3(0,0,0);
+        startMenu = [CCMenu menuWithItems:startButton, storeButton, recordButton,nil];
         startMenu.position = ccp(screenCenter.x, screenCenter.y - 50);
         [startMenu alignItemsVertically];
         [self addChild: startMenu];
+        /* add lifetime button*/
+
 	}
 
 	return self;

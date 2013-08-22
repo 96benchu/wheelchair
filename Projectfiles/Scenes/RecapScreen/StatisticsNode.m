@@ -54,9 +54,10 @@
     
     int yPosition = self.contentSize.height - (titleLabel.contentSize.height);
     
-    for (NSString *highScoreString in highScoreStrings) {
+    for (NSString *highScoreString in highScoreStrings)
+    {
         CCLabelTTF *highScoreLabel = [CCLabelTTF labelWithString:highScoreString
-                                                        fontName:DEFAULT_FONT
+                                                        fontName:@"Helvetica"
                                                         fontSize:20];
         highScoreLabel.color = DEFAULT_FONT_COLOR;
         highScoreLabel.anchorPoint = ccp(0, 1);

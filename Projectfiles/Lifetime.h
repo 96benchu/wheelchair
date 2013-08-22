@@ -9,5 +9,8 @@
 #import "CCLayer.h"
 
 @interface Lifetime : CCLayer
+{
+   
+}
 
 @end

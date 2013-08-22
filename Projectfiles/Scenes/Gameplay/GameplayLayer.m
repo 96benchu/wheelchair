@@ -196,7 +196,7 @@
         CCSprite *pauseButtonPressed = [CCSprite spriteWithFile:@"pause-pressed.png"];
         pauseButtonMenuItem = [CCMenuItemSprite itemWithNormalSprite:pauseButton selectedSprite:pauseButtonPressed target:self selector:@selector(pauseButtonPressed)];
         pauseButtonMenu = [CCMenu menuWithItems:pauseButtonMenuItem, nil];
-        pauseButtonMenu.position = ccp(self.contentSize.width - pauseButtonMenuItem.contentSize.width - 4, self.contentSize.height - 58);
+        pauseButtonMenu.position = ccp(self.contentSize.width - pauseButtonMenuItem.contentSize.width - 4, self.contentSize.height - 28);
         [hudNode addChild:pauseButtonMenu];
         //Nitro button
         nitro = [[NitroButton alloc] initWithButtonImage];
@@ -213,6 +213,7 @@
         CGFloat screenHeight = screenRect.size.height;
         jumpButtonMenu.position = ccp(0,49);
         jumpButtonMenu.scale = .5;
+        nitro.position = ccp(screenHeight*3.3/4, screenWidth*1.7/3);
         //[hudNode addChild:jumpButtonMenu];
         // add the enemy cache containing all spawned enemies
         [self addChild:[EnemyCache node]];
@@ -310,23 +311,12 @@
     spikes.position = ccp(0,125);
     spikes.zOrder = 9;
     spikes.rotation = 106;
-    nitro.position = ccp(screenHeight-screenHeight/3.8,190);
-    spikes.velocity = ccp(0,0);
-    arrowButton.position = ccp(jumpButtonMenu.position.x+screenHeight/4, jumpButtonMenu.position.y+142);
-    arrowButton2.position = ccp(nitro.position.x+43, nitro.position.y+100);
-    arrowButton.rotation = 90;
-    arrowButton2.rotation = 90;
-    arrowButton.visible = YES;
-    arrowButton2.visible = YES;
-    arrowButton2.scale = .3;
-    arrowButton.scale=.3;
-    arrow.position = ccp(screenHeight/2,screenWidth-screenWidth*2/3);
-    arrow.visible = NO;
     arrow.scaleX = .08;
     arrow.scaleY = .24;
     arrow.rotation = 270;
     arrowButton.opacity = 0;
     arrowButton2.opacity = 0;
+    arrow.position = ccp(screenHeight/2, screenWidth/2);
     speedUp =10;
     counter = 0;
     counter2 = 29;
@@ -428,7 +418,7 @@
     label8.opacity = 0;
     nitroOn2=false;
     counter12=0;
-    
+    arrow.visible = NO;
     
    //ramp.position = ccp(-500,-500);
 
@@ -534,13 +524,13 @@
     fire.rotation=90;
     // distance depends on the current scrolling speed
     gainedDistance2 += ((int) (delta*[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]));
-    gainedDistance = (int) ( [[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]);
-    game.meters = (int) ((gainedDistance)/20);
+    gainedDistance = (int) ([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]/5);
+    game.meters = (int) ((gainedDistance)/10);
     // update the score display
     pointsDisplayNode.score = game.meters;
     coinsDisplayNode.score = game.score;
     healthDisplayNode.health = knight.hitPoints;
-    spikesDisplayNode.score = gainedDistance2/20;
+    spikesDisplayNode.score = gainedDistance2/10;
     spikesDisplayNode2.score = spikes.velocity.x;
     Truth* data = [Truth sharedData];
     KKInput* input = [KKInput sharedInput];
@@ -577,7 +567,7 @@
     counter++;
     counter7++;
     counter9++;
-    if(text2)
+    if(text22)
     {
         counter10++;
     }
@@ -629,9 +619,14 @@
         [label3 runAction:[CCFadeIn actionWithDuration:.5]];
         text2 = true;
         [label4 runAction:[CCFadeIn actionWithDuration:.5]];
+
+    }
+    if(gainedDistance>=2400 && text22==false)
+    {
         arrow.visible = YES;
         arrow.rotation = 180;
         [arrow runAction:[CCBlink actionWithDuration:2 blinks:3]];
+        text22 = true;
     }
     if(counter10>120*((1/delta)/60))
     {
@@ -651,6 +646,9 @@
         label5.visible = YES;
         label7.visible = YES;
         arrowButton2.visible = YES;
+        arrowButton2.position = ccp(nitro.position.x+44, nitro.position.y+45);
+        arrowButton2.scale = .5;
+        arrowButton2.rotation = 90;
         [arrowButton2 runAction:[CCFadeIn actionWithDuration:.5]];
         [label5 runAction:[CCFadeIn actionWithDuration:.5]];
         [label7 runAction:[CCFadeIn actionWithDuration:.5]];
@@ -962,7 +960,7 @@
                             }
                             else
                             {
-                                spikes.velocity = ccp(spikes.velocity.x -6.8,spikes.velocity.y);
+                                spikes.velocity = ccp(spikes.velocity.x -6.7,spikes.velocity.y);
                             }
                         }
                         else
@@ -1006,6 +1004,8 @@
         //[[GameMechanics sharedGameMechanics] setGameState:GameStateMenu];
         if(gainedDistance2 < 10000)
         {
+            double fuelLeft = knight.fuel/10000;
+            data.fuelLeft = fuelLeft*100;
             [self presentGoOnPopUp];
         }
         else
@@ -1122,9 +1122,9 @@
         counter13=0;
         maxSwipes=0;
     }
-    if(data.maxSpeed<gainedDistance/40)
+    if(data.maxSpeed<=gainedDistance)
     {
-        data.maxSpeed = gainedDistance/40;
+        data.maxSpeed = gainedDistance;
     }
     CGSize spriteSize = data.sprite;
     float x = spriteSize.width;
@@ -1141,6 +1141,7 @@
         //NSLog(ramp.col ? @"Yes" : @"No");
         if(knight.position.y<diffX*z+20)
         {
+            /*
             if ((knight.rotation+5> -atan(z)*(180/M_PI)) && (knight.rotation-5 <-atan(z)*(180/M_PI)) && (!correct2))
             {
                 correct = true;
@@ -1162,6 +1163,7 @@
                 fire.visible = YES;
                 correct = false;
             }
+            */
             knight.position = ccp(knight.position.x, diffX*z+20);
             knight.rotation = -atan(z)*(180/M_PI);
             fire.rotation = atan(z)*(180/M_PI);
@@ -1172,11 +1174,11 @@
             //decreasbackground speed
             if(knight.position.y<diffX*z+20)
             {
-                  frac = 350/(350+(cap-300)/.62);
+                  frac = 350/(350+(cap-300)/.67);
             }
             else
             {
-                 frac = 350/(350+(cap-300)/1.55);
+                 frac = 350/(350+(cap-300)/1.75);
             }
             //double diffY = 1-(knight.position.y/screenWidth)/1.4;
             if(counter>=15*((1/delta)/60))
@@ -1186,7 +1188,7 @@
                     float d = 100.f/327.f;
                     float e = 1/z;
                     float f = e*d;
-                    float g = (f+1)/2;
+                    float g = (f+2)/3;
                     [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*(frac*g)];
                 }
             }
@@ -1198,11 +1200,11 @@
             {
             if(spikes.position.x<-20)
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/26, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/27, spikes.velocity.y);
             }
             else
             {
-                spikes.velocity = ccp(spikes.velocity.x + speedUp/26, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/27, spikes.velocity.y);
             }
             
             recent = true;
@@ -1227,6 +1229,7 @@
             recent = false;
             data.recent = recent;
             data.climbed+=1;
+            NSLog(@"climbed");
             correct2 = false;
         }
     }
@@ -1538,7 +1541,7 @@
     
     [[GameMechanics sharedGameMechanics] setGameState:GameStatePaused];
     CCScale9Sprite *backgroundImage = [StyleManager goOnPopUpBackground];
-    goOnPopUp = [PopupProvider presentPopUpWithContentString:nil backgroundImage:backgroundImage target:self selector:@selector(goOnPopUpButtonClicked:) buttonTitles:@[@"finish", @"restart tutorial?"]];
+    goOnPopUp = [PopupProvider presentPopUpWithContentString:nil backgroundImage:backgroundImage target:self selector:@selector(goOnPopUpButtonClicked:) buttonTitles:@[@"finish", @"restart"]];
     //[self addChild:goOnPopUp];
     [self disableGameplayButtons];
 }
@@ -1657,7 +1660,7 @@
        [goOnPopUp dismiss];
         [[GameMechanics sharedGameMechanics] setGameState:GameStateMenu];
         
-        RecapScreenScene*recap = [[RecapScreenScene alloc] init];
+        RecapScreenScene*recap = [[RecapScreenScene alloc] initWithGame:(game)];
         [[CCDirector sharedDirector] replaceScene:recap];
          
         

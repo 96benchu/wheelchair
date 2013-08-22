@@ -9,6 +9,7 @@
 #import "Leaderboard.h"
 #import "GameMechanics.h"
 #import "Game.h"
+#import "Truth.h"
 
 #define PERSONAL_RECORD_RUNNING_DISTANCE_KEY @"Running_Record"
 #define USERNAME_KEY @"UserName"
@@ -52,6 +53,7 @@
 
 + (int)personalRecordRunningDistance
 {
+    Truth *data = [Truth sharedData];
     int returnValue = 0;
     
     NSDictionary *highscore = [MGWU getMyHighScoreForLeaderboard:DISTANCE_LEADERBOARD];
@@ -64,9 +66,9 @@
     Game *game = [[GameMechanics sharedGameMechanics] game];
     
     // check if the current distance is better then the highest one
-    if (game.meters > returnValue)
+    if (data.gainedDistance > returnValue)
     {
-        returnValue = game.meters;
+        returnValue = data.gainedDistance;
     }
     
     return returnValue;

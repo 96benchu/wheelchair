@@ -116,6 +116,7 @@
     BOOL correct2;
     int counter13;
     int maxSwipes;
+    BOOL text22;
     double timeSpent;
 }
 

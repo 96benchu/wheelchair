@@ -670,9 +670,11 @@
                 box.visible = NO;
                 [box gotStolen];
                 data.blasted+=1;
+                NSLog(@"stolen");
             }
             else{
            // NSLog(@"done");
+                [box gotStolen];
             return true;
             }
         }
@@ -718,6 +720,7 @@
             }
             else{
             // NSLog(@"done");
+                [box3 gotStolen];
             return true;
             }
             }

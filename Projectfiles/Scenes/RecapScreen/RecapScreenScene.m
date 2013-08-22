@@ -44,6 +44,9 @@
     
     if (self)
     {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        CGFloat screenHeight = screenRect.size.height;
         game = g;
         Truth *data = [Truth sharedData];
         CGSize screenSize = [CCDirector sharedDirector].screenSize;
@@ -58,52 +61,127 @@
          The second panel (tabNode) is a UI component with multiple tabs.
          One tab will show the completed missions (MissionNode), another one will show the leaderboard (LeaderboardNode)
          */
-        
+        NSNumber *currentHighScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"highscore"];
+        int hs = [currentHighScore intValue];
+        NSNumber *currentHighScore2 = [[NSUserDefaults standardUserDefaults] objectForKey:@"distance"];
+        int hs2 = [currentHighScore2 intValue];
+        NSNumber *currentHighScore3 = [[NSUserDefaults standardUserDefaults] objectForKey:@"swipes"];
+        int hs3 = [currentHighScore3 intValue];
+        NSNumber *currentHighScore4 = [[NSUserDefaults standardUserDefaults] objectForKey:@"maxSwipes"];
+        int hs4 = [currentHighScore4 intValue];
+        NSNumber *currentHighScore5 = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeRamps"];
+        int hs5 = [currentHighScore5 intValue];
+        NSNumber *currentHighScore6 = [[NSUserDefaults standardUserDefaults] objectForKey:@"ramps"];
+        int hs6 = [currentHighScore6 intValue];
+        NSNumber *currentHighScore7 = [[NSUserDefaults standardUserDefaults] objectForKey:@"barrells"];
+        int hs7 = [currentHighScore7 intValue];
+        NSNumber *currentHighScore8 = [[NSUserDefaults standardUserDefaults] objectForKey:@"coins"];
+        int hs8 = [currentHighScore8 intValue];
+
         /********** Statistics Panel *********/
-        NSString *highscore = [NSString stringWithFormat:@"Max speed: %i meters per second", data.maxSpeed];
-        NSString *distance = [NSString stringWithFormat:@"%i meters traveled", data.gainedDistance/2];
-        NSString *swipes = [NSString stringWithFormat:@"%i total swipes" , data.totalSwipes];
-        NSString *swipes2 = [NSString stringWithFormat:@"Max swipes per second: %i", data.maxSwipes];
-        NSString *spentRamp = [NSString stringWithFormat:@"%i seconds spent on ramps", (int)data.timeSpent/60];
-        NSString *spentRamp2 = [NSString stringWithFormat:@"%i ramps climbed", data.climbed];
-        NSString *barrells = [NSString stringWithFormat:@"%i barrells busted", data.blasted];
-        NSString *fuel = [NSString stringWithFormat:@"fuel left %i%% ", data.fuelLeft];
+        if(data.maxSpeed>=hs)
+        {
+            hs = data.maxSpeed;
+            
+        }
+        NSNumber *highscore = [NSNumber numberWithInteger:hs];
+        NSNumber *distance = [NSNumber numberWithInteger :data.gainedDistance+hs2];
+        NSNumber *swipes = [NSNumber numberWithInteger : data.totalSwipes+hs3];
+        if(data.maxSwipes>=hs4)
+        {	
+            hs4= data.maxSwipes;
+            
+        }
+        NSNumber *swipes2 = [NSNumber numberWithInteger :hs4];
+        NSNumber *spentRamp = [NSNumber numberWithFloat:data.timeSpent/60 + hs5];
+        NSNumber*spentRamp2 = [NSNumber numberWithInteger: data.climbed + hs6];
+        NSNumber *barrells = [NSNumber numberWithInteger:data.blasted +hs7];
+       // NSNumber *fuel = [NSString stringWithFormat:@"fuel left %i%% ", data.fuelLeft];
+       
+
+        
+        [[NSUserDefaults standardUserDefaults] setObject:highscore forKey:@"fastest"];
+        [[NSUserDefaults standardUserDefaults] setObject:distance forKey:@"distance"];
+        [[NSUserDefaults standardUserDefaults] setObject:swipes forKey:@"swipes"];
+        [[NSUserDefaults standardUserDefaults] setObject:swipes2 forKey:@"maxSwipes"];
+        [[NSUserDefaults standardUserDefaults] setObject:spentRamp forKey:@"timeRamps"];
+        [[NSUserDefaults standardUserDefaults] setObject:spentRamp2 forKey:@"ramps"];
+        [[NSUserDefaults standardUserDefaults] setObject:barrells forKey:@"barrells"];
+        //[[NSUserDefaults standardUserDefaults] setObject:hs8+bonus+coin forKey:@"coins"];
+        //[[NSUserDefaults standardUserDefaults] setObject:fuel forKey:@"highS"];
         int coin = (data.gainedDistance - 500)/25;
         if(coin<0)
         {
             coin = 0;
         }
         int bonus = data.fuelLeft/10;
-        NSString *coins = [NSString stringWithFormat:@"Coins earned this round:%i", coin];
-        NSString *coins2 = [NSString stringWithFormat:@"+bonus fuel:%i for %i coins" , bonus,bonus+coin];
+        NSString *distanced = [NSString stringWithFormat:@"%i",data.gainedDistance];
+       // NSString *coins1 = [NSString stringWithFormat:@"and earned %i Coins ", coin];
+        //NSString *coins2 = [NSString stringWithFormat:@"plus %i bonus fuel coins" , bonus];
+         NSString *coins3 = [NSString stringWithFormat:@"%i", bonus+coin];
+        NSNumber *coins = [NSNumber numberWithInteger:bonus+coin +hs8];
+        [[NSUserDefaults standardUserDefaults] setObject:coins forKey:@"coins"];
+        CCLabelTTF *label1 = [CCLabelTTF labelWithString: @"You rolled" fontName:@"HelveticaNeue" fontSize:14];
+        CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"meters" fontName:@"HelveticaNeue" fontSize:14];
+        CCLabelTTF *label3 = [CCLabelTTF labelWithString:@"and gained" fontName:@"HelveticaNeue" fontSize:14];
+        CCLabelTTF *label4 = [CCLabelTTF labelWithString:@"coins"fontName:@"HelveticaNeue" fontSize:14];
+        CCLabelTTF *label12 = [CCLabelTTF labelWithString: distanced fontName:@"HelveticaNeue" fontSize:40];
+        CCLabelTTF *label32 = [CCLabelTTF labelWithString: coins3 fontName:@"HelveticaNeue" fontSize:40];
+        NSString *total = [NSString stringWithFormat:@"%@ coins", coins];
+        CCLabelTTF *label5 = [CCLabelTTF labelWithString:total fontName:@"HelveticaNeue" fontSize:18];
+        label1.position = ccp(screenHeight/20, screenWidth*2.8/4);
+        label12.position = ccp(label1.position.x+label1.contentSize.width+3, screenWidth*2.8/4-7);
+        label2.position = ccp(label12.position.x+label12.contentSize.width+2, screenWidth*2.8/4);
+        label3.position = ccp(screenHeight/20, screenWidth/1.7);
+        label32.position = ccp(label3.position.x+label3.contentSize.width, screenWidth/1.7-7);
+        label4.position = ccp(label32.position.x+label32.contentSize.width+2, screenWidth/1.7);
+        label1.anchorPoint = ccp(0,0);
+        label12.anchorPoint = ccp(0,0);
+        label2.anchorPoint = ccp(0,0);
+        label32.anchorPoint = ccp(0,0);
+        label3.anchorPoint = ccp(0,0);
+        label4.anchorPoint = ccp(0,0);
+        label1.visible = YES;
+        label12.visible = YES;
+        label2.visible = YES;
+        label3.visible = YES;
+        label4.visible = YES;
+        label32.visible = YES;
+        label1.color = ccc3(0,0,0);
+        label2.color = ccc3(0,0,0);
+        label3.color = ccc3(0,0,0);
+        label4.color = ccc3(0,0,0);
+        label12.color = ccc3(0,0,0);
+        label32.color = ccc3(0,0,0);
         //NSString *closeCalls = [NSString stringWithFormat:@"%i% close calls with spikes", data.closeCall];
-        NSArray *highScoreStrings = [NSArray arrayWithObjects:distance,/*highscore, swipes, swipes2, barrells, spentRamp, spentRamp2, fuel,*/ coins, coins2, nil];
+        //NSArray *highScoreStrings = [NSArray arrayWithObjects:distanced,/*highscore, swipes, swipes2, barrells, spentRamp, spentRamp2, fuel,*/ coins1, coins2, coins3, nil];
 
         // setup the statistics panel with the current game information of the user
-        statisticsNode = [[StatisticsNode alloc] initWithTitle:@"GAME OVER" highScoreStrings:highScoreStrings];
-        statisticsNode.contentSize = CGSizeMake(200, 200);
-        statisticsNode.anchorPoint = ccp(0, 1);
-        statisticsNode.position = ccp(2 ,screenSize.height - 60);
-        [self addChild:statisticsNode];
+        //statisticsNode = [[StatisticsNode alloc] initWithTitle:@"GAME OVER" highScoreStrings:highScoreStrings];
+        //statisticsNode.contentSize = CGSizeMake(200, 200);
+        //statisticsNode.anchorPoint = ccp(0, 1);
+        //statisticsNode.position = ccp(2 ,screenSize.height - 60);
+        //[self addChild:statisticsNode];
         
         /********** Mission Panel *********/
-        missionNode = [[MissionsNode alloc] initWithMissions:game.missions];
-        missionNode.contentSize = CGSizeMake(240.f, 201.f);
+        //missionNode = [[MissionsNode alloc] initWithMissions:game.missions];
+        //missionNode.contentSize = CGSizeMake(240.f, 201.f);
         // we want to use a fixed size image on the recap screen
-        missionNode.usesScaleSpriteBackground = FALSE;
+        //missionNode.usesScaleSpriteBackground = FALSE;
         
         /********** Leaderboard Panel *********/
         leaderboardNode = [[LeaderboardNode alloc] initWithScoreBoard:nil];
-        leaderboardNode.contentSize = CGSizeMake(240.f, 201.f);
-        
+        leaderboardNode.contentSize = CGSizeMake(50.f, 50.f);
+        leaderboardNode.position = ccp(screenHeight/5, screenWidth/5);
+        //leaderboardNode.anchorPoint = ccp(0,0);
         /********** TabView Panel *********/
-        NSArray *tabs = @[missionNode, leaderboardNode];
-        NSArray *tabTitles = @[@"Achievements", @"Leaderboards"];
+        NSArray *tabs = @[leaderboardNode];
+        NSArray *tabTitles = @[ @"Leaderboards"];
         tabNode = [[TabNode alloc] initWithTabs:tabs tabTitles:tabTitles];
-        tabNode.contentSize = CGSizeMake(270, 208);
+        tabNode.contentSize = CGSizeMake(100, 100);
         tabNode.anchorPoint = ccp(0,1);
         // initially this view will be off screen and will be animated on screen
-        tabNode.position =  ccp(screenSize.width - 30,screenSize.height - 20);
+        tabNode.position =  ccp(screenSize.width - 20,screenSize.height - 150);
         [self addChild:tabNode];
         
         /*********** Facebook, Twitter, MGWU and MoreGames Menu **********/
@@ -120,22 +198,20 @@
         socialMenu.anchorPoint = ccp(0,1);
         [socialMenu alignItemsHorizontallyWithPadding:0.f];
         [self addChild:socialMenu];
-        CCLabelTTF *protip = [CCLabelTTF labelWithString:@"Protip: Nitroing while jumping allows" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip1 = [CCLabelTTF labelWithString:@"you to leap over large distances!" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip2 = [CCLabelTTF labelWithString:@"Protip: Long swipes are equivalent to smaller ones!" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip3 = [CCLabelTTF labelWithString:@"Protip: Try swiping in the middle-bottom of your screen;" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip31 = [CCLabelTTF labelWithString:@"your thumb will often block your view otherwise" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip4 = [CCLabelTTF labelWithString:@"Protip: Buy upgrades to go farther and longer!" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip5 = [CCLabelTTF labelWithString:@"Protip: The initial burst of nitro" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip52 = [CCLabelTTF labelWithString:@" is stronger than subsequent usage," fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip51 = [CCLabelTTF labelWithString:@"this effect refreshes every 3 seconds" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip6 = [CCLabelTTF labelWithString:@"Protip: Becareful when using nitro;" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip61 = [CCLabelTTF labelWithString:@"you may find yourself running out" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip62 = [CCLabelTTF labelWithString:@"or accidentally crashing into objects" fontName:@"Helvetica" fontSize:12];
-        CCLabelTTF *protip7 = [CCLabelTTF labelWithString:@"Protip: Stop getting hit by stuff!" fontName:@"Helvetica" fontSize:12];
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
-        CGFloat screenHeight = screenRect.size.height;
+        CCLabelTTF *protip = [CCLabelTTF labelWithString:@"Protip: Nitroing while jumping allows" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip1 = [CCLabelTTF labelWithString:@"you to leap over large distances!" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip2 = [CCLabelTTF labelWithString:@"Protip: Long swipes are equivalent to smaller ones!" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip3 = [CCLabelTTF labelWithString:@"Protip: Try swiping in the middle-bottom of your screen;" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip31 = [CCLabelTTF labelWithString:@"your thumb will often block your view otherwise" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip4 = [CCLabelTTF labelWithString:@"Protip: Buy upgrades to go farther and longer!" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip5 = [CCLabelTTF labelWithString:@"Protip: The initial burst of nitro" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip52 = [CCLabelTTF labelWithString:@"is stronger than subsequent usage," fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip51 = [CCLabelTTF labelWithString:@"this effect refreshes every 3 seconds" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip6 = [CCLabelTTF labelWithString:@"Protip: Becareful when using nitro;" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip61 = [CCLabelTTF labelWithString:@"you may find yourself running out" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip62 = [CCLabelTTF labelWithString:@"or accidentally crashing into objects" fontName:@"HelveticaNeue-Light" fontSize:12];
+        CCLabelTTF *protip7 = [CCLabelTTF labelWithString:@"Protip: Stop getting hit by stuff!" fontName:@"HelveticaNeue-Light" fontSize:12];
+        
         int rand = arc4random()%7;
         protip.visible = NO;
         protip1.visible = NO;
@@ -189,21 +265,26 @@
         protip61.anchorPoint = ccp(0,0);
         protip62.anchorPoint = ccp(0,0);
         protip7.anchorPoint = ccp(0,0);
-        protip.position = ccp(screenHeight/23, screenWidth/3.5);
-        protip1.position = ccp(screenHeight/23, screenWidth/4.2);
-        protip2.position = ccp(screenHeight/23, screenWidth/3.5);
-        protip3.position = ccp(screenHeight/23, screenWidth/3.5);
-        protip31.position = ccp(screenHeight/23, screenWidth/4.2);
-        protip4.position = ccp(screenHeight/23, screenWidth/3.5);
-        protip5.position = ccp(screenHeight/23, screenWidth/3.5);
-        protip6.position = ccp(screenHeight/23, screenWidth/3.5);
-        protip52.position = ccp(screenHeight/23, screenWidth/4.2);
-        protip51.position = ccp(screenHeight/23, screenWidth/5.2);
-        protip61.position = ccp(screenHeight/23, screenWidth/4.2);
-        protip62.position = ccp(screenHeight/23, screenWidth/5.2);
-        protip7.position = ccp(screenHeight/23, screenWidth/3.5);
+        protip.position = ccp(screenHeight/23, screenWidth/4.5);
+        protip1.position = ccp(screenHeight/23, screenWidth/5.5);
+        protip2.position = ccp(screenHeight/23, screenWidth/4.5);
+        protip3.position = ccp(screenHeight/23, screenWidth/4.5);
+        protip31.position = ccp(screenHeight/23, screenWidth/5.5);
+        protip4.position = ccp(screenHeight/23, screenWidth/4.5);
+        protip5.position = ccp(screenHeight/23, screenWidth/4.5);
+        protip6.position = ccp(screenHeight/23, screenWidth/4.5);
+        protip52.position = ccp(screenHeight/23, screenWidth/5.5);
+        protip51.position = ccp(screenHeight/23, screenWidth/6.8);
+        protip61.position = ccp(screenHeight/23, screenWidth/5.5);
+        protip62.position = ccp(screenHeight/23, screenWidth/6.8);
+        protip7.position = ccp(screenHeight/23, screenWidth/4.5);
         
-        
+        [self addChild:label1];
+        [self addChild:label2];
+        [self addChild:label3];
+        [self addChild:label4];
+        [self addChild:label12];
+        [self addChild:label32];
         if(rand ==1)
         {
             protip.visible = YES;
@@ -256,6 +337,31 @@
         nextButtonMenu.anchorPoint = ccp(1,0);
         nextButtonMenu.position = ccp(self.contentSize.width - 60, 40);
         [self addChild:nextButtonMenu];
+        CCMenuItemSprite *replay = [CCMenuItemSprite itemWithNormalSprite:[CCSprite spriteWithFile:@"restart.png"] selectedSprite:[CCSprite spriteWithFile:@"restart.png"]block:^(id sender) {
+            GameplayLayer *gameplayLayer2 = [[GameplayLayer alloc] init];
+            [[CCDirector sharedDirector] replaceScene:gameplayLayer2];
+        }];
+        
+        replay.scale = .5;
+         CCMenu *replayButtonMenu = [CCMenu menuWithItems:replay, nil];
+        replayButtonMenu.anchorPoint = ccp(1,0);
+        replayButtonMenu.position = ccp(screenHeight/3, screenWidth/2.5);
+        [self addChild:replayButtonMenu];
+        CCMenuItemSprite *shop = [CCMenuItemSprite itemWithNormalSprite:[CCSprite spriteWithFile:@"shop-button.png"] selectedSprite:[CCSprite spriteWithFile:@"shop-button.png"]block:^(id sender) {
+            StoreScreenScene *gameplayLayer3 = [[StoreScreenScene alloc] init];
+            [[CCDirector sharedDirector] replaceScene:gameplayLayer3];
+        }];
+        shop.scale = .6;
+        
+        CCMenu *shopButtonMenu = [CCMenu menuWithItems:shop, nil];
+        shopButtonMenu.anchorPoint = ccp(1,0);
+        shopButtonMenu.position = ccp(screenHeight/3-shop.contentSize.width+20, screenWidth/2.5);
+        [self addChild:shopButtonMenu];
+        label5.position = ccp(screenHeight/3-shop.contentSize.width+20, screenWidth/2.5+20);
+        label5.visible = YES;
+        label5.color = ccc3(0,0,0);
+        [self addChild:label5];
+        
     }
     
     return self;

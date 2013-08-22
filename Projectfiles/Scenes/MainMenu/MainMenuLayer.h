@@ -14,6 +14,7 @@
     CCMenu *startMenu;
     CCMenuItem *startButton;
     CCMenuItemFont *storeButton;
+    CCMenuItemFont *recordButton;
     CGPoint startTitleLabelTargetPoint;
 }
 
