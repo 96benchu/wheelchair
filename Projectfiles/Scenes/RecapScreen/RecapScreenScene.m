@@ -19,6 +19,7 @@
 #import "MainMenuLayer.h"
 #import "Leaderboard.h"
 #import "Truth.h"
+#import "Lifetime.h"
 
 @interface RecapScreenScene()
 
@@ -109,8 +110,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:barrells forKey:@"barrells"];
         //[[NSUserDefaults standardUserDefaults] setObject:hs8+bonus+coin forKey:@"coins"];
         //[[NSUserDefaults standardUserDefaults] setObject:fuel forKey:@"highS"];
-        int coin = (data.gainedDistance - 500)/25;
-        if(coin<0)
+        int coin = ((data.gainedDistance - 500)*(data.gainedDistance - 500))/100;
+        if(data.gainedDistance<500)
         {
             coin = 0;
         }
@@ -357,10 +358,20 @@
         shopButtonMenu.anchorPoint = ccp(1,0);
         shopButtonMenu.position = ccp(screenHeight/3-shop.contentSize.width+20, screenWidth/2.5);
         [self addChild:shopButtonMenu];
-        label5.position = ccp(screenHeight/3-shop.contentSize.width+20, screenWidth/2.5+20);
+        label5.position = ccp(screenHeight/3-shop.contentSize.width+20, screenWidth/2.5+30);
         label5.visible = YES;
         label5.color = ccc3(0,0,0);
         [self addChild:label5];
+        CCMenuItemFont *recordButton = [CCMenuItemFont itemWithString:@"Lifetime Records" block:^(id sender) {
+            Lifetime *scene = [[Lifetime alloc] init];
+            [[CCDirector sharedDirector] replaceScene:scene];
+        }];
+        recordButton.color = ccc3(0,0,0);
+        CCMenu *recordButtonMenu = [CCMenu menuWithItems: recordButton, nil];
+        recordButtonMenu.anchorPoint = ccp(0,0);
+        recordButtonMenu.position = ccp(screenHeight*2/3, screenWidth/7);
+        recordButton.scale = .5;
+        [self addChild:recordButtonMenu];
         
     }
     

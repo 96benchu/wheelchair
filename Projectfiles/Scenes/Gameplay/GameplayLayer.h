@@ -118,6 +118,14 @@
     int maxSwipes;
     BOOL text22;
     double timeSpent;
+    
+    double nitroSpeed;
+    double nitroTime;
+    double nitroSpikes;
+    double wheelChairSpeed;
+    double wheelChairSpikes;
+    double wheelDrag;
+    
 }
 
 // defines if the main menu shall be displayed, or if the game shall start directly. By default the menu is displayed.

@@ -88,7 +88,21 @@
         [startMenu alignItemsVertically];
         [self addChild: startMenu];
         /* add lifetime button*/
-
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"nitroUpgrade"]==nil)
+        {
+            NSNumber *numb = [NSNumber numberWithDouble:0];
+            [[NSUserDefaults standardUserDefaults] setObject:numb forKey:@"nitroUpgrade"];
+        }
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"wheelUpgrade"]==nil)
+        {
+            NSNumber *numb = [NSNumber numberWithDouble:0];
+            [[NSUserDefaults standardUserDefaults] setObject:numb forKey:@"wheelUpgrade"];
+        }
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"coins"]==nil)
+        {
+            NSNumber *numb = [NSNumber numberWithDouble:0];
+            [[NSUserDefaults standardUserDefaults] setObject:numb forKey:@"coins"];
+        }
 	}
 
 	return self;

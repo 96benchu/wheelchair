@@ -13,25 +13,18 @@
 
 
 //Private class
-@interface SWTableViewNodeCell : SWTableViewCell {
-    CCNode *node;
-}
-@property (nonatomic, retain) CCNode *node;
-@end
-
-
-/**
- Screen for the In-App Purchase Store
- */
-@interface StoreScreenScene : CCScene <SWTableViewDataSource, StoreDisplayNeedsUpdate>
+@interface StoreScreenScene :CCLayer
 {
-    SWTableView *storeTableView;
-    NSMutableArray *cells;
-    CCLabelTTF *availableCashLabel;
+    CCNode *node;
+    CCLabelTTF* upgraded1;
+    CCLabelTTF* upgraded2;
+    CCLabelTTF* coinCount;
 }
 
-// initializes the view with the store content
-- (void)setupWithStoreContent;
-
+-(void)upgrade;
+-(void)upgrade2;
 @end
+
+
+
  

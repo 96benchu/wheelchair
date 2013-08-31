@@ -274,14 +274,31 @@
     data.recent = false;
     data.collect = false;
     data.nitroOn = false;
+    data.blasted = 0;
     game = [[Game alloc] init];
     [[GameMechanics sharedGameMechanics] setGame:game];
     [[GameMechanics sharedGameMechanics] setKnight:knight];
     // add a reference to this gamePlay scene to the gameMechanics, which allows accessing the scene from other classes
     [[GameMechanics sharedGameMechanics] setGameScene:self];
-
+    
     // set the default background scroll speed
     [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:0];
+    nitroSpeed=1;
+    nitroTime = 1;
+    wheelDrag = .9;
+    wheelChairSpeed = 1;
+    wheelChairSpikes = 1;
+    nitroSpikes = 1;
+    NSNumber *nitroUpgrade = [[NSUserDefaults standardUserDefaults] objectForKey:@"nitroUpgrade"];
+    int nUpgrade = [nitroUpgrade intValue];
+     NSNumber *wheelUpgrade = [[NSUserDefaults standardUserDefaults] objectForKey:@"WheelUpgrade"];
+    int wUpgrade = [wheelUpgrade intValue];
+    nitroSpeed = 1+ nUpgrade/5;
+    nitroTime = 1-nUpgrade/10;
+    nitroSpikes = 1+nUpgrade/7.5;
+    wheelChairSpeed =1+ wUpgrade/7.5;
+    wheelChairSpikes =1+ wUpgrade/7.5;
+    wheelDrag = .8+wUpgrade/15;
     
     /* setup initial values */
     NSLog(@"suces");
@@ -296,6 +313,7 @@
     coinsDisplayNode.score = game.score;
     pointsDisplayNode.score = game.meters;
     //setup spikes
+    spikes.velocity = ccp(3,0);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
@@ -419,7 +437,7 @@
     nitroOn2=false;
     counter12=0;
     arrow.visible = NO;
-    
+    //[[NSUserDefaults standardUserDefaults] setObject:highscore forKey:@"spikes"];
    //ramp.position = ccp(-500,-500);
 
     //set spwan rate for monsters
@@ -715,12 +733,12 @@
                     
                     if(knight.position.y >20 && data.onRamp == false)
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:300];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:200*nitroSpeed];
                     }
                     else
                     {
                         
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:200];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:100*nitroSpeed];
                     }
                 }
                 else
@@ -728,11 +746,11 @@
                     if(knight.position.y > 20 && data.onRamp == false)
                     {
                        
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+400];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+300*nitroSpeed];
                     }
                     else
                     {
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+400];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+300*nitroSpeed];
                     }
                 }
                 if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=20))
@@ -743,27 +761,27 @@
                         {
                             if(spikes.velocity.x > 15)
                             {
-                                spikes.velocity = ccp(-60, spikes.velocity.y);
+                                spikes.velocity = ccp(-30*nitroSpikes, spikes.velocity.y);
                             }
                             else
                             {
-                                spikes.velocity = ccp(-60, spikes.velocity.y);
+                                spikes.velocity = ccp(-30*nitroSpikes, spikes.velocity.y);
                             }
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x - 50, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x - 25*nitroSpikes, spikes.velocity.y);
                         }
                     }
                     else
                     {
                         if(spikes.velocity.x > 0)
                         {
-                            spikes.velocity = ccp(-80, spikes.velocity.y);
+                            spikes.velocity = ccp(-40*nitroSpikes, spikes.velocity.y);
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x - 40, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x - 20*nitroSpikes, spikes.velocity.y);
                         }
                     }
                 }
@@ -771,11 +789,11 @@
                 {
                     if(data.onRamp == true)
                     {
-                        spikes.velocity = ccp(spikes.velocity.x - 40, spikes.velocity.y);
+                        spikes.velocity = ccp(spikes.velocity.x - 20*nitroSpikes, spikes.velocity.y);
                     }
                     else
                     {
-                        spikes.velocity = ccp(spikes.velocity.x - 40, spikes.velocity.y);
+                        spikes.velocity = ccp(spikes.velocity.x - 20*nitroSpikes, spikes.velocity.y);
                     }
                 }
                 }
@@ -795,12 +813,12 @@
                     if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] >0)
                     {
                         //NSLog(@"WORKS");
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+60];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+30*nitroSpeed];
                     }
                     else
                     {
                        // NSLog(@"WORKS");
-                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+60];
+                        [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+30*nitroSpeed];
                     }
                 
                 if(([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]>=20))
@@ -809,11 +827,11 @@
                     {
                     if(spikes.velocity.x > 0)
                     {
-                        spikes.velocity = ccp(spikes.velocity.x - 8, spikes.velocity.y);
+                        spikes.velocity = ccp(spikes.velocity.x - 3*nitroSpikes, spikes.velocity.y);
                     }
                     else
                     {
-                        spikes.velocity = ccp(spikes.velocity.x - 8, spikes.velocity.y);
+                        spikes.velocity = ccp(spikes.velocity.x - 3*nitroSpikes, spikes.velocity.y);
                     }
                     }
                 }
@@ -845,11 +863,11 @@
     }
     //NSLog(nitroOn ? @"Yes" : @"No");
     counter11++;
-    if(counter11>600*(1/delta)/60)
+    if(counter11>1200*nitroTime*(1/delta)/60)
     {
         if(knight.fuel <10000)
         {
-            knight.fuel+=3;
+            knight.fuel+=1;
         }
     }
     if(knight.fuel < 0)
@@ -859,7 +877,7 @@
     if(recent2 == true)
     {
         counter6++;
-        if(counter6 >= 180*((1/delta)/60))
+        if(counter6 >= 480*nitroTime*((1/delta)/60))
         {
             recent2 = false;
             counter6=0;
@@ -938,7 +956,7 @@
             case KKSwipeGestureDirectionRight:
                 //if falling behind
 
-                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+cap/6];
+                    [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+(cap/7)*wheelChairSpeed];
                 
                 data.totalSwipes+=1;
                 maxSwipes+=1;
@@ -956,16 +974,16 @@
                         {
                             if(spikes.position.x < -25)
                             {
-                                spikes.velocity = ccp(spikes.velocity.x-5.5,spikes.velocity.y);
+                                spikes.velocity = ccp(spikes.velocity.x-5*wheelChairSpikes,spikes.velocity.y);
                             }
                             else
                             {
-                                spikes.velocity = ccp(spikes.velocity.x -6.7,spikes.velocity.y);
+                                spikes.velocity = ccp(spikes.velocity.x -5.7*wheelChairSpikes,spikes.velocity.y);
                             }
                         }
                         else
                         {
-                            spikes.velocity = ccp(spikes.velocity.x-5.5, spikes.velocity.y);
+                            spikes.velocity = ccp(spikes.velocity.x-5*wheelChairSpikes, spikes.velocity.y);
                         }
                     }
                 }
@@ -991,7 +1009,7 @@
         if(recent5 == true)
         if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] < cap)
         {
-            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+ .75];
+            //[[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]+ .75];
         }
     }
     //else if([input anyTouchEndedThisFrame])
@@ -1188,13 +1206,13 @@
                     float d = 100.f/327.f;
                     float e = 1/z;
                     float f = e*d;
-                    float g = (f+2)/3;
+                    float g = ((f+1)/2+wheelDrag)/2;
                     [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]*(frac*g)];
                 }
             }
             if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
             {
-                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/(capDivider+30)];
+                [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/(capDivider+40)];
             }
             if(spikes.velocity.x<50)
             {
@@ -1240,7 +1258,7 @@
     {
         if([[GameMechanics sharedGameMechanics] backGroundScrollSpeedX] > 0)
         {
-            //[[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/capDivider];
+            [[GameMechanics sharedGameMechanics] setBackGroundScrollSpeedX:[[GameMechanics sharedGameMechanics] backGroundScrollSpeedX]-cap/140];
         }
         // if there's a ramp
 
@@ -1268,11 +1286,11 @@
         {
             if(spikes.position.x <0)
             {
-                //spikes.velocity = ccp(spikes.velocity.x + speedUp/9.2, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/40, spikes.velocity.y);
             }
             else
             {
-                //spikes.velocity = ccp(spikes.velocity.x + speedUp/9.2, spikes.velocity.y);
+                spikes.velocity = ccp(spikes.velocity.x + speedUp/40, spikes.velocity.y);
             }
         }
         }

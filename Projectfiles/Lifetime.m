@@ -84,8 +84,9 @@
             [[CCDirector sharedDirector] replaceScene:scene];
         }];
         CCMenu *exitMenu = [CCMenu menuWithItems:exit, nil];
-        exitMenu.position = ccp(screenHeight/10, screenWidth/2);
-        exitMenu.scale = .8
+        exitMenu.position = ccp(0, 0);
+        exit.position = ccp(screenHeight/12, screenWidth/2);
+        exitMenu.scale = .8;
         [self addChild:exitMenu];
         
         

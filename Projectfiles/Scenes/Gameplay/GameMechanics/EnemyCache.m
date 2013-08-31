@@ -655,8 +655,8 @@
     Knight *knight = [[GameMechanics sharedGameMechanics] knight];
     CCARRAY_FOREACH([batch2 children], box)
     {
-        if(box.visible==YES)
-        {
+        NSLog(data.nitroOn ? @"Yes" : @"No");
+
         //NSLog(@"done");
         CGRect bbox = [box boundingBox];
         CGRect bbox2 = CGRectMake(CGRectGetMinX(bbox)+35,CGRectGetMinY(bbox), CGRectGetWidth(bbox)-35, CGRectGetHeight(bbox)+5);
@@ -665,20 +665,25 @@
         CGRect knightHitZone = [knight hitZone];
         if (CGRectIntersectsRect(knightHitZone, bbox2))
         {
-            if(data.nitroOn)
+            if(box.visible==YES)
             {
-                box.visible = NO;
-                [box gotStolen];
-                data.blasted+=1;
-                NSLog(@"stolen");
+                if(data.nitroOn)
+                {
+                    box.visible = NO;
+                    [box gotStolen];
+                    data.blasted+=1;
+                    NSLog(@"stolen");
+                }
+                else if(!data.nitroOn)
+                {
+                    // NSLog(@"done");
+                    [box gotStolen];
+                    return true;
+                }
             }
-            else{
-           // NSLog(@"done");
-                [box gotStolen];
-            return true;
-            }
+            
         }
-        }
+        
 
 
     }
@@ -699,6 +704,7 @@
 
         
     }
+    
     CCARRAY_FOREACH([batch5 children], box3)
     {
         
@@ -712,22 +718,22 @@
         {
             if(box3.visible==YES)
             {
-            if(data.nitroOn)
-            {
-                box3.visible = NO;
-                [box3 gotStolen];
-                data.blasted+=1;
-            }
-            else{
-            // NSLog(@"done");
-                [box3 gotStolen];
-            return true;
-            }
+                if(data.nitroOn)
+                {
+                    box3.visible = NO;
+                    [box3 gotStolen];
+                    data.blasted+=1;
+                }
+                else
+                {
+                    // NSLog(@"done");
+                    [box3 gotStolen];
+                    return true;
+                }
             }
         }
-
-        
     }
+
     return false;
 }
 -(int) checkForCoinCollisions
